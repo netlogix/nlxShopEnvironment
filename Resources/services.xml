@@ -8,7 +8,7 @@
             <argument type="service" id="service_container"/>
         </service>
         <!-- Commands -->
-        <service id="sd_shop_environment.commands.shop_environment" class="sdShopEnvironment\Commands\ShopEnvironmentDumpCommand">
+        <service id="sd_shop_environment.commands.shop_environment" class="sdShopEnvironment\Commands\ShopEnvironmentDumpConfigCommand">
             <argument type="service" id="sd_shop_environment.services.configuration_dumper"/>
             <argument type="string">%kernel.root_dir%/var/export</argument>
             <tag name="console.command" />
