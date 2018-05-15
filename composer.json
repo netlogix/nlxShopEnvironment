@@ -1,6 +1,6 @@
 {
-    "name": "solutiondrive/sdinfosystem",
-    "description": "Plugin to collect and publish information about version, installed plugins etc.",
+    "name": "solutiondrive/sdshopenvironment",
+    "description": "Plugin to dump/load configurations in a shopware shop to/from a file from/to the database",
     "type": "shopware-plugin",
     "license": "MIT",
     "authors": [
@@ -10,11 +10,11 @@
         }
     ],
     "extra": {
-        "installer-name": "sdInfoSystem"
+        "installer-name": "sdShopEnvironment"
     },
     "autoload": {
         "psr-4": {
-            "sdInfoSystem\\": "."
+            "sdShopEnvironment\\": "."
         }
     },
     "require": {
