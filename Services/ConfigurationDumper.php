@@ -27,7 +27,6 @@ class ConfigurationDumper implements ConfigurationDumperInterface
     public function dumpConfiguration($exportPath = '')
     {
         /** @var ModelManager $entityManager */
-        
         $entityManager = $this->container->get('models');
         $configElementRepository = $entityManager->getRepository('Shopware\Models\Config\Element');
 
@@ -37,7 +36,6 @@ class ConfigurationDumper implements ConfigurationDumperInterface
 
         foreach($allConfigs as $element) {
             try {
-
                 $configValue = $element->getValue();
                 $backendForm = $element->getForm();
 
