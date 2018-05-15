@@ -1,16 +1,15 @@
 <?php
 
-namespace sdShopEnvrionment;
+namespace sdShopEnvironment;
 
 use Shopware\Components\Plugin;
 use Shopware\Components\Console\Application;
-use sdShopEnvrionment\Commands\ShopEnvrionment;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * Shopware-Plugin sdShopEnvrionment.
+ * Shopware-Plugin sdShopEnvironment.
  */
-class sdShopEnvrionment extends Plugin
+class sdShopEnvironment extends Plugin
 {
 
     /**
@@ -18,7 +17,7 @@ class sdShopEnvrionment extends Plugin
     */
     public function build(ContainerBuilder $container)
     {
-        $container->setParameter('sd_shop_envrionment.plugin_dir', $this->getPath());
+        $container->setParameter('sd_shop_environment.plugin_dir', $this->getPath());
         parent::build($container);
     }
 

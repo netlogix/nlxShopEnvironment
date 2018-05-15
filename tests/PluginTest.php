@@ -1,20 +1,20 @@
 <?php
 
-namespace sdShopEnvrionment\Tests;
+namespace sdShopEnvironment\Tests;
 
-use sdShopEnvrionment\sdShopEnvrionment as Plugin;
+use sdShopEnvironment\sdShopEnvironment as Plugin;
 use Shopware\Components\Test\Plugin\TestCase;
 
 class PluginTest extends TestCase
 {
     protected static $ensureLoadedPlugins = [
-        'sdShopEnvrionment' => []
+        'sdShopEnvironment' => []
     ];
 
     public function testCanCreateInstance()
     {
         /** @var Plugin $plugin */
-        $plugin = Shopware()->Container()->get('kernel')->getPlugins()['sdShopEnvrionment'];
+        $plugin = Shopware()->Container()->get('kernel')->getPlugins()['sdShopEnvironment'];
 
         $this->assertInstanceOf(Plugin::class, $plugin);
     }

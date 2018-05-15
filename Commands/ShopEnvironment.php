@@ -1,6 +1,6 @@
 <?php
 
-namespace sdShopEnvrionment\Commands;
+namespace sdShopEnvironment\Commands;
 
 use Shopware\Components\Model\ModelManager;
 use Symfony\Component\Console\Input\InputArgument;
@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Shopware\Commands\ShopwareCommand;
 
-class ShopEnvrionment extends ShopwareCommand
+class ShopEnvironment extends ShopwareCommand
 {
     /**
      * {@inheritdoc}
@@ -17,7 +17,7 @@ class ShopEnvrionment extends ShopwareCommand
     protected function configure()
     {
         $this
-            ->setName('sd:GROUP:OPERATION')
+            ->setName('sd:environment:dump')
             ->setDescription('Description of this command')
             ->addArgument(
                 'my-argument',
