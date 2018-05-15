@@ -10,7 +10,7 @@
 
 
 
-        <service id="sd_shop_environment.commands.shop_environment" class="sdShopEnvironment\Commands\ShopEnvironment">
+        <service id="sd_shop_environment.commands.shop_environment" class="sdShopEnvironment\Commands\ShopEnvironmentDumpCommand">
             <tag name="console.command" />
         </service>
 

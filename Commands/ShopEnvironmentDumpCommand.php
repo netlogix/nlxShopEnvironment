@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Shopware\Commands\ShopwareCommand;
 
-class ShopEnvironment extends ShopwareCommand
+class ShopEnvironmentDumpCommand extends ShopwareCommand
 {
     /**
      * {@inheritdoc}
@@ -18,21 +18,9 @@ class ShopEnvironment extends ShopwareCommand
     {
         $this
             ->setName('sd:environment:dump')
-            ->setDescription('Description of this command')
-            ->addArgument(
-                'my-argument',
-                InputArgument::REQUIRED,
-                'An required argument (positional)'
-            )
-            ->addOption(
-                'my-option',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'An optional *option*',
-                'My-Default-Value'
-            )
+            ->setDescription('Dumps the current configs from the database to ')
             ->setHelp(<<<EOF
-The <info>%command.name%</info> implements a command.
+The <info>%command.name%</info> will dump all relevant config-values to a file.
 EOF
             );
     }
@@ -42,8 +30,6 @@ EOF
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln($input->getOption('my-option'));
-        $output->writeln($input->getArgument('my-argument'));
-
+        $output->writeln('I`m executed');
     }
 }
