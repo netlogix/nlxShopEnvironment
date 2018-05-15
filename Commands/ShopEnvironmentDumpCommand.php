@@ -2,8 +2,7 @@
 
 namespace sdShopEnvironment\Commands;
 
-use Shopware\Components\Model\ModelManager;
-use Symfony\Component\Console\Input\InputArgument;
+use sdShopEnvironment\Services\ConfigurationDumperInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -11,6 +10,25 @@ use Shopware\Commands\ShopwareCommand;
 
 class ShopEnvironmentDumpCommand extends ShopwareCommand
 {
+    /** @var ConfigurationDumperInterface */
+    private $configurationDumper;
+
+    private $exportPath = '';
+
+    /**
+     * ShopEnvironmentDumpCommand constructor.
+     * @param ConfigurationDumperInterface $configurationDumper
+     * @param string                       $defaultExportPath
+     */
+    public function __construct(
+        ConfigurationDumperInterface $configurationDumper,
+        $defaultExportPath
+    ) {
+        $this->configurationDumper = $configurationDumper;
+        $this->exportPath = $defaultExportPath;
+        parent::__construct();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -18,7 +36,8 @@ class ShopEnvironmentDumpCommand extends ShopwareCommand
     {
         $this
             ->setName('sd:environment:dump')
-            ->setDescription('Dumps the current configs from the database to ')
+            ->addOption('filename', 'f', InputOption::VALUE_OPTIONAL, 'the name of the file where the configs should be exported to', 'shopware_configs.yaml')
+            ->setDescription('Dumps the current configs from the database to a yaml-File')
             ->setHelp(<<<EOF
 The <info>%command.name%</info> will dump all relevant config-values to a file.
 EOF
@@ -30,6 +49,7 @@ EOF
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('I`m executed');
+        $filename = $input->getOption('filename');
+        $this->configurationDumper->dumpConfiguration($this->exportPath . '/' . $filename);
     }
 }
