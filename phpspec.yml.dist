@@ -1,0 +1,6 @@
+suites:
+  default:
+    namespace: sdShopEnvironment
+    psr4_prefix: sdShopEnvironment
+    spec_path: ./
+    src_path: ./
