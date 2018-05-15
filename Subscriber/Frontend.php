@@ -1,6 +1,6 @@
 <?php
 
-namespace sdShopEnvrionment\Subscriber;
+namespace sdShopEnvironment\Subscriber;
 
 use Enlight\Event\SubscriberInterface;
 
