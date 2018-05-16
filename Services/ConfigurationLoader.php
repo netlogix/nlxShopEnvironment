@@ -10,9 +10,7 @@ namespace sdShopEnvironment\Services;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
 use Shopware\Components\DependencyInjection\Container;
-use Shopware\Components\Model\ModelManager;
 use Shopware\Models\Config\Element;
 use Shopware\Models\Config\Form;
 use Symfony\Component\Yaml\Yaml;
@@ -74,6 +72,11 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
      */
     private function findOrCreateForm(ObjectRepository $configFormRepository, $elementInformation)
     {
+        /**
+         * @todo at the moment a deleted or not existing forms are making problems (dublicate key), which I have to investigate
+         * @todo for proper creation of form we would also need the plugin (there is a relation between forms and plugins)
+         * @todo look at /vendor/shopware/shopware/engine/Shopware/Models/Config/Form.php:42
+         */
         $form = $configFormRepository->findOneBy(['name' => $elementInformation['form']['name']]);
         if (null === $form) {
             $form = new Form();
