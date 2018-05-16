@@ -19,6 +19,8 @@ class ConfigurationDumper implements ConfigurationDumperInterface
     /** @var Container */
     private $container;
 
+    private $configurationAsArray;
+
     public function __construct(Container $container)
     {
         $this->container = $container;
@@ -32,9 +34,10 @@ class ConfigurationDumper implements ConfigurationDumperInterface
 
         $allConfigs = $configElementRepository->findAll();
 
-        $configurationAsArray = [];
+        $this->configurationAsArray = [];
 
         foreach($allConfigs as $element) {
+            /** @var $element Element */
             try {
                 $configValue = $element->getValue();
                 $backendForm = $element->getForm();
@@ -42,12 +45,9 @@ class ConfigurationDumper implements ConfigurationDumperInterface
                 $backendCategory = $backendForm->getName();
 
                 if (is_array($configValue)) {
-                    foreach ($configValue as $value) {
-                        $configurationAsArray[$backendCategory][] = $value;
-                    }
+                    $this->addMultipleValues($configValue, $backendCategory, $element);
                 } else {
-                    /** @var $element Element */
-                    $configurationAsArray[$backendCategory][$element->getName()] = $element->getValue();
+                    $this->addSingleValue($element, $backendCategory);
                 }
             } catch (EntityNotFoundException $entityNotFoundException) {
                 // @todo think of what to do here. The try-catch is necessary since there seems to be the
@@ -55,12 +55,33 @@ class ConfigurationDumper implements ConfigurationDumperInterface
             }
         }
 
-        $configurationAsYaml = Yaml::dump($configurationAsArray);
+        $configurationAsYaml = Yaml::dump($this->configurationAsArray);
 
         if (false === is_writable(dirname($exportPath))) {
             mkdir(dirname($exportPath), 0775);
         }
 
         file_put_contents($exportPath, $configurationAsYaml);
+    }
+
+    /**
+     * @param array   $configValue
+     * @param string  $backendCategory
+     * @param Element $element
+     */
+    private function addMultipleValues($configValue, $backendCategory, $element)
+    {
+        foreach ($configValue as $value) {
+            $this->configurationAsArray[$backendCategory][$element->getName()][] = $value;
+        }
+    }
+
+    /**
+     * @param Element $element
+     * @param string  $backendCategory
+     */
+    private function addSingleValue($element, $backendCategory)
+    {
+        $this->configurationAsArray[$backendCategory][$element->getName()] = $element->getValue();
     }
 }
