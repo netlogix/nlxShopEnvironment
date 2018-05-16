@@ -17,14 +17,14 @@ class ShopEnvironmentDumpConfigCommand extends ShopwareCommand
 
     /**
      * @param ConfigurationDumperInterface $configurationDumper
-     * @param string                       $defaultExportPath
+     * @param string                       $defaultImportPath
      */
     public function __construct(
         ConfigurationDumperInterface $configurationDumper,
-        $defaultExportPath
+        $defaultImportPath
     ) {
         $this->configurationDumper = $configurationDumper;
-        $this->exportPath = $defaultExportPath;
+        $this->exportPath = $defaultImportPath;
         parent::__construct();
     }
 
