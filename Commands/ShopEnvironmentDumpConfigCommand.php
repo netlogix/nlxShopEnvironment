@@ -36,8 +36,10 @@ class ShopEnvironmentDumpConfigCommand extends ShopwareCommand
     {
         $this
             ->setName('sd:environment:config:dump')
-            ->addOption('filename', 'f', InputOption::VALUE_OPTIONAL, 'the name of the file where the configs should be exported to', 'shopware_configs.yaml')
-            ->addOption('target-directory', 't', InputOption::VALUE_OPTIONAL, 'the location where the exported file should be placed', 'default')
+            ->addOption('filename', 'f', InputOption::VALUE_OPTIONAL, 'the name of the file where the configs should ' .
+                'be exported to', 'shopware_configs.yaml')
+            ->addOption('target-directory', 't', InputOption::VALUE_OPTIONAL, 'the location where the exported file ' .
+                'should be placed', 'default')
             ->setDescription('Dumps the current configs from the database to a yaml-File')
             ->setHelp(<<<EOF
 The <info>%command.name%</info> will dump all relevant config-values to a file.
@@ -55,7 +57,8 @@ EOF
 
         $this->configurationDumper->dumpConfiguration($this->exportPath . '/' . $filename);
 
-        $output->writeln("<fg=yellow>Config values from `s_core_config_elements` were exported to <fg=green>$this->exportPath/$filename</> succesfully</>");
+        $output->writeln("<fg=yellow>Config values from `s_core_config_elements` were exported to " .
+            "<fg=green>$this->exportPath/$filename</> succesfully</>");
 
         if ('default' !== $targetDirectory) {
             $output->writeln('moving file to '.$targetDirectory);
