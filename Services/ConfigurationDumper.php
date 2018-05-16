@@ -43,20 +43,23 @@ class ConfigurationDumper implements ConfigurationDumperInterface
                 $configValue = $element->getValue();
                 $backendForm = $element->getForm();
 
-                $backendCategory = $backendForm->getName();
-
                 if (is_array($configValue)) {
-                    $this->addMultipleValues($element, $backendForm, $configValue);
+                    $this->addElementWithMultipleValues($element, $backendForm, $configValue);
                 } else {
-                    $this->addSingleValue($element, $backendForm);
+                    $this->addElementWithSingleValue($element, $backendForm);
                 }
+
+                $this->addElementName($element, $backendForm);
+                $this->addFormInformation($element, $backendForm);
+
+
             } catch (EntityNotFoundException $entityNotFoundException) {
                 // @todo think of what to do here. The try-catch is necessary since there seems to be the
                 // @todo possibility, that there are values assigned to forms that do not exist. (id = 0)
             }
         }
 
-        $configurationAsYaml = Yaml::dump($this->configurationAsArray);
+        $configurationAsYaml = Yaml::dump($this->configurationAsArray, 4);
 
         if (false === is_writable(dirname($exportPath))) {
             mkdir(dirname($exportPath), 0775);
@@ -70,22 +73,36 @@ class ConfigurationDumper implements ConfigurationDumperInterface
      * @param Form $backendForm
      * @param array $configValue
      */
-    private function addMultipleValues(Element $element, Form $backendForm, $configValue)
+    private function addElementWithMultipleValues(Element $element, Form $backendForm, $configValue)
     {
         foreach ($configValue as $value) {
             $this->configurationAsArray[$backendForm->getName()][$element->getName()]['value'][] = $value;
         }
-        $this->addElementName($element, $backendForm);
     }
 
-    private function addSingleValue(Element $element, Form $backendForm)
+    private function addElementWithSingleValue(Element $element, Form $backendForm)
     {
         $this->configurationAsArray[$backendForm->getName()][$element->getName()]['value'] = $element->getValue();
-        $this->addElementName($element, $backendForm);
     }
 
     private function addElementName(Element $element, Form $backendForm)
     {
         $this->configurationAsArray[$backendForm->getName()][$element->getName()]['name'] = $element->getName();
+    }
+
+    private function addFormInformation(Element $element, Form $backendForm)
+    {
+        $this->configurationAsArray[$backendForm->getName()][$element->getName()]['form'] =
+            [
+                'id'          => $backendForm->getId(),
+                'parent_id'   => is_null($backendForm->getParent()) ? null: $backendForm->getParent()->getId(),
+                'name'        => $backendForm->getName(),
+                'label'       => $backendForm->getLabel(),
+                'description' => $backendForm->getDescription(),
+                'position'    => $backendForm->getPosition(),
+                'plugin_id'   => $backendForm->getPluginId(),
+            ]
+        ;
+
     }
 }
