@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityNotFoundException;
 use Shopware\Components\DependencyInjection\Container;
 use Shopware\Components\Model\ModelManager;
 use Shopware\Models\Config\Element;
+use Shopware\Models\Config\Form;
 use Symfony\Component\Yaml\Yaml;
 
 class ConfigurationDumper implements ConfigurationDumperInterface
@@ -45,9 +46,9 @@ class ConfigurationDumper implements ConfigurationDumperInterface
                 $backendCategory = $backendForm->getName();
 
                 if (is_array($configValue)) {
-                    $this->addMultipleValues($configValue, $backendCategory, $element);
+                    $this->addMultipleValues($element, $backendForm, $configValue);
                 } else {
-                    $this->addSingleValue($element, $backendCategory);
+                    $this->addSingleValue($element, $backendForm);
                 }
             } catch (EntityNotFoundException $entityNotFoundException) {
                 // @todo think of what to do here. The try-catch is necessary since there seems to be the
@@ -65,23 +66,26 @@ class ConfigurationDumper implements ConfigurationDumperInterface
     }
 
     /**
-     * @param array   $configValue
-     * @param string  $backendCategory
      * @param Element $element
+     * @param Form $backendForm
+     * @param array $configValue
      */
-    private function addMultipleValues($configValue, $backendCategory, $element)
+    private function addMultipleValues(Element $element, Form $backendForm, $configValue)
     {
         foreach ($configValue as $value) {
-            $this->configurationAsArray[$backendCategory][$element->getName()][] = $value;
+            $this->configurationAsArray[$backendForm->getName()][$element->getName()]['value'][] = $value;
         }
+        $this->addElementName($element, $backendForm);
     }
 
-    /**
-     * @param Element $element
-     * @param string  $backendCategory
-     */
-    private function addSingleValue($element, $backendCategory)
+    private function addSingleValue(Element $element, Form $backendForm)
     {
-        $this->configurationAsArray[$backendCategory][$element->getName()] = $element->getValue();
+        $this->configurationAsArray[$backendForm->getName()][$element->getName()]['value'] = $element->getValue();
+        $this->addElementName($element, $backendForm);
+    }
+
+    private function addElementName(Element $element, Form $backendForm)
+    {
+        $this->configurationAsArray[$backendForm->getName()][$element->getName()]['name'] = $element->getName();
     }
 }
