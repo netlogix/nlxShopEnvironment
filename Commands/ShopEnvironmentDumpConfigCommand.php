@@ -16,7 +16,6 @@ class ShopEnvironmentDumpConfigCommand extends ShopwareCommand
     private $exportPath = '';
 
     /**
-     * ShopEnvironmentDumpConfigCommand constructor.
      * @param ConfigurationDumperInterface $configurationDumper
      * @param string                       $defaultExportPath
      */
