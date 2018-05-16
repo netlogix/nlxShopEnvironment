@@ -8,6 +8,9 @@
 
 namespace sdShopEnvironment\Services;
 
+use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Shopware\Components\DependencyInjection\Container;
 use Shopware\Components\Model\ModelManager;
 use Shopware\Models\Config\Element;
@@ -18,6 +21,9 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
 {
     /** @var Container */
     private $container;
+
+    /** @var EntityManagerInterface */
+    private $entityManager;
 
     public function __construct(Container $container)
     {
@@ -33,12 +39,13 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
             throw new \RuntimeException('file not found - '.$pathToFile);
         }
 
-        /** @var ModelManager $entityManager */
-        $entityManager = $this->container->get('models');
-        $configElementRepository = $entityManager->getRepository('Shopware\Models\Config\Element');
-        $configFormRepository = $entityManager->getRepository('Shopware\Models\Config\Form');
+        $this->entityManager = $this->container->get('models');
 
-        $contentOfYamlFile = Yaml::parse($pathToFile);
+        $configElementRepository = $this->entityManager->getRepository('Shopware\Models\Config\Element');
+        $configFormRepository = $this->entityManager->getRepository('Shopware\Models\Config\Form');
+
+        $contentOfYamlFile = Yaml::parse(file_get_contents($pathToFile));
+
 
         // @todo continue here when all data is dumped correctly
         foreach ($contentOfYamlFile as $nameOfBackendForm => $formElements) {
@@ -54,40 +61,51 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
                 $element->setPosition($elementInformation['position']);
                 $element->setScope($elementInformation['scope']);
                 $element->setValue($elementInformation['value']);
-                $entityManager->persist($element);
             }
         }
-        $entityManager->flush();
+        $this->entityManager->flush();
     }
 
     /**
-     * @param $configFormRepository
-     * @param $elementInformation
+     * @param ObjectRepository $configFormRepository
+     * @param array            $elementInformation
+     *
      * @return Form
      */
-    private function findOrCreateForm($configFormRepository, $elementInformation)
+    private function findOrCreateForm(ObjectRepository $configFormRepository, $elementInformation)
     {
         $form = $configFormRepository->findOneBy(['name' => $elementInformation['form']['name']]);
         if (null === $form) {
             $form = new Form();
+            $this->entityManager->persist($form);
         }
 
         $form->setName($elementInformation['form']['name']);
         $form->setLabel($elementInformation['form']['label']);
         $form->setDescription($elementInformation['form']['description']);
         $form->setPosition($elementInformation['form']['position']);
+
         return $form;
     }
 
-    private function findOrCreateElement($configElementRepository, $elementName, $elementInformation)
+    /**
+     * @param ObjectRepository $configElementRepository
+     * @param string           $elementName
+     * @param array            $elementInformation
+     *
+     * @return object|Element
+     */
+    private function findOrCreateElement(ObjectRepository $configElementRepository, $elementName, $elementInformation)
     {
-        $element = $configElementRepository->findOneBy(['name' => $elementName]);
+        $element = $configElementRepository->findOneBy(['name' => $elementName, 'label' => $elementInformation['label']]);
         if (null === $element) {
             $elementType = $elementInformation['type'];
             $elementOptions = $elementInformation['options'];
 
             $element = new Element($elementType, $elementName, $elementOptions);
+            $this->entityManager->persist($element);
         }
+
         return $element;
     }
 }

@@ -3,15 +3,29 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <!-- Dumping-Services -->
+        <!-- Helper-Services -->
         <service id="sd_shop_environment.services.configuration_dumper" class="sdShopEnvironment\Services\ConfigurationDumper">
             <argument type="service" id="service_container"/>
         </service>
+        <service id="sd_shop_environment.services.configuration_loader" class="sdShopEnvironment\Services\ConfigurationLoader">
+            <argument type="service" id="service_container"/>
+        </service>
         <!-- Commands -->
-        <service id="sd_shop_environment.commands.shop_environment" class="sdShopEnvironment\Commands\ShopEnvironmentDumpConfigCommand">
+        <service
+                id="sd_shop_environment.commands.shop_environment_dump_config_command"
+                class="sdShopEnvironment\Commands\ShopEnvironmentDumpConfigCommand"
+        >
             <argument type="service" id="sd_shop_environment.services.configuration_dumper"/>
             <argument type="string">%kernel.root_dir%/var/export</argument>
-            <tag name="console.command" />
+            <tag name="console.command"/>
+        </service>
+        <service
+                id="sd_shop_environment.commands.shop_environment_load_config_command"
+                class="sdShopEnvironment\Commands\ShopEnvironmentLoadConfigCommand"
+        >
+            <argument type="service" id="sd_shop_environment.services.configuration_loader"/>
+            <argument type="string">%kernel.root_dir%/var/import</argument>
+            <tag name="console.command"/>
         </service>
     </services>
 </container>
