@@ -10,5 +10,8 @@ namespace sdShopEnvironment\Services;
 
 interface ConfigurationDumperInterface
 {
-
+    /**
+     * @param string $exportPath
+     */
+    public function dumpConfiguration($exportPath);
 }
