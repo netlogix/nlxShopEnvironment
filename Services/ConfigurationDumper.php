@@ -20,6 +20,7 @@ class ConfigurationDumper implements ConfigurationDumperInterface
     /** @var Container */
     private $container;
 
+    /** @var array */
     private $configurationAsArray;
 
     public function __construct(Container $container)
@@ -51,7 +52,6 @@ class ConfigurationDumper implements ConfigurationDumperInterface
 
                 $this->addElementInformation($element, $backendForm);
                 $this->addFormInformation($element, $backendForm);
-
 
             } catch (EntityNotFoundException $entityNotFoundException) {
                 // @todo think of what to do here. The try-catch is necessary since there seems to be the
@@ -90,14 +90,14 @@ class ConfigurationDumper implements ConfigurationDumperInterface
         $formName = $backendForm->getName();
         $elementName = $element->getName();
 
-        $this->configurationAsArray[$formName][$elementName]['name'] = $elementName;
-        $this->configurationAsArray[$formName][$elementName]['label'] = $element->getLabel();
+        $this->configurationAsArray[$formName][$elementName]['name']        = $elementName;
+        $this->configurationAsArray[$formName][$elementName]['label']       = $element->getLabel();
         $this->configurationAsArray[$formName][$elementName]['description'] = $element->getDescription();
-        $this->configurationAsArray[$formName][$elementName]['type'] = $element->getType();
-        $this->configurationAsArray[$formName][$elementName]['required'] = $element->getRequired();
-        $this->configurationAsArray[$formName][$elementName]['position'] = $element->getPosition();
-        $this->configurationAsArray[$formName][$elementName]['scope'] = $element->getScope();
-        $this->configurationAsArray[$formName][$elementName]['options'] = $element->getOptions();
+        $this->configurationAsArray[$formName][$elementName]['type']        = $element->getType();
+        $this->configurationAsArray[$formName][$elementName]['required']    = $element->getRequired();
+        $this->configurationAsArray[$formName][$elementName]['position']    = $element->getPosition();
+        $this->configurationAsArray[$formName][$elementName]['scope']       = $element->getScope();
+        $this->configurationAsArray[$formName][$elementName]['options']     = $element->getOptions();
     }
 
     private function addFormInformation(Element $element, Form $backendForm)
