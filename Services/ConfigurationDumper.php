@@ -104,8 +104,6 @@ class ConfigurationDumper implements ConfigurationDumperInterface
     {
         $this->configurationAsArray[$backendForm->getName()][$element->getName()]['form'] =
             [
-                'id'          => $backendForm->getId(),
-                'parent_id'   => is_null($backendForm->getParent()) ? null: $backendForm->getParent()->getId(),
                 'name'        => $backendForm->getName(),
                 'label'       => $backendForm->getLabel(),
                 'description' => $backendForm->getDescription(),
