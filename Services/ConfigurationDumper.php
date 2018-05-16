@@ -49,7 +49,7 @@ class ConfigurationDumper implements ConfigurationDumperInterface
                     $this->addElementWithSingleValue($element, $backendForm);
                 }
 
-                $this->addElementName($element, $backendForm);
+                $this->addElementInformation($element, $backendForm);
                 $this->addFormInformation($element, $backendForm);
 
 
@@ -85,9 +85,19 @@ class ConfigurationDumper implements ConfigurationDumperInterface
         $this->configurationAsArray[$backendForm->getName()][$element->getName()]['value'] = $element->getValue();
     }
 
-    private function addElementName(Element $element, Form $backendForm)
+    private function addElementInformation(Element $element, Form $backendForm)
     {
-        $this->configurationAsArray[$backendForm->getName()][$element->getName()]['name'] = $element->getName();
+        $formName = $backendForm->getName();
+        $elementName = $element->getName();
+
+        $this->configurationAsArray[$formName][$elementName]['name'] = $elementName;
+        $this->configurationAsArray[$formName][$elementName]['label'] = $element->getLabel();
+        $this->configurationAsArray[$formName][$elementName]['description'] = $element->getDescription();
+        $this->configurationAsArray[$formName][$elementName]['type'] = $element->getType();
+        $this->configurationAsArray[$formName][$elementName]['required'] = $element->getRequired();
+        $this->configurationAsArray[$formName][$elementName]['position'] = $element->getPosition();
+        $this->configurationAsArray[$formName][$elementName]['scope'] = $element->getScope();
+        $this->configurationAsArray[$formName][$elementName]['options'] = $element->getOptions();
     }
 
     private function addFormInformation(Element $element, Form $backendForm)
@@ -103,6 +113,5 @@ class ConfigurationDumper implements ConfigurationDumperInterface
                 'plugin_id'   => $backendForm->getPluginId(),
             ]
         ;
-
     }
 }
