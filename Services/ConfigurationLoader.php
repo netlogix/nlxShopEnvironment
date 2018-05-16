@@ -9,6 +9,9 @@
 namespace sdShopEnvironment\Services;
 
 use Shopware\Components\DependencyInjection\Container;
+use Shopware\Components\Model\ModelManager;
+use Shopware\Models\Config\Element;
+use Symfony\Component\Yaml\Yaml;
 
 class ConfigurationLoader implements ConfigurationLoaderInterface
 {
@@ -20,8 +23,35 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
         $this->container = $container;
     }
 
-    public function loadConfiguration()
+    /**
+     * {@inheritdoc}
+     */
+    public function loadConfiguration($pathToFile)
     {
-        // TODO: Implement loadConfiguration() method.
+        if (false === is_readable($pathToFile)) {
+            throw new \RuntimeException('file not found - '.$pathToFile);
+        }
+
+        /** @var ModelManager $entityManager */
+        $entityManager = $this->container->get('models');
+        $configElementRepository = $entityManager->getRepository('Shopware\Models\Config\Element');
+
+        $contentOfYamlFile = Yaml::parse($pathToFile);
+
+        // @todo continue here when all data is dumped correctly
+        /*foreach ($contentOfYamlFile as $nameOfBackendForm => $formElements) {
+            foreach ($formElements as $elementName => $elementValue) {
+                $element = $configElementRepository->findOneBy(['name' => $elementName]);
+                if (null === $element) {
+                    if (is_int($elementValue)) {
+
+                    } elseif( is_array($elementValue)) {
+
+                    }
+                }
+            }
+        }*/
+
+
     }
 }

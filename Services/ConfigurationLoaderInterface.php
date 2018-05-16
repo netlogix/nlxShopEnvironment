@@ -11,5 +11,8 @@ namespace sdShopEnvironment\Services;
 
 interface ConfigurationLoaderInterface
 {
-    public function loadConfiguration();
+    /**
+     * @param string $pathToFile
+     */
+    public function loadConfiguration($pathToFile);
 }
