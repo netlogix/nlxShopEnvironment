@@ -38,8 +38,8 @@ class ConfigurationDumper implements ConfigurationDumperInterface
 
         $this->configurationAsArray = [];
 
-        foreach($allConfigs as $element) {
-            /** @var $element Element */
+        foreach ($allConfigs as $element) {
+            /* @var $element Element */
             try {
                 $configValue = $element->getValue();
                 $backendForm = $element->getForm();
@@ -52,7 +52,6 @@ class ConfigurationDumper implements ConfigurationDumperInterface
 
                 $this->addElementInformation($element, $backendForm);
                 $this->addFormInformation($element, $backendForm);
-
             } catch (EntityNotFoundException $entityNotFoundException) {
                 // @todo think of what to do here. The try-catch is necessary since there seems to be the
                 // @todo possibility, that there are values assigned to forms that do not exist. (id = 0)
@@ -70,8 +69,8 @@ class ConfigurationDumper implements ConfigurationDumperInterface
 
     /**
      * @param Element $element
-     * @param Form $backendForm
-     * @param array $configValue
+     * @param Form    $backendForm
+     * @param array   $configValue
      */
     private function addElementWithMultipleValues(Element $element, Form $backendForm, $configValue)
     {

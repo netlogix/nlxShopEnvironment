@@ -34,7 +34,7 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
     public function loadConfiguration($pathToFile)
     {
         if (false === is_readable($pathToFile)) {
-            throw new \RuntimeException('file not found - '.$pathToFile);
+            throw new \RuntimeException('file not found - ' . $pathToFile);
         }
 
         $this->entityManager = $this->container->get('models');
@@ -46,7 +46,6 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
 
         foreach ($contentOfYamlFile as $nameOfBackendForm => $formElements) {
             foreach ($formElements as $elementName => $elementInformation) {
-
                 $element = $this->findOrCreateElement($configElementRepository, $elementName, $elementInformation);
                 $form = $this->findOrCreateForm($configFormRepository, $elementInformation);
 
@@ -59,6 +58,7 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
                 $element->setValue($elementInformation['value']);
             }
         }
+
         $this->entityManager->flush();
     }
 
