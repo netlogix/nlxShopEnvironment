@@ -1,0 +1,91 @@
+workspace:
+  base: /workspace
+  path: sdShopEnvironment
+
+pipeline:
+  setup:composer:
+    image: docker.solutiondrive.de/library/composer:${PHP_VERSION}
+    commands:
+      - ./etc/scripts/prepareComposerJson.sh
+      - composer update -n --no-progress --no-suggest
+    volumes:
+      - /var/cache/composer:/composer/cache
+    secrets: [ composer_auth ]
+
+  test:codingstandards:
+    image: docker.solutiondrive.de/library/composer:${PHP_VERSION}
+    commands:
+      - ./etc/scripts/checkCodingStandards.sh
+    when:
+      matrix:
+        PHP_VERSION: php7.2
+        SHOPWARE_VERSION: 5.4.*
+
+  test:spec:
+    image: docker.solutiondrive.de/library/php-xdebug:${PHP_VERSION}
+    commands:
+      - vendor/bin/phpspec-standalone run --no-code-generation --format=dot
+
+  # Create a artifact with the lowest possible version
+  publish:create:master_archive:
+    image: docker.solutiondrive.de/library/composer:${PHP_VERSION}
+    commands:
+      - rm -rf sdShopEnvironment-master.zip
+      - rm -rf sdShopEnvironment
+      - mkdir -p sdShopEnvironment
+      - git archive master | tar -x -C sdShopEnvironment
+      - cd sdShopEnvironment
+      - composer install --no-dev -n -o --no-progress --no-suggest
+      - cd ../
+      - zip -r sdShopEnvironment-master.zip sdShopEnvironment
+      - rm -rf sdShopEnvironment
+    when:
+      branch: master
+      event: [push]
+      matrix:
+        PHP_VERSION: php5.6
+        SHOPWARE_VERSION: 5.2.*
+
+  publish:create:release_archive:
+    image: docker.solutiondrive.de/library/composer:${PHP_VERSION}
+    commands:
+      - rm -rf sdShopEnvironment-${DRONE_TAG}.zip
+      - rm -rf sdShopEnvironment
+      - mkdir -p sdShopEnvironment
+      - git archive ${DRONE_TAG} | tar -x -C sdShopEnvironment
+      - cd sdShopEnvironment
+      - composer install --no-dev -n -o --no-progress --no-suggest
+      - cd ../
+      - zip -r sdShopEnvironment-${DRONE_TAG}.zip sdShopEnvironment
+      - rm -rf sdShopEnvironment
+    when:
+      branch: master
+      event: [tag]
+      matrix:
+        PHP_VERSION: php5.6
+        SHOPWARE_VERSION: 5.2.*
+
+  publish:s3:release:
+    image: plugins/s3
+    bucket: application-configs-385280725562
+    acl: private
+    region: eu-central-1
+    source: sdShopEnvironment-*.zip
+    target: /releases/shopwareModules
+    when:
+      branch: master
+      event: [push, tag]
+      matrix:
+        PHP_VERSION: php5.6
+        SHOPWARE_VERSION: 5.2.*
+
+matrix:
+  PHP_VERSION:
+    - php7.2
+    - php7.1
+    - php7.0
+    - php5.6
+  SHOPWARE_VERSION:
+    - 5.4.*
+    - 5.3.*
+    - 5.2.*
