@@ -44,8 +44,6 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
 
         $contentOfYamlFile = Yaml::parse(file_get_contents($pathToFile));
 
-
-        // @todo continue here when all data is dumped correctly
         foreach ($contentOfYamlFile as $nameOfBackendForm => $formElements) {
             foreach ($formElements as $elementName => $elementInformation) {
 
