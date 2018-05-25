@@ -24,7 +24,7 @@ pipeline:
   test:spec:
     image: docker.solutiondrive.de/library/php-xdebug:${PHP_VERSION}
     commands:
-      - vendor/bin/phpspec-standalone run --no-code-generation --format=dot
+      - vendor/bin/phpspec-standalone.phar run --no-code-generation --format=dot
 
   # Create a artifact with the lowest possible version
   publish:create:master_archive:
