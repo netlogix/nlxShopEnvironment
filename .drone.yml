@@ -79,6 +79,19 @@ pipeline:
         PHP_VERSION: php5.6
         SHOPWARE_VERSION: 5.2.*
 
+  notify:mail:
+    image: docker.solutiondrive.de/drone/plugin-email
+    from: ci@solutiondrive.de
+    host: sslout.df.eu
+    when:
+      event: push
+      status: [changed, failure]
+    secrets:
+      - source: ci_email_user
+        target: plugin_username
+      - source: ci_email_password
+        target: plugin_password
+
 matrix:
   PHP_VERSION:
     - php7.2
