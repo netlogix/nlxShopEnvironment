@@ -42,8 +42,13 @@ class ShopEnvironmentLoadConfigCommand extends ShopwareCommand
     {
         $this
             ->setName('sd:environment:config:load')
-            ->addOption('file', 'f', InputOption::VALUE_OPTIONAL, 'the path to the file which should be used ' .
-                'for the import', 'shopware_configs.yaml')
+            ->addOption(
+                'file',
+                'f',
+                InputOption::VALUE_OPTIONAL,
+                'the path to the file which should be used for the import',
+                'shopware_configs.yaml'
+            )
             ->setDescription('Loads the current configs from a yaml-File to the database')
             ->setHelp(
                 <<<EOF

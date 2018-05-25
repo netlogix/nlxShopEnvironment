@@ -41,15 +41,25 @@ class ShopEnvironmentDumpConfigCommand extends ShopwareCommand
     {
         $this
             ->setName('sd:environment:config:dump')
-            ->addOption('filename', 'f', InputOption::VALUE_OPTIONAL, 'the name of the file where the configs should ' .
-                'be exported to', 'shopware_configs.yaml')
-            ->addOption('target-directory', 't', InputOption::VALUE_OPTIONAL, 'the location where the exported file ' .
-                'should be placed', 'default')
-            ->setDescription('Dumps the current configs from the database to a yaml-File')
+            ->addOption(
+                'filename',
+                'f',
+                InputOption::VALUE_OPTIONAL,
+                'the name of the file where the configs should be exported to',
+                'shopware_configs.yaml'
+            )
+            ->addOption(
+                'target-directory',
+                't',
+                InputOption::VALUE_OPTIONAL,
+                'the location where the exported file should be placed',
+                'default'
+            )
+            ->setDescription(
+                'Dumps the current configs from the database to a yaml-File'
+            )
             ->setHelp(
-                <<<EOF
-The <info>%command.name%</info> will dump all relevant config-values to a file.
-EOF
+                'The <info>%command.name%</info> will dump all relevant config-values to a file.'
             );
     }
 
