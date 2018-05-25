@@ -12,6 +12,8 @@ use sdShopEnvironment\Services\ConfigurationDumperInterface;
 use Shopware\Commands\ShopwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ShopEnvironmentDumpConfigCommand extends ShopwareCommand
@@ -19,18 +21,13 @@ class ShopEnvironmentDumpConfigCommand extends ShopwareCommand
     /** @var ConfigurationDumperInterface */
     private $configurationDumper;
 
-    private $exportPath = '';
-
     /**
      * @param ConfigurationDumperInterface $configurationDumper
-     * @param string                       $defaultImportPath
      */
     public function __construct(
-        ConfigurationDumperInterface $configurationDumper,
-        $defaultImportPath
+        ConfigurationDumperInterface $configurationDumper
     ) {
         $this->configurationDumper = $configurationDumper;
-        $this->exportPath = $defaultImportPath;
         parent::__construct();
     }
 
@@ -42,22 +39,13 @@ class ShopEnvironmentDumpConfigCommand extends ShopwareCommand
         $this
             ->setName('sd:environment:config:dump')
             ->addOption(
-                'filename',
+                'file',
                 'f',
                 InputOption::VALUE_OPTIONAL,
-                'the name of the file where the configs should be exported to',
-                'shopware_configs.yaml'
+                'Name and path of the file where the configs should be exported to, use - for stdout.',
+                'shopware_config.yaml'
             )
-            ->addOption(
-                'target-directory',
-                't',
-                InputOption::VALUE_OPTIONAL,
-                'the location where the exported file should be placed',
-                'default'
-            )
-            ->setDescription(
-                'Dumps the current configs from the database to a yaml-File'
-            )
+            ->setDescription('Dumps the current config from the database to a YAML file.')
             ->setHelp(
                 'The <info>%command.name%</info> will dump all relevant config-values to a file.'
             );
@@ -68,30 +56,36 @@ class ShopEnvironmentDumpConfigCommand extends ShopwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $filename = $input->getOption('filename');
-        $targetDirectory = $input->getOption('target-directory');
-
-        $this->configurationDumper->dumpConfiguration($this->exportPath . '/' . $filename);
-
-        $output->writeln('<fg=yellow>Config values from `s_core_config_elements` were exported to ' .
-            "<fg=green>$this->exportPath/$filename</> succesfully</>");
-
-        if ('default' !== $targetDirectory) {
-            $output->writeln('moving file to ' . $targetDirectory);
-            if (false === is_writable($targetDirectory)) {
-                $output->writeln("directory does not exist: <fg=red>$targetDirectory</>");
-                exit(1);
-            }
-
-            if (rename($this->exportPath . '/' . $filename, $targetDirectory . '/' . $filename)) {
-                $output->writeln('<fg=green>file successfully moved</>');
-                exit(0);
-            }
-
-            $output->writeln('<fg=red>moving file to ' . $targetDirectory . ' failed!</>');
-            exit(1);
+        $filename = trim($input->getOption('file'));
+        if ('-' === $filename) {
+            $filename = 'php://stdout';
         }
 
+        $this->configurationDumper->dumpConfiguration($filename);
+
+        $errorOutput = $this->getErrorOutput($output, $filename);
+        $errorOutput->writeln(
+            '<fg=yellow>Config values from `s_core_config_elements` have successfully been exported to ' .
+            "<fg=green>$filename</></>."
+        );
+
         exit(0);
+    }
+
+    /**
+     * @param OutputInterface $output
+     * @param string          $filename
+     *
+     * @return OutputInterface
+     */
+    private function getErrorOutput(OutputInterface $output, $filename = '')
+    {
+        if ($output instanceof ConsoleOutputInterface) {
+            return $output->getErrorOutput();
+        } elseif ('php://stdout' !== $filename) {
+            return $output;
+        }
+
+        return new NullOutput();
     }
 }

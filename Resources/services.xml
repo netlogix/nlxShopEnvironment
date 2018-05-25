@@ -16,7 +16,6 @@
                 class="sdShopEnvironment\Commands\ShopEnvironmentDumpConfigCommand"
         >
             <argument type="service" id="sd_shop_environment.services.configuration_dumper"/>
-            <argument type="string">%kernel.root_dir%/var/export</argument>
             <tag name="console.command"/>
         </service>
         <service
@@ -24,7 +23,6 @@
                 class="sdShopEnvironment\Commands\ShopEnvironmentLoadConfigCommand"
         >
             <argument type="service" id="sd_shop_environment.services.configuration_loader"/>
-            <argument type="string">%kernel.root_dir%/var/import</argument>
             <tag name="console.command"/>
         </service>
     </services>

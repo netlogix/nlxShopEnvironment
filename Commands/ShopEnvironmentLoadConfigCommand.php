@@ -12,6 +12,7 @@ use sdShopEnvironment\Services\ConfigurationLoaderInterface;
 use Shopware\Commands\ShopwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ShopEnvironmentLoadConfigCommand extends ShopwareCommand
@@ -19,19 +20,13 @@ class ShopEnvironmentLoadConfigCommand extends ShopwareCommand
     /** @var ConfigurationLoaderInterface */
     private $configurationLoader;
 
-    /** @var string */
-    private $importPath;
-
     /**
      * @param ConfigurationLoaderInterface $configurationLoader
-     * @param string                       $defaultImportPath
      */
     public function __construct(
-        ConfigurationLoaderInterface $configurationLoader,
-        $defaultImportPath
+        ConfigurationLoaderInterface $configurationLoader
     ) {
         $this->configurationLoader = $configurationLoader;
-        $this->importPath = $defaultImportPath;
         parent::__construct();
     }
 
@@ -46,10 +41,10 @@ class ShopEnvironmentLoadConfigCommand extends ShopwareCommand
                 'file',
                 'f',
                 InputOption::VALUE_OPTIONAL,
-                'the path to the file which should be used for the import',
-                'shopware_configs.yaml'
+                'Name and path of the file that should be used to import values from, use - for stdin.',
+                'shopware_config.yaml'
             )
-            ->setDescription('Loads the current configs from a yaml-File to the database')
+            ->setDescription('Loads the current config from a YAML file into the database.')
             ->setHelp(
                 <<<EOF
 The <info>%command.name%</info> will load all config-values from the given file into the `s_core_config_elements` table.
@@ -62,15 +57,31 @@ EOF
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $filename = $input->getOption('file');
+        $errorOutput = $this->getErrorOutput($output);
 
-        $fileLocation = $this->importPath . '/' . $filename;
-
-        if (false === file_exists($fileLocation)) {
-            $output->writeln('File not found - ' . $fileLocation);
+        $filename = trim($input->getOption('file'));
+        if ('-' === $filename) {
+            $filename = 'php://stdin';
+        } elseif (false === file_exists($filename)) {
+            $errorOutput->writeln('<error>File not found: ' . $filename . '</error>');
             exit(1);
         }
 
-        $this->configurationLoader->loadConfiguration($fileLocation);
+        $this->configurationLoader->loadConfiguration($filename);
+        $errorOutput->writeln('<info>Imported file: ' . $filename . '</info>');
+    }
+
+    /**
+     * @param OutputInterface $output
+     *
+     * @return OutputInterface
+     */
+    private function getErrorOutput(OutputInterface $output)
+    {
+        if ($output instanceof ConsoleOutputInterface) {
+            return $output->getErrorOutput();
+        }
+
+        return $output;
     }
 }
