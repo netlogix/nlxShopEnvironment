@@ -13,6 +13,7 @@ use Shopware\Components\DependencyInjection\Container;
 use Shopware\Components\Model\ModelManager;
 use Shopware\Models\Config\Element;
 use Shopware\Models\Config\Form;
+use Shopware\Models\Shop\Shop;
 use Symfony\Component\Yaml\Yaml;
 
 class ConfigurationDumper implements ConfigurationDumperInterface
@@ -82,8 +83,30 @@ class ConfigurationDumper implements ConfigurationDumperInterface
      */
     private function getShopConfig()
     {
-        // @TODO
-        return [];
+        $shopConfigs = [];
+
+        /** @var ModelManager $entityManager */
+        $entityManager = $this->container->get('models');
+        $shopRepo = $entityManager->getRepository('Shopware\Models\Shop\Shop');
+
+        $shops = $shopRepo->findAll();
+        /** @var Shop $shop */
+        foreach ($shops as $shop) {
+            $shopConfigs[$shop->getId()] = [
+                'name'              => $shop->getName(),
+                'title'             => $shop->getTitle(),
+                'host'              => $shop->getHost(),
+                'base_path'         => $shop->getBasePath(),
+                'base_url'          => $shop->getBaseUrl(),
+                'hosts'             => $shop->getHosts(),
+                'secure'            => $shop->getSecure(),
+                'customer_scope'    => $shop->getCustomerScope(),
+                'default'           => $shop->getDefault(),
+                'active'            => $shop->getActive(),
+            ];
+        }
+
+        return $shopConfigs;
     }
 
     /**
