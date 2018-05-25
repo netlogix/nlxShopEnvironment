@@ -39,12 +39,21 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
 
         $this->entityManager = $this->container->get('models');
 
+        $contentOfYamlFile = Yaml::parse(file_get_contents($pathToFile));
+        if (isset($contentOfYamlFile['core_config'])) {
+            $this->loadCoreConfiguration($contentOfYamlFile['core_config']);
+        }
+    }
+
+    /**
+     * @param array $config
+     */
+    private function loadCoreConfiguration($config)
+    {
         $configElementRepository = $this->entityManager->getRepository('Shopware\Models\Config\Element');
         $configFormRepository = $this->entityManager->getRepository('Shopware\Models\Config\Form');
 
-        $contentOfYamlFile = Yaml::parse(file_get_contents($pathToFile));
-
-        foreach ($contentOfYamlFile as $nameOfBackendForm => $formElements) {
+        foreach ($config as $nameOfBackendForm => $formElements) {
             foreach ($formElements as $elementName => $elementInformation) {
                 $element = $this->findOrCreateElement($configElementRepository, $elementName, $elementInformation);
                 $form = $this->findOrCreateForm($configFormRepository, $elementInformation);

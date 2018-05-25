@@ -20,9 +20,6 @@ class ConfigurationDumper implements ConfigurationDumperInterface
     /** @var Container */
     private $container;
 
-    /** @var array */
-    private $configurationAsArray;
-
     public function __construct(Container $container)
     {
         $this->container = $container;
@@ -30,35 +27,12 @@ class ConfigurationDumper implements ConfigurationDumperInterface
 
     public function dumpConfiguration($exportPath = '')
     {
-        /** @var ModelManager $entityManager */
-        $entityManager = $this->container->get('models');
-        $configElementRepository = $entityManager->getRepository('Shopware\Models\Config\Element');
+        $configuration = [];
 
-        $allConfigs = $configElementRepository->findAll();
+        $configuration['core_config'] = $this->getCoreConfig();
+        $configuration['shop_config'] = $this->getShopConfig();
 
-        $this->configurationAsArray = [];
-
-        foreach ($allConfigs as $element) {
-            /* @var $element Element */
-            try {
-                $configValue = $element->getValue();
-                $backendForm = $element->getForm();
-
-                if (is_array($configValue)) {
-                    $this->addElementWithMultipleValues($element, $backendForm, $configValue);
-                } else {
-                    $this->addElementWithSingleValue($element, $backendForm);
-                }
-
-                $this->addElementInformation($element, $backendForm);
-                $this->addFormInformation($element, $backendForm);
-            } catch (EntityNotFoundException $entityNotFoundException) {
-                // @todo think of what to do here. The try-catch is necessary since there seems to be the
-                // @todo possibility, that there are values assigned to forms that do not exist. (id = 0)
-            }
-        }
-
-        $configurationAsYaml = Yaml::dump($this->configurationAsArray, 4);
+        $configurationAsYaml = Yaml::dump($configuration, 4);
 
         if (false === is_writable(dirname($exportPath))) {
             mkdir(dirname($exportPath), 0775);
@@ -68,40 +42,101 @@ class ConfigurationDumper implements ConfigurationDumperInterface
     }
 
     /**
+     * @return array
+     */
+    private function getCoreConfig()
+    {
+        /** @var ModelManager $entityManager */
+        $entityManager = $this->container->get('models');
+        $configElementRepository = $entityManager->getRepository('Shopware\Models\Config\Element');
+
+        $allConfigs = $configElementRepository->findAll();
+
+        $configuration = [];
+
+        foreach ($allConfigs as $element) {
+            /* @var $element Element */
+            try {
+                $configValue = $element->getValue();
+                $backendForm = $element->getForm();
+
+                if (is_array($configValue)) {
+                    $this->addElementWithMultipleValues($element, $backendForm, $configValue, $configuration);
+                } else {
+                    $this->addElementWithSingleValue($element, $backendForm, $configuration);
+                }
+
+                $this->addElementInformation($element, $backendForm, $configuration);
+                $this->addFormInformation($element, $backendForm, $configuration);
+            } catch (EntityNotFoundException $entityNotFoundException) {
+                // @todo think of what to do here. The try-catch is necessary since there seems to be the
+                // @todo possibility, that there are values assigned to forms that do not exist. (id = 0)
+            }
+        }
+
+        return $configuration;
+    }
+
+    /**
+     * @return array
+     */
+    private function getShopConfig()
+    {
+        // @TODO
+        return [];
+    }
+
+    /**
      * @param Element $element
      * @param Form    $backendForm
      * @param array   $configValue
+     * @param array   $configuration
      */
-    private function addElementWithMultipleValues(Element $element, Form $backendForm, $configValue)
+    private function addElementWithMultipleValues(Element $element, Form $backendForm, $configValue, &$configuration)
     {
         foreach ($configValue as $value) {
-            $this->configurationAsArray[$backendForm->getName()][$element->getName()]['value'][] = $value;
+            $configuration[$backendForm->getName()][$element->getName()]['value'][] = $value;
         }
     }
 
-    private function addElementWithSingleValue(Element $element, Form $backendForm)
+    /**
+     * @param Element $element
+     * @param Form    $backendForm
+     * @param array   $configuration
+     */
+    private function addElementWithSingleValue(Element $element, Form $backendForm, &$configuration)
     {
-        $this->configurationAsArray[$backendForm->getName()][$element->getName()]['value'] = $element->getValue();
+        $configuration[$backendForm->getName()][$element->getName()]['value'] = $element->getValue();
     }
 
-    private function addElementInformation(Element $element, Form $backendForm)
+    /**
+     * @param Element $element
+     * @param Form    $backendForm
+     * @param array   $configuration
+     */
+    private function addElementInformation(Element $element, Form $backendForm, &$configuration)
     {
         $formName = $backendForm->getName();
         $elementName = $element->getName();
 
-        $this->configurationAsArray[$formName][$elementName]['name']        = $elementName;
-        $this->configurationAsArray[$formName][$elementName]['label']       = $element->getLabel();
-        $this->configurationAsArray[$formName][$elementName]['description'] = $element->getDescription();
-        $this->configurationAsArray[$formName][$elementName]['type']        = $element->getType();
-        $this->configurationAsArray[$formName][$elementName]['required']    = $element->getRequired();
-        $this->configurationAsArray[$formName][$elementName]['position']    = $element->getPosition();
-        $this->configurationAsArray[$formName][$elementName]['scope']       = $element->getScope();
-        $this->configurationAsArray[$formName][$elementName]['options']     = $element->getOptions();
+        $configuration[$formName][$elementName]['name']        = $elementName;
+        $configuration[$formName][$elementName]['label']       = $element->getLabel();
+        $configuration[$formName][$elementName]['description'] = $element->getDescription();
+        $configuration[$formName][$elementName]['type']        = $element->getType();
+        $configuration[$formName][$elementName]['required']    = $element->getRequired();
+        $configuration[$formName][$elementName]['position']    = $element->getPosition();
+        $configuration[$formName][$elementName]['scope']       = $element->getScope();
+        $configuration[$formName][$elementName]['options']     = $element->getOptions();
     }
 
-    private function addFormInformation(Element $element, Form $backendForm)
+    /**
+     * @param Element $element
+     * @param Form    $backendForm
+     * @param array   $configuration
+     */
+    private function addFormInformation(Element $element, Form $backendForm, &$configuration)
     {
-        $this->configurationAsArray[$backendForm->getName()][$element->getName()]['form'] =
+        $configuration[$backendForm->getName()][$element->getName()]['form'] =
             [
                 'name'        => $backendForm->getName(),
                 'label'       => $backendForm->getLabel(),
