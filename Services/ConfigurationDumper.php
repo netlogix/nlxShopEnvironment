@@ -93,16 +93,16 @@ class ConfigurationDumper implements ConfigurationDumperInterface
         /** @var Shop $shop */
         foreach ($shops as $shop) {
             $shopConfigs[$shop->getId()] = [
-                'name'              => $shop->getName(),
-                'title'             => $shop->getTitle(),
-                'host'              => $shop->getHost(),
-                'base_path'         => $shop->getBasePath(),
-                'base_url'          => $shop->getBaseUrl(),
-                'hosts'             => $shop->getHosts(),
-                'secure'            => $shop->getSecure(),
-                'customer_scope'    => $shop->getCustomerScope(),
-                'default'           => $shop->getDefault(),
-                'active'            => $shop->getActive(),
+                'Name'              => $shop->getName(),
+                'Title'             => $shop->getTitle(),
+                'Host'              => $shop->getHost(),
+                'BasePath'          => $shop->getBasePath(),
+                'BaseUrl'           => $shop->getBaseUrl(),
+                'Hosts'             => $shop->getHosts(),
+                'Secure'            => $shop->getSecure(),
+                'CustomerScope'     => $shop->getCustomerScope(),
+                'Default'           => $shop->getDefault(),
+                'Active'            => $shop->getActive(),
             ];
         }
 

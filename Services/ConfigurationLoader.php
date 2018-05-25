@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopware\Components\DependencyInjection\Container;
 use Shopware\Models\Config\Element;
 use Shopware\Models\Config\Form;
+use Shopware\Models\Shop\Shop;
 use Symfony\Component\Yaml\Yaml;
 
 class ConfigurationLoader implements ConfigurationLoaderInterface
@@ -43,6 +44,10 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
         if (isset($contentOfYamlFile['core_config'])) {
             $this->loadCoreConfiguration($contentOfYamlFile['core_config']);
         }
+
+        if (isset($contentOfYamlFile['shop_config'])) {
+            $this->loadShopConfiguration($contentOfYamlFile['shop_config']);
+        }
     }
 
     /**
@@ -66,6 +71,43 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
                 $element->setScope($elementInformation['scope']);
                 $element->setValue($elementInformation['value']);
             }
+        }
+
+        $this->entityManager->flush();
+    }
+
+    /**
+     * @param array $config
+     */
+    private function loadShopConfiguration($config)
+    {
+        $shopRepo = $this->entityManager->getRepository('Shopware\Models\Shop\Shop');
+
+        foreach ($config as $id => $shopConfig) {
+            $shop = $shopRepo->find($id);
+            if (null === $shop) {
+                echo
+                    'The loadable configuration contains a shop with an ID that is not yet created in database. ' .
+                    PHP_EOL .
+                    'We cannot create new shops with custom IDs at the moment, so this shop cannot be configured now.' .
+                    PHP_EOL .
+                    'Problematic shop: ' . $id . PHP_EOL . PHP_EOL
+                ;
+                continue;
+            }
+
+            foreach ($shopConfig as $parameter => $value) {
+                $reflectionClass = new \ReflectionClass('Shopware\Models\Shop\Shop');
+                $setter = 'set' . $parameter;
+                if (false === $reflectionClass->hasMethod($setter)) {
+                    echo 'Property could not be imported as it does not exist: ' .
+                        $parameter . ' (shop: ' . $id . ')' . PHP_EOL;
+                }
+
+                $shop->$setter($value);
+            }
+
+            $this->entityManager->persist($shop);
         }
 
         $this->entityManager->flush();
