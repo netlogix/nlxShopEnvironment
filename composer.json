@@ -2,7 +2,7 @@
     "name": "solutiondrive/sdshopenvironment",
     "description": "Plugin to dump/load configurations in a shopware shop to/from a file from/to the database",
     "type": "shopware-plugin",
-    "license": "MIT",
+    "license": "proprietary",
     "authors": [
         {
             "name": "solutionDrive GmbH",
@@ -19,11 +19,20 @@
     },
     "require": {
         "php": ">5.6",
-        "symfony/yaml": "^3.3"
+        "symfony/yaml": "^2.8"
     },
     "require-dev": {
         "shopware/shopware": "^5.2",
         "phpunit/phpunit": "^5.7",
-        "phpspec/phpspec": "^3.4"
+        "solutiondrive/standalone-build-tools": "^1.0.0"
+    },
+    "config": {
+        "sort-packages": true,
+        "standalone-build-tools": {
+            "phpspec-standalone.phar": "http://build-tools.cloud.solutiondrive.de/phar/phpspec-standalone.php{{PHP_VERSION}}.phar",
+            "behat-standalone.phar": "http://build-tools.cloud.solutiondrive.de/phar/behat-standalone.php7.2.phar",
+            "ecs-standalone.phar": "http://build-tools.cloud.solutiondrive.de/phar/coding-standard-standalone.ecs.php7.2.phar",
+            "easy-coding-standard-php5.6.yml": "http://build-tools.cloud.solutiondrive.de/phar/easy-coding-standard-php5.6.yml"
+        }
     }
 }

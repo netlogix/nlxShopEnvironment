@@ -45,7 +45,8 @@ class ShopEnvironmentLoadConfigCommand extends ShopwareCommand
             ->addOption('file', 'f', InputOption::VALUE_OPTIONAL, 'the path to the file which should be used ' .
                 'for the import', 'shopware_configs.yaml')
             ->setDescription('Loads the current configs from a yaml-File to the database')
-            ->setHelp(<<<EOF
+            ->setHelp(
+                <<<EOF
 The <info>%command.name%</info> will load all config-values from the given file into the `s_core_config_elements` table.
 EOF
             );
