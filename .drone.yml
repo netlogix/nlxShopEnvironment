@@ -7,10 +7,9 @@ pipeline:
     image: docker.solutiondrive.de/library/composer:${PHP_VERSION}
     commands:
       - ./etc/scripts/prepareComposerJson.sh
-      - cat composer.json
       - composer update -n --no-progress --no-suggest
-    #volumes:
-    #  - /var/cache/composer:/composer/cache
+    volumes:
+      - /var/cache/composer:/composer/cache
     secrets: [ composer_auth ]
 
   test:codingstandards:
