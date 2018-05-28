@@ -34,13 +34,13 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
      */
     public function loadConfiguration($pathToFile)
     {
-        if (false === is_readable($pathToFile)) {
+        if (false === is_readable($pathToFile) && 'php://stdin' !== $pathToFile) {
             throw new \RuntimeException('file not found - ' . $pathToFile);
         }
 
         $this->entityManager = $this->container->get('models');
 
-        $contentOfYamlFile = Yaml::parse(file_get_contents($pathToFile));
+        $contentOfYamlFile = Yaml::parse(file_get_contents($pathToFile, false));
         if (isset($contentOfYamlFile['core_config'])) {
             $this->loadCoreConfiguration($contentOfYamlFile['core_config']);
         }

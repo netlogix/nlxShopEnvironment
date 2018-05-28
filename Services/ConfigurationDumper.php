@@ -26,16 +26,16 @@ class ConfigurationDumper implements ConfigurationDumperInterface
         $this->container = $container;
     }
 
-    public function dumpConfiguration($exportPath = '')
+    public function dumpConfiguration($exportPath = 'php://stdout')
     {
         $configuration = [];
 
         $configuration['core_config'] = $this->getCoreConfig();
         $configuration['shop_config'] = $this->getShopConfig();
 
-        $configurationAsYaml = Yaml::dump($configuration, 4);
+        $configurationAsYaml = Yaml::dump($configuration, 4, 4, true, false);
 
-        if (false === is_writable(dirname($exportPath))) {
+        if (false === is_writable(dirname($exportPath)) && 'php://stdout' !== $exportPath) {
             mkdir(dirname($exportPath), 0775);
         }
 
