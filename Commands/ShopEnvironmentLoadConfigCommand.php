@@ -67,8 +67,8 @@ EOF
             exit(1);
         }
 
-        $hasErrored = $this->configurationLoader->loadConfiguration($filename);
-        if ($hasErrored) {
+        $success = $this->configurationLoader->loadConfiguration($filename);
+        if (false === $success) {
             $errors = $this->configurationLoader->getErrors();
             foreach ($errors as $errorMessage) {
                 $errorOutput->writeln($errorMessage);
