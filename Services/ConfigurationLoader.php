@@ -72,7 +72,7 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
             $this->loadThemeConfiguration($contentOfYamlFile['theme_config']);
         }
 
-        return $this->hasErrors();
+        return false === $this->hasErrors();
     }
 
     /**
