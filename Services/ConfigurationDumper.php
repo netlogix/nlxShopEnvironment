@@ -11,10 +11,13 @@ namespace sdShopEnvironment\Services;
 use Doctrine\ORM\EntityNotFoundException;
 use Shopware\Components\DependencyInjection\Container;
 use Shopware\Components\Model\ModelManager;
+use Shopware\Components\Theme;
 use Shopware\Models\Config\Element;
 use Shopware\Models\Config\Form;
 use Shopware\Models\Shop\Shop;
+use Shopware\Models\Shop\Template;
 use Symfony\Component\Yaml\Yaml;
+use Shopware\Models\Shop\TemplateConfig\Element as ThemeElement;
 
 class ConfigurationDumper implements ConfigurationDumperInterface
 {
@@ -32,6 +35,7 @@ class ConfigurationDumper implements ConfigurationDumperInterface
 
         $configuration['core_config'] = $this->getCoreConfig();
         $configuration['shop_config'] = $this->getShopConfig();
+        $configuration['theme_config'] = $this->getThemeConfig();
 
         $configurationAsYaml = Yaml::dump($configuration, 4, 4, true, false);
 
@@ -81,6 +85,36 @@ class ConfigurationDumper implements ConfigurationDumperInterface
     /**
      * @return array
      */
+    private function getThemeConfig()
+    {
+        /** @var ModelManager $entityManager */
+        $entityManager = $this->container->get('models');
+        $configElementRepository = $entityManager->getRepository('Shopware\Models\Shop\TemplateConfig\Element');
+
+        $allConfigs = $configElementRepository->findAll();
+
+        $configuration = [];
+
+        foreach ($allConfigs as $element) {
+            /* @var $element ThemeElement */
+            try {
+                $configValues = $element->getValues()->toArray();
+                $template = $element->getTemplate();
+
+                $this->addThemeElementValues($element, $template, $configValues, $configuration);
+                $this->addThemeElementInformation($element, $template, $configuration);
+            } catch (EntityNotFoundException $entityNotFoundException) {
+                // @todo think of what to do here. The try-catch is necessary since there seems to be the
+                // @todo possibility, that there are values assigned to forms that do not exist. (id = 0)
+            }
+        }
+
+        return $configuration;
+    }
+
+    /**
+     * @return array
+     */
     private function getShopConfig()
     {
         $shopConfigs = [];
@@ -110,6 +144,22 @@ class ConfigurationDumper implements ConfigurationDumperInterface
     }
 
     /**
+     * @param ThemeElement $element
+     * @param Template     $template
+     * @param array        $configValues
+     * @param array        $configuration
+     */
+    private function addThemeElementValues(ThemeElement $element, Template $template, $configValues, &$configuration)
+    {
+        foreach ($configValues as $value) {
+            if (is_object($value)) {
+                $value = $value->getValue();
+            }
+            $configuration[$template->getName()][$element->getName()]['value'] = $value;
+        }
+    }
+
+    /**
      * @param Element $element
      * @param Form    $backendForm
      * @param array   $configValue
@@ -130,6 +180,23 @@ class ConfigurationDumper implements ConfigurationDumperInterface
     private function addElementWithSingleValue(Element $element, Form $backendForm, &$configuration)
     {
         $configuration[$backendForm->getName()][$element->getName()]['value'] = $element->getValue();
+    }
+
+    /**
+     * @param ThemeElement $element
+     * @param Template     $template
+     * @param array        $configuration
+     */
+    private function addThemeElementInformation(ThemeElement $element, Template $template, &$configuration)
+    {
+        $templateName = $template->getName();
+        $elementName = $element->getName();
+
+        $configuration[$templateName][$elementName]['name']         = $elementName;
+        $configuration[$templateName][$elementName]['type']         = $element->getType();
+        $configuration[$templateName][$elementName]['position']     = $element->getPosition();
+        $configuration[$templateName][$elementName]['defaultValue'] = $element->getDefaultValue();
+        $configuration[$templateName][$elementName]['fieldLabel']   = $element->getFieldLabel();
     }
 
     /**
