@@ -89,7 +89,7 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
             $template = $configTemplateRepository->findOneBy(['name' => $themeName]);
             if (null === $template) {
                 $this->addError(
-                    '<comment>There is not Theme with the name "' . $themeName . '".</comment>'
+                    '<comment>There is no theme with name "' . $themeName . '".</comment>'
                 );
                 continue;
             }
