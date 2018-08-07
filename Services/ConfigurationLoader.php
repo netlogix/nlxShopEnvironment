@@ -13,7 +13,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopware\Components\DependencyInjection\Container;
 use Shopware\Models\Config\Element;
 use Shopware\Models\Config\Form;
-use Shopware\Models\Shop\Shop;
+use Shopware\Models\Shop\Template;
+use Shopware\Models\Shop\TemplateConfig\Element as ThemeElement;
 use Symfony\Component\Yaml\Yaml;
 
 class ConfigurationLoader implements ConfigurationLoaderInterface
@@ -24,9 +25,27 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
     /** @var EntityManagerInterface */
     private $entityManager;
 
+    /** @var array */
+    private $errors;
+
     public function __construct(Container $container)
     {
         $this->container = $container;
+    }
+
+    private function addError($errorMessage)
+    {
+        $this->errors[] = $errorMessage;
+    }
+
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
+    public function hasErrors()
+    {
+        return false === empty($this->errors);
     }
 
     /**
@@ -48,6 +67,73 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
         if (isset($contentOfYamlFile['shop_config'])) {
             $this->loadShopConfiguration($contentOfYamlFile['shop_config']);
         }
+
+        if (isset($contentOfYamlFile['theme_config'])) {
+            $this->loadThemeConfiguration($contentOfYamlFile['theme_config']);
+        }
+
+        return $this->hasErrors();
+    }
+
+    /**
+     * @param array $config
+     */
+    private function loadThemeConfiguration($config)
+    {
+        $configElementRepository = $this->entityManager->getRepository('Shopware\Models\Shop\TemplateConfig\Element');
+        $configTemplateRepository = $this->entityManager->getRepository('Shopware\Models\Shop\Template');
+        $configValueRepository = $this->entityManager->getRepository('Shopware\Models\Shop\TemplateConfig\Value');
+
+        foreach ($config as $themeName => $themeValues) {
+            $template = $configTemplateRepository->findOneBy(['name' => $themeName]);
+            if (null === $template) {
+                $this->addError(
+                    '<comment>There is not Theme with the name "' . $themeName . '".</comment>'
+                );
+                continue;
+            }
+
+            foreach ($themeValues as $configName => $configValues) {
+                $element = $this->findOrCreateThemeConfig($configElementRepository, $template, $configValues);
+                if (null === $element) {
+                    continue;
+                }
+
+                $element->setPosition($configValues['position']);
+                $element->setSupportText($configValues['supportText']);
+
+                $elementValues = $configValueRepository->findBy(['element' => $element]);
+
+                foreach ($elementValues as $value) {
+                    $value->setValue($configValues['value']);
+                }
+            }
+        }
+
+        $this->entityManager->flush();
+    }
+
+    /**
+     * @param ObjectRepository $configElementRepository
+     * @param Template         $template
+     * @param array            $configValues
+     *
+     * @return ThemeElement|null|object
+     */
+    private function findOrCreateThemeConfig(ObjectRepository $configElementRepository, Template $template, $configValues)
+    {
+        $element = $configElementRepository->findOneBy(['name' => $configValues['name'], 'templateId' => $template->getId()]);
+        if (null === $element) {
+            $themeName = $template->getName();
+            $elementName = $configValues['name'];
+            $this->addError(
+                '<comment>Theme "' . $themeName . '" has no configuration element for "' . $elementName . '". ' .
+                'Configure it in the Theme.php</comment>'
+            );
+            return null;
+        }
+
+        return $element;
     }
 
     /**
