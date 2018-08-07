@@ -96,16 +96,11 @@ class ConfigurationDumper implements ConfigurationDumperInterface
 
         foreach ($allConfigs as $element) {
             /* @var $element ThemeElement */
-            try {
-                $configValues = $element->getValues()->toArray();
-                $template = $element->getTemplate();
+            $configValues = $element->getValues()->toArray();
+            $template = $element->getTemplate();
 
-                $this->addThemeElementValues($element, $template, $configValues, $configuration);
-                $this->addThemeElementInformation($element, $template, $configuration);
-            } catch (EntityNotFoundException $entityNotFoundException) {
-                // @todo think of what to do here. The try-catch is necessary since there seems to be the
-                // @todo possibility, that there are values assigned to forms that do not exist. (id = 0)
-            }
+            $this->addThemeElementValues($element, $template, $configValues, $configuration);
+            $this->addThemeElementInformation($element, $template, $configuration);
         }
 
         return $configuration;
