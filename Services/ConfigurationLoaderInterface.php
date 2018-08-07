@@ -12,6 +12,7 @@ interface ConfigurationLoaderInterface
 {
     /**
      * @param string $pathToFile
+     *
      * @return bool
      */
     public function loadConfiguration($pathToFile);
