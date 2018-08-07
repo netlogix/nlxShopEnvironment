@@ -12,6 +12,17 @@ interface ConfigurationLoaderInterface
 {
     /**
      * @param string $pathToFile
+     * @return bool
      */
     public function loadConfiguration($pathToFile);
+
+    /**
+     * @return array
+     */
+    public function getErrors();
+
+    /**
+     * @return bool
+     */
+    public function hasErrors();
 }
