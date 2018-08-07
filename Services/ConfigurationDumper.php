@@ -11,13 +11,12 @@ namespace sdShopEnvironment\Services;
 use Doctrine\ORM\EntityNotFoundException;
 use Shopware\Components\DependencyInjection\Container;
 use Shopware\Components\Model\ModelManager;
-use Shopware\Components\Theme;
 use Shopware\Models\Config\Element;
 use Shopware\Models\Config\Form;
 use Shopware\Models\Shop\Shop;
 use Shopware\Models\Shop\Template;
-use Symfony\Component\Yaml\Yaml;
 use Shopware\Models\Shop\TemplateConfig\Element as ThemeElement;
+use Symfony\Component\Yaml\Yaml;
 
 class ConfigurationDumper implements ConfigurationDumperInterface
 {
@@ -155,6 +154,7 @@ class ConfigurationDumper implements ConfigurationDumperInterface
             if (is_object($value)) {
                 $value = $value->getValue();
             }
+
             $configuration[$template->getName()][$element->getName()]['value'] = $value;
         }
     }
