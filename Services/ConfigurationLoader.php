@@ -15,6 +15,7 @@ use Shopware\Models\Config\Element;
 use Shopware\Models\Config\Form;
 use Shopware\Models\Shop\Template;
 use Shopware\Models\Shop\TemplateConfig\Element as ThemeElement;
+use Shopware\Models\Shop\TemplateConfig\Value;
 use Symfony\Component\Yaml\Yaml;
 
 class ConfigurationLoader implements ConfigurationLoaderInterface
@@ -80,9 +81,9 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
      */
     private function loadThemeConfiguration($config)
     {
-        $configElementRepository = $this->entityManager->getRepository('Shopware\Models\Shop\TemplateConfig\Element');
-        $configTemplateRepository = $this->entityManager->getRepository('Shopware\Models\Shop\Template');
-        $configValueRepository = $this->entityManager->getRepository('Shopware\Models\Shop\TemplateConfig\Value');
+        $configElementRepository = $this->entityManager->getRepository(ThemeElement::class);
+        $configTemplateRepository = $this->entityManager->getRepository(Template::class);
+        $configValueRepository = $this->entityManager->getRepository(Value::class);
 
         foreach ($config as $themeName => $themeValues) {
             $template = $configTemplateRepository->findOneBy(['name' => $themeName]);
