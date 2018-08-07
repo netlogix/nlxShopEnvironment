@@ -67,7 +67,14 @@ EOF
             exit(1);
         }
 
-        $this->configurationLoader->loadConfiguration($filename);
+        $hasErrored = $this->configurationLoader->loadConfiguration($filename);
+        if ($hasErrored) {
+            $errors = $this->configurationLoader->getErrors();
+            foreach ($errors as $errorMessage) {
+                $errorOutput->writeln($errorMessage);
+            }
+        }
+
         $errorOutput->writeln('<info>Imported file: ' . $filename . '</info>');
     }
 
