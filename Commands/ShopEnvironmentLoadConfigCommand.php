@@ -83,6 +83,7 @@ EOF
             if (null !== $wrap) {
                 $logMessage = sprintf($wrap, $logMessage);
             }
+
             $errorOutput->writeln($logMessage);
         }
     }
