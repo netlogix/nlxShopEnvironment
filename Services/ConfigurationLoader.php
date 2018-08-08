@@ -20,33 +20,17 @@ use Symfony\Component\Yaml\Yaml;
 
 class ConfigurationLoader implements ConfigurationLoaderInterface
 {
+    use LoggingTrait;
+
     /** @var Container */
     private $container;
 
     /** @var EntityManagerInterface */
     private $entityManager;
 
-    /** @var array */
-    private $errors;
-
     public function __construct(Container $container)
     {
         $this->container = $container;
-    }
-
-    private function addError($errorMessage)
-    {
-        $this->errors[] = $errorMessage;
-    }
-
-    public function getErrors()
-    {
-        return $this->errors;
-    }
-
-    public function hasErrors()
-    {
-        return false === empty($this->errors);
     }
 
     /**
@@ -88,8 +72,8 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
         foreach ($config as $themeName => $themeValues) {
             $template = $configTemplateRepository->findOneBy(['name' => $themeName]);
             if (null === $template) {
-                $this->addError(
-                    '<comment>There is no theme with name "' . $themeName . '".</comment>'
+                $this->addWarning(
+                    'There is no theme with name "' . $themeName . '".'
                 );
                 continue;
             }
@@ -127,9 +111,9 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
         if (null === $element) {
             $themeName = $template->getName();
             $elementName = $configValues['name'];
-            $this->addError(
-                '<comment>Theme "' . $themeName . '" has no configuration element for "' . $elementName . '". ' .
-                'Configure it in the Theme.php</comment>'
+            $this->addWarning(
+                'Theme "' . $themeName . '" has no configuration element for "' . $elementName . '". ' .
+                'Configure it in the Theme.php'
             );
             return null;
         }
