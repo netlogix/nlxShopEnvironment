@@ -11,14 +11,17 @@ namespace sdShopEnvironment\Services;
 
 trait LoggingTrait
 {
+    /** @var array|string[] */
     private $errors   = [];
 
+    /** @var array|string[] */
     private $warnings = [];
 
+    /** @var array|string[] */
     private $infos    = [];
 
     /**
-     * @return array
+     * @return array|string[]
      */
     public function getErrors()
     {
@@ -30,13 +33,16 @@ trait LoggingTrait
         $this->errors[] = $message;
     }
 
+    /**
+     * @return bool
+     */
     public function hasErrors()
     {
         return false === empty($this->errors);
     }
 
     /**
-     * @return array
+     * @return array|string[]
      */
     public function getWarnings()
     {
@@ -48,13 +54,16 @@ trait LoggingTrait
         $this->warnings[] = $message;
     }
 
+    /**
+     * @return bool
+     */
     public function hasWarnings()
     {
         return false === empty($this->warnings);
     }
 
     /**
-     * @return array
+     * @return array|string[]
      */
     public function getInfos()
     {
@@ -66,11 +75,17 @@ trait LoggingTrait
         $this->infos[] = $message;
     }
 
+    /**
+     * @return bool
+     */
     public function hasInfos()
     {
         return false === empty($this->infos);
     }
 
+    /**
+     * @return bool
+     */
     public function hasLogs()
     {
         return $this->hasInfos() || $this->hasWarnings() || $this->hasErrors();
