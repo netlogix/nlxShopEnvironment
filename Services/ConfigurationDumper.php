@@ -16,6 +16,7 @@ use Shopware\Models\Config\Form;
 use Shopware\Models\Shop\Shop;
 use Shopware\Models\Shop\Template;
 use Shopware\Models\Shop\TemplateConfig\Element as ThemeElement;
+use Shopware\Models\Shop\TemplateConfig\Value as ThemeElementValue;
 use Symfony\Component\Yaml\Yaml;
 
 class ConfigurationDumper implements ConfigurationDumperInterface
@@ -146,7 +147,7 @@ class ConfigurationDumper implements ConfigurationDumperInterface
     private function addThemeElementValues(ThemeElement $element, Template $template, $configValues, &$configuration)
     {
         foreach ($configValues as $value) {
-            if (is_object($value)) {
+            if ($value instanceof ThemeElementValue) {
                 $value = $value->getValue();
             }
 
