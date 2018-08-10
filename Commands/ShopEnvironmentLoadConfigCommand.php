@@ -68,7 +68,24 @@ EOF
         }
 
         $this->configurationLoader->loadConfiguration($filename);
+        if ($this->configurationLoader->hasLogs()) {
+            $this->outputLogs($this->configurationLoader->getInfos(), $errorOutput, '<info>%s</info>');
+            $this->outputLogs($this->configurationLoader->getWarnings(), $errorOutput, '<comment>%s</comment>');
+            $this->outputLogs($this->configurationLoader->getErrors(), $errorOutput, '<error>%s</error>');
+        }
+
         $errorOutput->writeln('<info>Imported file: ' . $filename . '</info>');
+    }
+
+    private function outputLogs($logs, $errorOutput, $wrap = null)
+    {
+        foreach ($logs as $logMessage) {
+            if (null !== $wrap) {
+                $logMessage = sprintf($wrap, $logMessage);
+            }
+
+            $errorOutput->writeln($logMessage);
+        }
     }
 
     /**
