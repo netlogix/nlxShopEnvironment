@@ -28,6 +28,9 @@ trait LoggingTrait
         return $this->errors;
     }
 
+    /**
+     * @param string $message
+     */
     public function addError($message)
     {
         $this->errors[] = $message;
@@ -49,6 +52,9 @@ trait LoggingTrait
         return $this->warnings;
     }
 
+    /**
+     * @param string $message
+     */
     public function addWarning($message)
     {
         $this->warnings[] = $message;
@@ -70,6 +76,9 @@ trait LoggingTrait
         return $this->infos;
     }
 
+    /**
+     * @param string $message
+     */
     public function addInfo($message)
     {
         $this->infos[] = $message;
