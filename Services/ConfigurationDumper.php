@@ -9,6 +9,7 @@
 namespace sdShopEnvironment\Services;
 
 use Doctrine\ORM\EntityNotFoundException;
+use Shopware\Components\ConfigWriter;
 use Shopware\Components\DependencyInjection\Container;
 use Shopware\Components\Model\ModelManager;
 use Shopware\Models\Config\Element;
@@ -21,8 +22,13 @@ use Symfony\Component\Yaml\Yaml;
 
 class ConfigurationDumper implements ConfigurationDumperInterface
 {
+    const NO_FORM_NAME = '__NO_FORM__';
+
     /** @var Container */
     private $container;
+
+    /** @var array|Shop[] */
+    private $shops;
 
     public function __construct(Container $container)
     {
@@ -61,21 +67,24 @@ class ConfigurationDumper implements ConfigurationDumperInterface
 
         foreach ($allConfigs as $element) {
             /* @var $element Element */
+            $configValue = $element->getValue();
             try {
-                $configValue = $element->getValue();
+                // Try to load form and get an arbitrary property (lazy loading!) to check if form exists
                 $backendForm = $element->getForm();
-
-                if (is_array($configValue)) {
-                    $this->addElementWithMultipleValues($element, $backendForm, $configValue, $configuration);
-                } else {
-                    $this->addElementWithSingleValue($element, $backendForm, $configValue, $configuration);
-                }
-
-                $this->addElementInformation($element, $backendForm, $configuration);
-                $this->addFormInformation($element, $backendForm, $configuration);
+                $backendForm->getName();
             } catch (EntityNotFoundException $entityNotFoundException) {
-                // @todo think of what to do here. The try-catch is necessary since there seems to be the
-                // @todo possibility, that there are values assigned to forms that do not exist. (id = 0)
+                $backendForm = null;
+            }
+
+            if (is_array($configValue)) {
+                $this->addElementWithMultipleValues($element, $backendForm, $configValue, $configuration);
+            } else {
+                $this->addElementWithSingleValue($element, $backendForm, $configValue, $configuration);
+            }
+
+            $this->addElementInformation($element, $backendForm, $configuration);
+            if (null !== $backendForm) {
+                $this->addFormInformation($element, $backendForm, $configuration);
             }
         }
 
@@ -156,44 +165,77 @@ class ConfigurationDumper implements ConfigurationDumperInterface
     }
 
     /**
-     * @param Element $element
-     * @param Form    $backendForm
-     * @param array   $defaultValue
-     * @param array   $configuration
+     * @return array|Shop[]
      */
-    private function addElementWithMultipleValues(Element $element, Form $backendForm, $defaultValue, &$configuration)
+    private function getShops()
     {
-        /** @var \Shopware_Components_Config $config */
-        $config = $this->container->get('Config');
-        $configValues = $config->get($element->getName());
-
-        foreach ($defaultValue as $value) {
-            $configuration[$backendForm->getName()][$element->getName()]['defaultValue'][] = $value;
+        if (null === $this->shops) {
+            /** @var $repository \Shopware\Models\Shop\Repository */
+            $repository = Shopware()->Models()->getRepository(Shop::class);
+            $this->shops = $repository->findAll();
         }
 
-        if ($configValues !== $defaultValue) {
-            foreach ($configValues as $value) {
-                $configuration[$backendForm->getName()][$element->getName()]['value'][] = $value;
-            }
-        }
+        return $this->shops;
     }
 
     /**
-     * @param Element $element
-     * @param Form    $backendForm
-     * @param mixed   $defaultValue
-     * @param array   $configuration
+     * @param null|Form $backendForm
+     *
+     * @return string
      */
-    private function addElementWithSingleValue(Element $element, Form $backendForm, $defaultValue, &$configuration)
+    private function getFormName($backendForm)
     {
-        /** @var \Shopware_Components_Config $config */
-        $config = $this->container->get('Config');
-        $value = $config->get($element->getName());
-
-        $configuration[$backendForm->getName()][$element->getName()]['defaultValue'] = $defaultValue;
-        if ($value !== $defaultValue) {
-            $configuration[$backendForm->getName()][$element->getName()]['value'] = $value;
+        if (null === $backendForm) {
+            return self::NO_FORM_NAME;
         }
+
+        return $backendForm->getName();
+    }
+
+    /**
+     * @param Element   $element
+     * @param null|Form $backendForm
+     * @param array     $defaultValue
+     * @param array     $configuration
+     */
+    private function addElementWithMultipleValues(Element $element, $backendForm, $defaultValue, &$configuration)
+    {
+        $formName = $this->getFormName($backendForm);
+
+        /** @var ConfigWriter $configWriter */
+        $configWriter = $this->container->get('config_writer');
+        $shops = $this->getShops();
+
+        $values = [];
+        foreach ($shops as $shop) {
+            $values[$shop->getId()] = $configWriter->get($element->getName(), $formName, $shop->getId());
+        }
+
+        $configuration[$formName][$element->getName()]['defaultValue'][] = $defaultValue;
+        $configuration[$formName][$element->getName()]['shopValues'] = $values;
+    }
+
+    /**
+     * @param Element   $element
+     * @param null|Form $backendForm
+     * @param mixed     $defaultValue
+     * @param array     $configuration
+     */
+    private function addElementWithSingleValue(Element $element, $backendForm, $defaultValue, &$configuration)
+    {
+        $formName = $this->getFormName($backendForm);
+
+        /** @var ConfigWriter $configWriter */
+        $configWriter = $this->container->get('config_writer');
+        $shops = $this->getShops();
+
+        $values = [];
+        foreach ($shops as $shop) {
+            $values[$shop->getId()] = $configWriter->get($element->getName(), $formName, $shop->getId());
+        }
+
+        $configuration[$formName][$element->getName()]['defaultValue'] = $defaultValue;
+        $configuration[$formName][$element->getName()]['shopValues'] = $values;
     }
 
     /**
@@ -214,13 +256,13 @@ class ConfigurationDumper implements ConfigurationDumperInterface
     }
 
     /**
-     * @param Element $element
-     * @param Form    $backendForm
-     * @param array   $configuration
+     * @param Element   $element
+     * @param null|Form $backendForm
+     * @param array     $configuration
      */
-    private function addElementInformation(Element $element, Form $backendForm, &$configuration)
+    private function addElementInformation(Element $element, $backendForm, &$configuration)
     {
-        $formName = $backendForm->getName();
+        $formName = $this->getFormName($backendForm);
         $elementName = $element->getName();
 
         $configuration[$formName][$elementName]['name']        = $elementName;
