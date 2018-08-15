@@ -17,14 +17,12 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
  */
 class sdShopEnvironment extends Plugin
 {
-
     /**
-    * @param ContainerBuilder $container
-    */
+     * @param ContainerBuilder $container
+     */
     public function build(ContainerBuilder $container)
     {
         $container->setParameter('sd_shop_environment.plugin_dir', $this->getPath());
         parent::build($container);
     }
-
 }
