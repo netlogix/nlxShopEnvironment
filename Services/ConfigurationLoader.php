@@ -86,7 +86,7 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
                     continue;
                 }
 
-                $element->setPosition($configValues['position']);
+                $element->setPosition(isset($configValues['position']) ? $configValues['position'] : 0);
                 $element->setSupportText(isset($configValues['supportText']) ? $configValues['supportText'] : '');
 
                 $elementValues = $configValueRepository->findBy(['element' => $element]);
