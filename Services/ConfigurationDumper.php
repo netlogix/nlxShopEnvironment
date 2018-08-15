@@ -68,7 +68,7 @@ class ConfigurationDumper implements ConfigurationDumperInterface
                 if (is_array($configValue)) {
                     $this->addElementWithMultipleValues($element, $backendForm, $configValue, $configuration);
                 } else {
-                    $this->addElementWithSingleValue($element, $backendForm, $configuration);
+                    $this->addElementWithSingleValue($element, $backendForm, $configValue, $configuration);
                 }
 
                 $this->addElementInformation($element, $backendForm, $configuration);
@@ -158,32 +158,42 @@ class ConfigurationDumper implements ConfigurationDumperInterface
     /**
      * @param Element $element
      * @param Form    $backendForm
-     * @param array   $configValue
+     * @param array   $defaultValue
      * @param array   $configuration
      */
-    private function addElementWithMultipleValues(Element $element, Form $backendForm, $configValue, &$configuration)
+    private function addElementWithMultipleValues(Element $element, Form $backendForm, $defaultValue, &$configuration)
     {
         /** @var \Shopware_Components_Config $config */
         $config = $this->container->get('Config');
         $configValues = $config->get($element->getName());
 
-        foreach ($configValues as $value) {
-            $configuration[$backendForm->getName()][$element->getName()]['value'][] = $value;
+        foreach ($defaultValue as $value) {
+            $configuration[$backendForm->getName()][$element->getName()]['defaultValue'][] = $value;
+        }
+
+        if ($configValues !== $defaultValue) {
+            foreach ($configValues as $value) {
+                $configuration[$backendForm->getName()][$element->getName()]['value'][] = $value;
+            }
         }
     }
 
     /**
      * @param Element $element
      * @param Form    $backendForm
+     * @param mixed   $defaultValue
      * @param array   $configuration
      */
-    private function addElementWithSingleValue(Element $element, Form $backendForm, &$configuration)
+    private function addElementWithSingleValue(Element $element, Form $backendForm, $defaultValue, &$configuration)
     {
         /** @var \Shopware_Components_Config $config */
         $config = $this->container->get('Config');
         $value = $config->get($element->getName());
 
-        $configuration[$backendForm->getName()][$element->getName()]['value'] = $value;
+        $configuration[$backendForm->getName()][$element->getName()]['defaultValue'] = $defaultValue;
+        if ($value !== $defaultValue) {
+            $configuration[$backendForm->getName()][$element->getName()]['value'] = $value;
+        }
     }
 
     /**
