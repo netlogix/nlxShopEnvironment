@@ -165,11 +165,16 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
                 }
 
                 if (isset($elementInformation['value']) && isset($elementInformation['defaultValue'])) {
-                    $configWriter->save(
-                        $element->getName(),
-                        $elementInformation['value'],
-                        (null !== $form) ? $form->getName() : null
-                    );
+                    if (is_array($elementInformation['value'])) {
+                        foreach ($elementInformation['value'] as $shopId => $value) {
+                            $configWriter->save(
+                                $element->getName(),
+                                $elementInformation['value'],
+                                (null !== $form) ? $form->getName() : null,
+                                $shopId
+                            );
+                        }
+                    }
                 }
             }
         }
