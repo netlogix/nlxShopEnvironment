@@ -151,15 +151,19 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
                 if (array_key_exists('label', $elementInformation)) {
                     $element->setLabel($elementInformation['label']);
                 }
+
                 if (array_key_exists('description', $elementInformation)) {
                     $element->setDescription($elementInformation['description']);
                 }
+
                 if (array_key_exists('position', $elementInformation)) {
                     $element->setPosition($elementInformation['position']);
                 }
+
                 if (array_key_exists('scope', $elementInformation)) {
                     $element->setScope($elementInformation['scope']);
                 }
+
                 if (array_key_exists('description', $elementInformation)) {
                     $element->setValue($elementInformation['defaultValue']);
                 }
