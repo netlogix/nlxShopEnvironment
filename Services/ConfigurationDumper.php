@@ -163,7 +163,11 @@ class ConfigurationDumper implements ConfigurationDumperInterface
      */
     private function addElementWithMultipleValues(Element $element, Form $backendForm, $configValue, &$configuration)
     {
-        foreach ($configValue as $value) {
+        /** @var \Shopware_Components_Config $config */
+        $config = $this->container->get('Config');
+        $configValues = $config->get($element->getName());
+
+        foreach ($configValues as $value) {
             $configuration[$backendForm->getName()][$element->getName()]['value'][] = $value;
         }
     }
@@ -175,7 +179,11 @@ class ConfigurationDumper implements ConfigurationDumperInterface
      */
     private function addElementWithSingleValue(Element $element, Form $backendForm, &$configuration)
     {
-        $configuration[$backendForm->getName()][$element->getName()]['value'] = $element->getValue();
+        /** @var \Shopware_Components_Config $config */
+        $config = $this->container->get('Config');
+        $value = $config->get($element->getName());
+
+        $configuration[$backendForm->getName()][$element->getName()]['value'] = $value;
     }
 
     /**
