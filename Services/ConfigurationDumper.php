@@ -76,13 +76,9 @@ class ConfigurationDumper implements ConfigurationDumperInterface
                 $backendForm = null;
             }
 
-            if (is_array($configValue)) {
-                $this->addElementWithMultipleValues($element, $backendForm, $configValue, $configuration);
-            } else {
-                $this->addElementWithSingleValue($element, $backendForm, $configValue, $configuration);
-            }
-
+            $this->addElement($element, $backendForm, $configValue, $configuration);
             $this->addElementInformation($element, $backendForm, $configuration);
+
             if (null !== $backendForm) {
                 $this->addFormInformation($element, $backendForm, $configuration);
             }
@@ -195,33 +191,10 @@ class ConfigurationDumper implements ConfigurationDumperInterface
     /**
      * @param Element   $element
      * @param null|Form $backendForm
-     * @param array     $defaultValue
-     * @param array     $configuration
-     */
-    private function addElementWithMultipleValues(Element $element, $backendForm, $defaultValue, &$configuration)
-    {
-        $formName = $this->getFormName($backendForm);
-
-        /** @var ConfigWriter $configWriter */
-        $configWriter = $this->container->get('config_writer');
-        $shops = $this->getShops();
-
-        $values = [];
-        foreach ($shops as $shop) {
-            $values[$shop->getId()] = $configWriter->get($element->getName(), $formName, $shop->getId());
-        }
-
-        $configuration[$formName][$element->getName()]['defaultValue'][] = $defaultValue;
-        $configuration[$formName][$element->getName()]['shopValues'] = $values;
-    }
-
-    /**
-     * @param Element   $element
-     * @param null|Form $backendForm
      * @param mixed     $defaultValue
      * @param array     $configuration
      */
-    private function addElementWithSingleValue(Element $element, $backendForm, $defaultValue, &$configuration)
+    private function addElement(Element $element, $backendForm, $defaultValue, &$configuration)
     {
         $formName = $this->getFormName($backendForm);
 
@@ -231,7 +204,10 @@ class ConfigurationDumper implements ConfigurationDumperInterface
 
         $values = [];
         foreach ($shops as $shop) {
-            $values[$shop->getId()] = $configWriter->get($element->getName(), $formName, $shop->getId());
+            $value = $configWriter->get($element->getName(), $formName, $shop->getId());
+            if ($value !== $defaultValue) {
+                $values[$shop->getId()] = $value;
+            }
         }
 
         $configuration[$formName][$element->getName()]['defaultValue'] = $defaultValue;
