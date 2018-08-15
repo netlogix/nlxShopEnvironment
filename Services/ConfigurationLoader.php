@@ -10,6 +10,7 @@ namespace sdShopEnvironment\Services;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopware\Components\ConfigWriter;
 use Shopware\Components\DependencyInjection\Container;
 use Shopware\Models\Config\Element;
 use Shopware\Models\Config\Form;
@@ -129,22 +130,69 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
         $configElementRepository = $this->entityManager->getRepository('Shopware\Models\Config\Element');
         $configFormRepository = $this->entityManager->getRepository('Shopware\Models\Config\Form');
 
+        // First load config elements and forms (structure and defaults)
         foreach ($config as $nameOfBackendForm => $formElements) {
             foreach ($formElements as $elementName => $elementInformation) {
                 $element = $this->findOrCreateElement($configElementRepository, $elementName, $elementInformation);
-                $form = $this->findOrCreateForm($configFormRepository, $elementInformation);
 
-                // update existing element
-                $element->setForm($form);
+                if (ConfigurationDumper::NO_FORM_NAME !== $nameOfBackendForm) {
+                    $form = $this->findOrCreateForm($configFormRepository, $elementInformation);
+                    $element->setForm($form);
+                }
+
                 $element->setLabel($elementInformation['label']);
                 $element->setDescription($elementInformation['description']);
                 $element->setPosition($elementInformation['position']);
                 $element->setScope($elementInformation['scope']);
-                $element->setValue($elementInformation['value']);
+                $element->setValue($this->getDefaultValue($elementInformation));
             }
         }
 
         $this->entityManager->flush();
+
+        // And now write values
+        /** @var ConfigWriter $configWriter */
+        $configWriter = $this->container->get('config_writer');
+        foreach ($config as $nameOfBackendForm => $formElements) {
+            foreach ($formElements as $elementName => $elementInformation) {
+                $element = $this->findOrCreateElement($configElementRepository, $elementName, $elementInformation);
+
+                // Load form if it is set
+                if (ConfigurationDumper::NO_FORM_NAME !== $nameOfBackendForm) {
+                    $form = $this->findOrCreateForm($configFormRepository, $elementInformation);
+                } else {
+                    $form = null;
+                }
+
+                if (isset($elementInformation['value']) && isset($elementInformation['defaultValue'])) {
+                    $configWriter->save(
+                        $element->getName(),
+                        $elementInformation['value'],
+                        (null !== $form) ? $form->getName() : null
+                    );
+                }
+            }
+        }
+
+        $this->entityManager->flush();
+    }
+
+    /**
+     * For current file format this returns the 'defaultValue' element.
+     * For legacy (very first) file format 'value' is returned.
+     * (Legacy version is DEPRECATED and discouraged as this does not honour Shopware's config override logic!)
+     *
+     * @param array $configElement
+     *
+     * @return mixed
+     */
+    private function getDefaultValue($configElement)
+    {
+        if (isset($configElement['defaultValue'])) {
+            return $configElement['defaultValue'];
+        }
+
+        return $configElement['value'];
     }
 
     /**
