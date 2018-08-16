@@ -9,7 +9,9 @@
 namespace sdShopEnvironment\Services;
 
 use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\DBAL\Statement;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopware\Components\ConfigWriter;
 use Shopware\Components\DependencyInjection\Container;
 use Shopware\Models\Config\Element;
 use Shopware\Models\Config\Form;
@@ -84,8 +86,8 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
                     continue;
                 }
 
-                $element->setPosition($configValues['position']);
-                $element->setSupportText($configValues['supportText']);
+                $element->setPosition(isset($configValues['position']) ? $configValues['position'] : 0);
+                $element->setSupportText(isset($configValues['supportText']) ? $configValues['supportText'] : '');
 
                 $elementValues = $configValueRepository->findBy(['element' => $element]);
 
@@ -129,18 +131,72 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
         $configElementRepository = $this->entityManager->getRepository('Shopware\Models\Config\Element');
         $configFormRepository = $this->entityManager->getRepository('Shopware\Models\Config\Form');
 
+        // First load config elements and forms (structure and defaults)
         foreach ($config as $nameOfBackendForm => $formElements) {
             foreach ($formElements as $elementName => $elementInformation) {
-                $element = $this->findOrCreateElement($configElementRepository, $elementName, $elementInformation);
-                $form = $this->findOrCreateForm($configFormRepository, $elementInformation);
+                // Load form if it is set
+                if (ConfigurationDumper::NO_FORM_NAME !== $nameOfBackendForm) {
+                    $form = $this->findOrCreateForm($configFormRepository, $nameOfBackendForm, $elementInformation);
+                } else {
+                    $form = null;
+                }
 
-                // update existing element
-                $element->setForm($form);
-                $element->setLabel($elementInformation['label']);
-                $element->setDescription($elementInformation['description']);
-                $element->setPosition($elementInformation['position']);
-                $element->setScope($elementInformation['scope']);
-                $element->setValue($elementInformation['value']);
+                $element =
+                    $this->findOrCreateElement($configElementRepository, $form, $elementName, $elementInformation);
+
+                if (null !== $form) {
+                    $element->setForm($form);
+                }
+
+                if (array_key_exists('label', $elementInformation)) {
+                    $element->setLabel($elementInformation['label']);
+                }
+
+                if (array_key_exists('description', $elementInformation)) {
+                    $element->setDescription($elementInformation['description']);
+                }
+
+                if (array_key_exists('position', $elementInformation)) {
+                    $element->setPosition($elementInformation['position']);
+                }
+
+                if (array_key_exists('scope', $elementInformation)) {
+                    $element->setScope($elementInformation['scope']);
+                }
+
+                if (array_key_exists('description', $elementInformation)) {
+                    $element->setValue($elementInformation['defaultValue']);
+                }
+            }
+        }
+
+        $this->entityManager->flush();
+
+        // And now write values
+        /** @var ConfigWriter $configWriter */
+        $configWriter = $this->container->get('config_writer');
+        foreach ($config as $nameOfBackendForm => $formElements) {
+            foreach ($formElements as $elementName => $elementInformation) {
+                // Load form if it is set
+                if (ConfigurationDumper::NO_FORM_NAME !== $nameOfBackendForm) {
+                    $form = $this->findOrCreateForm($configFormRepository, $nameOfBackendForm, $elementInformation);
+                } else {
+                    $form = null;
+                }
+
+                $element =
+                    $this->findOrCreateElement($configElementRepository, $form, $elementName, $elementInformation);
+
+                if (isset($elementInformation['shopValues']) && is_array($elementInformation['shopValues'])) {
+                    foreach ($elementInformation['shopValues'] as $shopId => $value) {
+                        $configWriter->save(
+                            $element->getName(),
+                            $value,
+                            (null !== $form) ? $form->getName() : null,
+                            $shopId
+                        );
+                    }
+                }
             }
         }
 
@@ -186,49 +242,88 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
 
     /**
      * @param ObjectRepository $configFormRepository
+     * @param string           $formName
      * @param array            $elementInformation
      *
      * @return Form
      */
-    private function findOrCreateForm(ObjectRepository $configFormRepository, $elementInformation)
+    private function findOrCreateForm(ObjectRepository $configFormRepository, $formName, $elementInformation)
     {
         /**
          * @todo at the moment a deleted or not existing forms are making problems (dublicate key), which I have to investigate
          * @todo for proper creation of form we would also need the plugin (there is a relation between forms and plugins)
          * @todo look at /vendor/shopware/shopware/engine/Shopware/Models/Config/Form.php:42
          */
-        $form = $configFormRepository->findOneBy(['name' => $elementInformation['form']['name']]);
+        $form = $configFormRepository->findOneBy(['name' => $formName]);
         if (null === $form) {
             $form = new Form();
             $this->entityManager->persist($form);
         }
 
-        $form->setName($elementInformation['form']['name']);
-        $form->setLabel($elementInformation['form']['label']);
-        $form->setDescription($elementInformation['form']['description']);
-        $form->setPosition($elementInformation['form']['position']);
+        if (array_key_exists('form', $elementInformation)) {
+            $form->setName($elementInformation['form']['name']);
+            $form->setLabel($elementInformation['form']['label']);
+            $form->setDescription($elementInformation['form']['description']);
+            $form->setPosition($elementInformation['form']['position']);
+        }
 
         return $form;
     }
 
     /**
      * @param ObjectRepository $configElementRepository
+     * @param null|Form        $form
      * @param string           $elementName
      * @param array            $elementInformation
      *
      * @return object|Element
      */
-    private function findOrCreateElement(ObjectRepository $configElementRepository, $elementName, $elementInformation)
-    {
-        $element = $configElementRepository->findOneBy(['name' => $elementName, 'label' => $elementInformation['label']]);
-        if (null === $element) {
+    private function findOrCreateElement(
+        ObjectRepository $configElementRepository,
+        $form,
+        $elementName,
+        $elementInformation
+    ) {
+        $elementId = $this->getConfigElementIdByNameAndForm($elementName, $form);
+        if (null !== $elementId) {
+            $element = $configElementRepository->find($elementId);
+        } else {
             $elementType = $elementInformation['type'];
-            $elementOptions = $elementInformation['options'];
+            $elementOptions = (null !== $elementInformation['options']) ? $elementInformation['options'] : [];
 
             $element = new Element($elementType, $elementName, $elementOptions);
+            $element->setForm($form);
             $this->entityManager->persist($element);
         }
 
         return $element;
+    }
+
+    /**
+     * @param string    $name
+     * @param null|Form $form
+     *
+     * @return int
+     */
+    private function getConfigElementIdByNameAndForm($name, $form)
+    {
+        $connection = $this->container->get('dbal_connection');
+        $formId = (null !== $form) ? $form->getId() : '0';
+        $sql = ' 
+            SELECT `id`
+                FROM `s_core_config_elements`
+                WHERE `name` = :elementName AND `form_id` = :formId
+        ';
+
+        /** @var Statement $stmt */
+        $stmt = $connection->prepare($sql);
+        $stmt->execute(['elementName' => $name, 'formId' => $formId]);
+        $result = $stmt->fetch();
+
+        if (count($result) < 1) {
+            return null;
+        }
+
+        return $result['id'];
     }
 }
