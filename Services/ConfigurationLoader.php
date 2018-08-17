@@ -164,7 +164,7 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
                     $element->setScope($elementInformation['scope']);
                 }
 
-                if (array_key_exists('description', $elementInformation)) {
+                if (array_key_exists('defaultValue', $elementInformation)) {
                     $element->setValue($elementInformation['defaultValue']);
                 }
             }
