@@ -19,7 +19,7 @@
     },
     "require": {
         "php": ">5.6",
-        "symfony/yaml": "^2.8||^3.2||~3.4"
+        "symfony/yaml": "^2.8||^3.2||^3.4"
     },
     "conflict": {
         "symfony/yaml": ">=4.0"
