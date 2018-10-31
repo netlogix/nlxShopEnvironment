@@ -15,6 +15,7 @@ use Shopware\Components\ConfigWriter;
 use Shopware\Components\DependencyInjection\Container;
 use Shopware\Models\Config\Element;
 use Shopware\Models\Config\Form;
+use Shopware\Models\Shop\Shop;
 use Shopware\Models\Shop\Template;
 use Shopware\Models\Shop\TemplateConfig\Element as ThemeElement;
 use Shopware\Models\Shop\TemplateConfig\Value;
@@ -70,6 +71,7 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
         $configElementRepository = $this->entityManager->getRepository(ThemeElement::class);
         $configTemplateRepository = $this->entityManager->getRepository(Template::class);
         $configValueRepository = $this->entityManager->getRepository(Value::class);
+        $shopRepository = $this->entityManager->getRepository(Shop::class);
 
         foreach ($config as $themeName => $themeValues) {
             $template = $configTemplateRepository->findOneBy(['name' => $themeName]);
@@ -88,11 +90,14 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
 
                 $element->setPosition(isset($configValues['position']) ? $configValues['position'] : 0);
                 $element->setSupportText(isset($configValues['supportText']) ? $configValues['supportText'] : '');
+                $element->setDefaultValue(isset($configValues['defaultValue']) ? $configValues['defaultValue'] : '');
 
-                $elementValues = $configValueRepository->findBy(['element' => $element]);
-
-                foreach ($elementValues as $value) {
-                    $value->setValue($configValues['value']);
+                if (isset($configValues['shopValues'])) {
+                    foreach ($configValues['shopValues'] as $shopId => $configValue) {
+                        /** @var Shop $shop */
+                        $shop = $shopRepository->find($shopId);
+                        $this->findOrCreateThemeConfigValue($configValueRepository, $element, $shop, $configValue);
+                    }
                 }
             }
         }
@@ -121,6 +126,34 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
         }
 
         return $element;
+    }
+
+    /**
+     * @param ObjectRepository $configValueRepository
+     * @param ThemeElement     $element
+     * @param Shop             $shop
+     * @param mixed            $configValue
+     *
+     * @return Value
+     */
+    private function findOrCreateThemeConfigValue(
+        ObjectRepository $configValueRepository,
+        ThemeElement $element,
+        Shop $shop,
+        $configValue
+    ) {
+        $elementValue = $configValueRepository->findOneBy(['element' => $element, 'shop' => $shop]);
+        if (null === $elementValue) {
+            $elementValue = new Value();
+            $elementValue->setElement($element);
+            $elementValue->setShop($shop);
+            $elementValue->setValue($configValue);
+            $this->entityManager->persist($elementValue);
+        } else {
+            $elementValue->setValue($configValue);
+        }
+
+        return $elementValue;
     }
 
     /**
