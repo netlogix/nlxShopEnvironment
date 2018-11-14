@@ -9,6 +9,7 @@
 namespace sdShopEnvironment\Services;
 
 use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Statement;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopware\Components\ConfigWriter;
@@ -25,15 +26,23 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
 {
     use LoggingTrait;
 
-    /** @var Container */
-    private $container;
-
     /** @var EntityManagerInterface */
     private $entityManager;
 
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
+    /** @var ConfigWriter */
+    private $configWriter;
+
+    /** @var Connection */
+    private $connection;
+
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        ConfigWriter $configWriter,
+        Connection $connection
+    ) {
+        $this->entityManager = $entityManager;
+        $this->configWriter = $configWriter;
+        $this->connection = $connection;
     }
 
     /**
@@ -44,8 +53,6 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
         if (false === is_readable($pathToFile) && 'php://stdin' !== $pathToFile) {
             throw new \RuntimeException('file not found - ' . $pathToFile);
         }
-
-        $this->entityManager = $this->container->get('models');
 
         $contentOfYamlFile = Yaml::parse(file_get_contents($pathToFile, false));
         if (isset($contentOfYamlFile['core_config'])) {
@@ -206,8 +213,6 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
         $this->entityManager->flush();
 
         // And now write values
-        /** @var ConfigWriter $configWriter */
-        $configWriter = $this->container->get('config_writer');
         foreach ($config as $nameOfBackendForm => $formElements) {
             foreach ($formElements as $elementName => $elementInformation) {
                 // Load form if it is set
@@ -222,7 +227,7 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
 
                 if (isset($elementInformation['shopValues']) && is_array($elementInformation['shopValues'])) {
                     foreach ($elementInformation['shopValues'] as $shopId => $value) {
-                        $configWriter->save(
+                        $this->configWriter->save(
                             $element->getName(),
                             $value,
                             (null !== $form) ? $form->getName() : null,
@@ -340,7 +345,6 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
      */
     private function getConfigElementIdByNameAndForm($name, $form)
     {
-        $connection = $this->container->get('dbal_connection');
         $formId = (null !== $form) ? $form->getId() : '0';
         $sql = ' 
             SELECT `id`
@@ -349,7 +353,7 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
         ';
 
         /** @var Statement $stmt */
-        $stmt = $connection->prepare($sql);
+        $stmt = $this->connection->prepare($sql);
         $stmt->execute(['elementName' => $name, 'formId' => $formId]);
         $result = $stmt->fetch();
 
