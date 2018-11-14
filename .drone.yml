@@ -19,7 +19,7 @@ pipeline:
     when:
       matrix:
         PHP_VERSION: php7.2
-        SHOPWARE_VERSION: 5.4.*
+        SHOPWARE_VERSION: \~5.5.3
 
   test:spec:
     image: docker.solutiondrive.de/library/php-xdebug:${PHP_VERSION}
@@ -44,7 +44,7 @@ pipeline:
       event: [push]
       matrix:
         PHP_VERSION: php5.6
-        SHOPWARE_VERSION: 5.2.*
+        SHOPWARE_VERSION: \~5.2.27
 
   publish:create:release_archive:
     image: docker.solutiondrive.de/library/composer:${PHP_VERSION}
@@ -63,7 +63,7 @@ pipeline:
       event: [tag]
       matrix:
         PHP_VERSION: php5.6
-        SHOPWARE_VERSION: 5.2.*
+        SHOPWARE_VERSION: \~5.2.27
 
   publish:s3:release:
     image: plugins/s3
@@ -77,7 +77,7 @@ pipeline:
       event: [push, tag]
       matrix:
         PHP_VERSION: php5.6
-        SHOPWARE_VERSION: 5.2.*
+        SHOPWARE_VERSION: \~5.2.27
 
   notify:mail:
     image: docker.solutiondrive.de/drone/plugin-email
@@ -99,6 +99,7 @@ matrix:
     - php7.0
     - php5.6
   SHOPWARE_VERSION:
-    - 5.4.*
-    - 5.3.*
-    - 5.2.*
+    - \~5.5.3
+    - \~5.4.6
+    - \~5.3.7
+    - \~5.2.27
