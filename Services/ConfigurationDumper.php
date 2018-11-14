@@ -11,8 +11,6 @@ namespace sdShopEnvironment\Services;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Shopware\Components\ConfigWriter;
-use Shopware\Components\DependencyInjection\Container;
-use Shopware\Components\Model\ModelManager;
 use Shopware\Models\Config\Element;
 use Shopware\Models\Config\Form;
 use Shopware\Models\Shop\Shop;

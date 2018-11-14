@@ -13,7 +13,6 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Statement;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopware\Components\ConfigWriter;
-use Shopware\Components\DependencyInjection\Container;
 use Shopware\Models\Config\Element;
 use Shopware\Models\Config\Form;
 use Shopware\Models\Shop\Shop;
