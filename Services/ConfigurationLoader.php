@@ -12,6 +12,7 @@ use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Statement;
 use Doctrine\ORM\EntityManagerInterface;
+use sdShopEnvironment\DataTypes\DataTypeCollectorInterface;
 use Shopware\Components\ConfigWriter;
 use Shopware\Models\Config\Element;
 use Shopware\Models\Config\Form;
@@ -34,14 +35,19 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
     /** @var Connection */
     private $connection;
 
+    /** @var DataTypeCollectorInterface */
+    private $dataTypeCollector;
+
     public function __construct(
         EntityManagerInterface $entityManager,
         ConfigWriter $configWriter,
-        Connection $connection
+        Connection $connection,
+        DataTypeCollectorInterface $dataTypeCollector
     ) {
         $this->entityManager = $entityManager;
         $this->configWriter = $configWriter;
         $this->connection = $connection;
+        $this->dataTypeCollector = $dataTypeCollector;
     }
 
     /**
@@ -54,16 +60,20 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
         }
 
         $contentOfYamlFile = Yaml::parse(file_get_contents($pathToFile, false));
-        if (isset($contentOfYamlFile['core_config'])) {
-            $this->loadCoreConfiguration($contentOfYamlFile['core_config']);
-        }
+        foreach ($contentOfYamlFile as $rootName => $content) {
+            $type = $this->dataTypeCollector->get($rootName);
+            if (null === $type) {
+                $this->addError('Configuration file contains unknown root entry `' . $rootName . '`. Aborting.');
+                continue;
+            }
 
-        if (isset($contentOfYamlFile['shop_config'])) {
-            $this->loadShopConfiguration($contentOfYamlFile['shop_config']);
-        }
+            $loader = $type->getLoader();
+            if (null === $loader) {
+                $this->addError('Data of type `' . $rootName . '` cannot be loaded. Aborting.');
+                continue;
+            }
 
-        if (isset($contentOfYamlFile['theme_config'])) {
-            $this->loadThemeConfiguration($contentOfYamlFile['theme_config']);
+            $loader->load($content);
         }
 
         return false === $this->hasErrors();

@@ -10,6 +10,7 @@ namespace sdShopEnvironment\Services;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
+use sdShopEnvironment\DataTypes\DataTypeCollectorInterface;
 use Shopware\Components\ConfigWriter;
 use Shopware\Models\Config\Element;
 use Shopware\Models\Config\Form;
@@ -32,29 +33,35 @@ class ConfigurationDumper implements ConfigurationDumperInterface
     /** @var array|Shop[] */
     private $shops;
 
+    /** @var DataTypeCollectorInterface */
+    private $dataTypeCollector;
+
     public function __construct(
         EntityManagerInterface $entityManager,
-        ConfigWriter $configWriter
+        ConfigWriter $configWriter,
+        DataTypeCollectorInterface $dataTypeCollector
     ) {
         $this->entityManager = $entityManager;
         $this->configWriter = $configWriter;
+        $this->dataTypeCollector = $dataTypeCollector;
     }
 
     public function dumpConfiguration($exportPath = 'php://stdout')
     {
         $configuration = [];
 
-        $configuration['core_config'] = $this->getCoreConfig();
-        $configuration['shop_config'] = $this->getShopConfig();
-        $configuration['theme_config'] = $this->getThemeConfig();
+        $types = $this->dataTypeCollector->getAll();
+        foreach ($types as $rootName => $type) {
+            $configuration[$rootName] = $type->getDumper()->dump();
+        }
 
         $configurationAsYaml = Yaml::dump($configuration, 4, 4, true, false);
 
-        if (false === is_writable(dirname($exportPath)) && 'php://stdout' !== $exportPath) {
-            mkdir(dirname($exportPath), 0775);
+        if (false === \is_writable(dirname($exportPath)) && 'php://stdout' !== $exportPath) {
+            \mkdir(\dirname($exportPath), 0775);
         }
 
-        file_put_contents($exportPath, $configurationAsYaml);
+        \file_put_contents($exportPath, $configurationAsYaml);
     }
 
     /**

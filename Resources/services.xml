@@ -2,17 +2,29 @@
 <container xmlns="http://symfony.com/schema/dic/services"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <imports>
+        <import resource="services/data_types.xml" />
+        <import resource="services/dumpers.xml" />
+        <import resource="services/loaders.xml" />
+    </imports>
+
     <services>
         <!-- Helper-Services -->
-        <service id="sd_shop_environment.services.configuration_dumper" class="sdShopEnvironment\Services\ConfigurationDumper">
-            <argument type="service" key="$entityManager" id="models"/>
-            <argument type="service" key="$configWriter" id="config_writer"/>
+        <service id="sd_shop_environment.services.configuration_dumper"
+                 class="sdShopEnvironment\Services\ConfigurationDumper">
+            <argument type="service" key="$entityManager" id="models" />
+            <argument type="service" key="$configWriter" id="config_writer" />
+            <argument type="service" key="$dataTypeCollector" id="sd_shop_environment.data_types.data_type_collector" />
         </service>
-        <service id="sd_shop_environment.services.configuration_loader" class="sdShopEnvironment\Services\ConfigurationLoader">
+        <service id="sd_shop_environment.services.configuration_loader"
+                 class="sdShopEnvironment\Services\ConfigurationLoader">
             <argument type="service" key="$entityManager" id="models"/>
             <argument type="service" key="$configWriter" id="config_writer"/>
             <argument type="service" key="$connection" id="dbal_connection"/>
+            <argument type="service" key="$dataTypeCollector" id="sd_shop_environment.data_types.data_type_collector" />
         </service>
+
         <!-- Commands -->
         <service
                 id="sd_shop_environment.commands.shop_environment_dump_config_command"

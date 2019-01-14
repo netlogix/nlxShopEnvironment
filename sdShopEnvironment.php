@@ -2,8 +2,8 @@
 
 namespace sdShopEnvironment;
 
+use sdShopEnvironment\Components\CompilerPass\DataTypeCompilerPass;
 use Shopware\Components\Plugin;
-use Shopware\Components\Console\Application;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 // We know, this makes problems in development environment (if Shopware is installed into vendor),
@@ -25,5 +25,7 @@ class sdShopEnvironment extends Plugin
     {
         $container->setParameter('sd_shop_environment.plugin_dir', $this->getPath());
         parent::build($container);
+
+        $container->addCompilerPass(new DataTypeCompilerPass());
     }
 }
