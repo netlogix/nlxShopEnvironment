@@ -8,10 +8,9 @@
 
 namespace sdShopEnvironment\Services;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Shopware\Components\ConfigWriter;
-use Shopware\Components\DependencyInjection\Container;
-use Shopware\Components\Model\ModelManager;
 use Shopware\Models\Config\Element;
 use Shopware\Models\Config\Form;
 use Shopware\Models\Shop\Shop;
@@ -24,15 +23,21 @@ class ConfigurationDumper implements ConfigurationDumperInterface
 {
     const NO_FORM_NAME = '__NO_FORM__';
 
-    /** @var Container */
-    private $container;
+    /** @var EntityManagerInterface */
+    private $entityManager;
+
+    /** @var ConfigWriter */
+    private $configWriter;
 
     /** @var array|Shop[] */
     private $shops;
 
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        ConfigWriter $configWriter
+    ) {
+        $this->entityManager = $entityManager;
+        $this->configWriter = $configWriter;
     }
 
     public function dumpConfiguration($exportPath = 'php://stdout')
@@ -57,9 +62,7 @@ class ConfigurationDumper implements ConfigurationDumperInterface
      */
     private function getCoreConfig()
     {
-        /** @var ModelManager $entityManager */
-        $entityManager = $this->container->get('models');
-        $configElementRepository = $entityManager->getRepository('Shopware\Models\Config\Element');
+        $configElementRepository = $this->entityManager->getRepository('Shopware\Models\Config\Element');
 
         $allConfigs = $configElementRepository->findAll();
 
@@ -92,9 +95,7 @@ class ConfigurationDumper implements ConfigurationDumperInterface
      */
     private function getThemeConfig()
     {
-        /** @var ModelManager $entityManager */
-        $entityManager = $this->container->get('models');
-        $configElementRepository = $entityManager->getRepository('Shopware\Models\Shop\TemplateConfig\Element');
+        $configElementRepository = $this->entityManager->getRepository('Shopware\Models\Shop\TemplateConfig\Element');
 
         $allConfigs = $configElementRepository->findAll();
 
@@ -119,9 +120,7 @@ class ConfigurationDumper implements ConfigurationDumperInterface
     {
         $shopConfigs = [];
 
-        /** @var ModelManager $entityManager */
-        $entityManager = $this->container->get('models');
-        $shopRepo = $entityManager->getRepository('Shopware\Models\Shop\Shop');
+        $shopRepo = $this->entityManager->getRepository('Shopware\Models\Shop\Shop');
 
         $shops = $shopRepo->findAll();
         /** @var Shop $shop */
@@ -167,7 +166,7 @@ class ConfigurationDumper implements ConfigurationDumperInterface
     {
         if (null === $this->shops) {
             /** @var $repository \Shopware\Models\Shop\Repository */
-            $repository = Shopware()->Models()->getRepository(Shop::class);
+            $repository = $this->entityManager->getRepository(Shop::class);
             $this->shops = $repository->findAll();
         }
 
@@ -198,13 +197,11 @@ class ConfigurationDumper implements ConfigurationDumperInterface
     {
         $formName = $this->getFormName($backendForm);
 
-        /** @var ConfigWriter $configWriter */
-        $configWriter = $this->container->get('config_writer');
         $shops = $this->getShops();
 
         $values = [];
         foreach ($shops as $shop) {
-            $value = $configWriter->get($element->getName(), $formName, $shop->getId());
+            $value = $this->configWriter->get($element->getName(), $formName, $shop->getId());
             if ($value !== $defaultValue) {
                 $values[$shop->getId()] = $value;
             }

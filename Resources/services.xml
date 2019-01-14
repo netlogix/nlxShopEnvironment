@@ -5,10 +5,13 @@
     <services>
         <!-- Helper-Services -->
         <service id="sd_shop_environment.services.configuration_dumper" class="sdShopEnvironment\Services\ConfigurationDumper">
-            <argument type="service" id="service_container"/>
+            <argument type="service" key="$entityManager" id="models"/>
+            <argument type="service" key="$configWriter" id="config_writer"/>
         </service>
         <service id="sd_shop_environment.services.configuration_loader" class="sdShopEnvironment\Services\ConfigurationLoader">
-            <argument type="service" id="service_container"/>
+            <argument type="service" key="$entityManager" id="models"/>
+            <argument type="service" key="$configWriter" id="config_writer"/>
+            <argument type="service" key="$connection" id="dbal_connection"/>
         </service>
         <!-- Commands -->
         <service
