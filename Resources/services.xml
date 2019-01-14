@@ -10,18 +10,28 @@
     </imports>
 
     <services>
+        <!-- Own logger to log into console -->
+        <service
+                id="sd_shop_environment.logger"
+                class="Monolog\Logger"
+        >
+            <argument type="string">sd_shop_environment_logger</argument>
+        </service>
+        <service
+                id="sd_shop_environment.logger.handler.console"
+                class="Monolog\Handler\PHPConsole"
+        >
+            <argument type="string">console_handler</argument>
+        </service>
+
+
         <!-- Helper-Services -->
         <service id="sd_shop_environment.services.configuration_dumper"
                  class="sdShopEnvironment\Services\ConfigurationDumper">
-            <argument type="service" key="$entityManager" id="models" />
-            <argument type="service" key="$configWriter" id="config_writer" />
             <argument type="service" key="$dataTypeCollector" id="sd_shop_environment.data_types.data_type_collector" />
         </service>
         <service id="sd_shop_environment.services.configuration_loader"
                  class="sdShopEnvironment\Services\ConfigurationLoader">
-            <argument type="service" key="$entityManager" id="models"/>
-            <argument type="service" key="$configWriter" id="config_writer"/>
-            <argument type="service" key="$connection" id="dbal_connection"/>
             <argument type="service" key="$dataTypeCollector" id="sd_shop_environment.data_types.data_type_collector" />
         </service>
 

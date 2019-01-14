@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /*
  * Created by solutionDrive GmbH
@@ -9,29 +8,18 @@ declare(strict_types=1);
 
 namespace sdShopEnvironment\Loader;
 
-use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
-use Shopware\Components\ConfigWriter;
+use Shopware\Models\Shop\Shop;
 
 class ShopConfigLoader implements LoaderInterface
 {
     /** @var EntityManagerInterface */
     private $entityManager;
 
-    /** @var ConfigWriter */
-    private $configWriter;
-
-    /** @var Connection */
-    private $connection;
-
     public function __construct(
-        Connection $connection,
-        EntityManagerInterface $entityManager,
-        ConfigWriter $configWriter
+        EntityManagerInterface $entityManager
     ) {
-        $this->connection = $connection;
         $this->entityManager = $entityManager;
-        $this->configWriter = $configWriter;
     }
 
     /**
@@ -39,6 +27,35 @@ class ShopConfigLoader implements LoaderInterface
      */
     public function load($config)
     {
-        // TODO: Implement load() method.
+        $shopRepo = $this->entityManager->getRepository(Shop::class);
+
+        foreach ($config as $id => $shopConfig) {
+            $shop = $shopRepo->find($id);
+            if (null === $shop) {
+                echo
+                    'The loadable configuration contains a shop with an ID that is not yet created in database. ' .
+                    PHP_EOL .
+                    'We cannot create new shops with custom IDs at the moment, so this shop cannot be configured now.' .
+                    PHP_EOL .
+                    'Problematic shop: ' . $id . PHP_EOL . PHP_EOL
+                ;
+                continue;
+            }
+
+            foreach ($shopConfig as $parameter => $value) {
+                $reflectionClass = new \ReflectionClass(Shop::class);
+                $setter = 'set' . $parameter;
+                if (false === $reflectionClass->hasMethod($setter)) {
+                    echo 'Property could not be imported as it does not exist: ' .
+                        $parameter . ' (shop: ' . $id . ')' . PHP_EOL;
+                }
+
+                $shop->$setter($value);
+            }
+
+            $this->entityManager->persist($shop);
+        }
+
+        $this->entityManager->flush();
     }
 }

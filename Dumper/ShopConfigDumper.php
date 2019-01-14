@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /*
  * Created by solutionDrive GmbH
@@ -10,22 +9,17 @@ declare(strict_types=1);
 namespace sdShopEnvironment\Dumper;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Shopware\Components\ConfigWriter;
+use Shopware\Models\Shop\Shop;
 
 class ShopConfigDumper implements DumperInterface
 {
     /** @var EntityManagerInterface */
     private $entityManager;
 
-    /** @var ConfigWriter */
-    private $configWriter;
-
     public function __construct(
-        EntityManagerInterface $entityManager,
-        ConfigWriter $configWriter
+        EntityManagerInterface $entityManager
     ) {
         $this->entityManager = $entityManager;
-        $this->configWriter = $configWriter;
     }
 
     /**
@@ -33,7 +27,27 @@ class ShopConfigDumper implements DumperInterface
      */
     public function dump()
     {
-        // TODO: Implement load() method.
-        return [];
+        $shopConfigs = [];
+
+        $shopRepo = $this->entityManager->getRepository(Shop::class);
+        $shops = $shopRepo->findAll();
+
+        /** @var Shop $shop */
+        foreach ($shops as $shop) {
+            $shopConfigs[$shop->getId()] = [
+                'Name'          => $shop->getName(),
+                'Title'         => $shop->getTitle(),
+                'Host'          => $shop->getHost(),
+                'BasePath'      => $shop->getBasePath(),
+                'BaseUrl'       => $shop->getBaseUrl(),
+                'Hosts'         => $shop->getHosts(),
+                'Secure'        => $shop->getSecure(),
+                'CustomerScope' => $shop->getCustomerScope(),
+                'Default'       => $shop->getDefault(),
+                'Active'        => $shop->getActive(),
+            ];
+        }
+
+        return $shopConfigs;
     }
 }

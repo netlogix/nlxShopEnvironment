@@ -5,6 +5,12 @@
 
     <services>
         <service
+                id="sd_shop_environment.dumper.shop_config_dumper"
+                class="sdShopEnvironment\Dumper\ShopConfigDumper"
+        >
+            <argument type="service" id="models" />
+        </service>
+        <service
                 id="sd_shop_environment.dumper.core_config_dumper"
                 class="sdShopEnvironment\Dumper\CoreConfigDumper"
         >
@@ -16,14 +22,6 @@
                 class="sdShopEnvironment\Dumper\ThemeConfigDumper"
         >
             <argument type="service" id="models" />
-            <argument type="service" id="config_writer" />
-        </service>
-        <service
-                id="sd_shop_environment.dumper.shop_config_dumper"
-                class="sdShopEnvironment\Dumper\ShopConfigDumper"
-        >
-            <argument type="service" id="models" />
-            <argument type="service" id="config_writer" />
         </service>
     </services>
 </container>

@@ -8,23 +8,18 @@
 
 namespace spec\sdShopEnvironment\Services;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
 use PhpSpec\ObjectBehavior;
+use sdShopEnvironment\DataTypes\DataTypeCollectorInterface;
 use sdShopEnvironment\Services\ConfigurationDumper;
 use sdShopEnvironment\Services\ConfigurationDumperInterface;
-use Shopware\Components\ConfigWriter;
-use Shopware\Components\DependencyInjection\Container;
 
 class ConfigurationDumperSpec extends ObjectBehavior
 {
     public function let(
-        EntityManagerInterface $entityManager,
-        ConfigWriter $configWriter
+        DataTypeCollectorInterface $dataTypeCollector
     ) {
         $this->beConstructedWith(
-            $entityManager,
-            $configWriter
+            $dataTypeCollector
         );
     }
 

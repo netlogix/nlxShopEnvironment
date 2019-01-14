@@ -5,6 +5,12 @@
 
     <services>
         <service
+                id="sd_shop_environment.loader.shop_config_loader"
+                class="sdShopEnvironment\Loader\ShopConfigLoader"
+        >
+            <argument type="service" id="models" />
+        </service>
+        <service
                 id="sd_shop_environment.loader.core_config_loader"
                 class="sdShopEnvironment\Loader\CoreConfigLoader"
         >
@@ -16,17 +22,8 @@
                 id="sd_shop_environment.loader.theme_config_loader"
                 class="sdShopEnvironment\Loader\ThemeConfigLoader"
         >
-            <argument type="service" id="dbal_connection" />
             <argument type="service" id="models" />
-            <argument type="service" id="config_writer" />
-        </service>
-        <service
-                id="sd_shop_environment.loader.shop_config_loader"
-                class="sdShopEnvironment\Loader\ShopConfigLoader"
-        >
-            <argument type="service" id="dbal_connection" />
-            <argument type="service" id="models" />
-            <argument type="service" id="config_writer" />
+            <argument type="service" id="sd_shop_environment.logger" />
         </service>
     </services>
 </container>
