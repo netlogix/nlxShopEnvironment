@@ -23,5 +23,11 @@
         >
             <argument type="service" id="models" />
         </service>
+        <service
+                id="sd_shop_environment.dumper.productivity_mode_config_dumper"
+                class="sdShopEnvironment\Dumper\ProductivityModeConfigDumper"
+        >
+            <argument type="service" id="models" />
+        </service>
     </services>
 </container>
