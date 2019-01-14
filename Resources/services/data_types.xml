@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service
+                id="sd_shop_environment.data_types.data_type_collector"
+                class="sdShopEnvironment\DataTypes\DataTypeCollector"
+        >
+        </service>
+
+        <service
+                id="sd_shop_environment.data_types.shop_config_type"
+                class="sdShopEnvironment\DataTypes\GenericDataType"
+        >
+            <tag name="sd.data_type" root_name="shop_config" />
+            <argument type="service" id="sd_shop_environment.dumper.shop_config_dumper" />
+            <argument type="service" id="sd_shop_environment.loader.shop_config_loader" />
+        </service>
+        <service
+                id="sd_shop_environment.data_types.core_config_type"
+                class="sdShopEnvironment\DataTypes\GenericDataType"
+        >
+            <tag name="sd.data_type" root_name="core_config" />
+            <argument type="service" id="sd_shop_environment.dumper.core_config_dumper" />
+            <argument type="service" id="sd_shop_environment.loader.core_config_loader" />
+        </service>
+        <service
+                id="sd_shop_environment.data_types.theme_config_type"
+                class="sdShopEnvironment\DataTypes\GenericDataType"
+        >
+            <tag name="sd.data_type" root_name="theme_config" />
+            <argument type="service" id="sd_shop_environment.dumper.theme_config_dumper" />
+            <argument type="service" id="sd_shop_environment.loader.theme_config_loader" />
+        </service>
+    </services>
+</container>

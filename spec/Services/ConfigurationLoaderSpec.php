@@ -8,26 +8,18 @@
 
 namespace spec\sdShopEnvironment\Services;
 
-use Doctrine\DBAL\Connection;
-use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
+use sdShopEnvironment\DataTypes\DataTypeCollectorInterface;
 use sdShopEnvironment\Services\ConfigurationLoader;
 use sdShopEnvironment\Services\ConfigurationLoaderInterface;
-use Shopware\Components\ConfigWriter;
-use Shopware\Components\DependencyInjection\Container;
 
 class ConfigurationLoaderSpec extends ObjectBehavior
 {
     public function let(
-        EntityManagerInterface $entityManager,
-        ConfigWriter $configWriter,
-        Connection $connection
+        DataTypeCollectorInterface $dataTypeCollector
     ) {
         $this->beConstructedWith(
-            $entityManager,
-            $configWriter,
-            $connection
+            $dataTypeCollector
         );
     }
 
