@@ -38,7 +38,7 @@
                 id="sd_shop_environment.data_types.productivity_mode_config_type"
                 class="sdShopEnvironment\DataTypes\GenericDataType"
         >
-            <tag name="sd.data_type" root_name="theme_config" />
+            <tag name="sd.data_type" root_name="productivity_mode_config" />
             <argument type="service" id="sd_shop_environment.dumper.productivity_mode_config_dumper" />
             <argument type="service" id="sd_shop_environment.loader.productivity_mode_config_loader" />
         </service>
