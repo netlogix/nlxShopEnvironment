@@ -70,11 +70,11 @@ class PaymentMethodsDumperSpec extends ObjectBehavior
             ->willReturn(161);
 
         $paymentMethodOne
-            ->getId()
-            ->willReturn(42);
+            ->getName()
+            ->willReturn('ac');
 
         $paymentMethodOne
-            ->getName()
+            ->getDescription()
             ->willReturn('Payment Method One');
 
         $paymentMethodOne
@@ -82,11 +82,11 @@ class PaymentMethodsDumperSpec extends ObjectBehavior
             ->willReturn(new ArrayCollection());
 
         $paymentMethodTwo
-            ->getId()
-            ->willReturn(1312);
+            ->getName()
+            ->willReturn('ab');
 
         $paymentMethodTwo
-            ->getName()
+            ->getDescription()
             ->willReturn('Payment Method Two');
 
         $paymentMethodTwo
@@ -100,13 +100,13 @@ class PaymentMethodsDumperSpec extends ObjectBehavior
 
         $classMetadata
             ->getFieldNames()
-            ->willReturn(['id', 'name']);
+            ->willReturn(['id', 'description']);
 
         $this
             ->dump()
             ->shouldBeLike([
-                42   => ['name' => 'Payment Method One', 'shops' => []],
-                1312 => ['name' => 'Payment Method Two', 'shops' => [161]],
+                'ac' => ['description' => 'Payment Method One', 'shops' => []],
+                'ab' => ['description' => 'Payment Method Two', 'shops' => [161]],
             ]);
     }
 }

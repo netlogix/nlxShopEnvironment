@@ -36,7 +36,7 @@ class PaymentMethodsDumper implements DumperInterface
         $paymentMethods = [];
 
         foreach ($this->paymentMethodsRepository->findAll() as $paymentMethod) {
-            $paymentMethods[$paymentMethod->getId()] = $this->getPaymentMethodArrayData($paymentMethod);
+            $paymentMethods[$paymentMethod->getName()] = $this->getPaymentMethodArrayData($paymentMethod);
         }
 
         return $paymentMethods;
@@ -52,7 +52,9 @@ class PaymentMethodsDumper implements DumperInterface
         foreach ($this->classMetadata->getFieldNames() as $fieldName) {
             switch ($fieldName) {
                 case 'id':
-                    // id is already array key
+                case 'name':
+                    // ignore id due to missing setId method (necessary for reimporting payment method)
+                    // Ignore name: used as identifier (is unique by sql scheme)
                     break;
                 default:
                     $getter = 'get' . ucfirst($fieldName);
