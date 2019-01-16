@@ -54,11 +54,6 @@ class PaymentMethodsDumper implements DumperInterface
                 case 'id':
                     // id is already array key
                     break;
-                case 'shops':
-                    $paymentData['shops'] = $paymentMethod->getShops()->map(function (Shop $shop) {
-                        return $shop->getId();
-                    });
-                    break;
                 default:
                     $getter = 'get' . ucfirst($fieldName);
                     $data = $paymentMethod->$getter();
@@ -66,6 +61,12 @@ class PaymentMethodsDumper implements DumperInterface
                     break;
             }
         }
+
+        $paymentData['shops'] = $paymentMethod->getShops()
+            ->map(function (Shop $shop) {
+                return $shop->getId();
+            })
+            ->toArray();
 
         return $paymentData;
     }

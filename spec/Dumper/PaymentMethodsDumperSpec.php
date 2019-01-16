@@ -8,6 +8,7 @@
 
 namespace spec\sdShopEnvironment\Dumper;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -15,6 +16,7 @@ use PhpSpec\ObjectBehavior;
 use sdShopEnvironment\Dumper\DumperInterface;
 use sdShopEnvironment\Dumper\PaymentMethodsDumper;
 use Shopware\Models\Payment\Payment;
+use Shopware\Models\Shop\Shop;
 
 class PaymentMethodsDumperSpec extends ObjectBehavior
 {
@@ -60,8 +62,13 @@ class PaymentMethodsDumperSpec extends ObjectBehavior
         ObjectRepository $paymentMethodsRepository,
         ClassMetadata $classMetadata,
         Payment $paymentMethodOne,
-        Payment $paymentMethodTwo
+        Payment $paymentMethodTwo,
+        Shop $shopAssignedToPaymentMethodTwo
     ) {
+        $shopAssignedToPaymentMethodTwo
+            ->getId()
+            ->willReturn(161);
+
         $paymentMethodOne
             ->getId()
             ->willReturn(42);
@@ -70,6 +77,10 @@ class PaymentMethodsDumperSpec extends ObjectBehavior
             ->getName()
             ->willReturn('Payment Method One');
 
+        $paymentMethodOne
+            ->getShops()
+            ->willReturn(new ArrayCollection());
+
         $paymentMethodTwo
             ->getId()
             ->willReturn(1312);
@@ -77,6 +88,10 @@ class PaymentMethodsDumperSpec extends ObjectBehavior
         $paymentMethodTwo
             ->getName()
             ->willReturn('Payment Method Two');
+
+        $paymentMethodTwo
+            ->getShops()
+            ->willReturn(new ArrayCollection([$shopAssignedToPaymentMethodTwo->getWrappedObject()]));
 
         $paymentMethodsRepository
             ->findAll()
@@ -90,8 +105,8 @@ class PaymentMethodsDumperSpec extends ObjectBehavior
         $this
             ->dump()
             ->shouldBeLike([
-                42   => ['name' => 'Payment Method One'],
-                1312 => ['name' => 'Payment Method Two'],
+                42   => ['name' => 'Payment Method One', 'shops' => []],
+                1312 => ['name' => 'Payment Method Two', 'shops' => [161]],
             ]);
     }
 }
