@@ -32,5 +32,9 @@
             <argument type="service" id="models" />
             <argument type="service" id="shopware.plugin_manager" />
         </service>
+        <service
+                id="sd.shop_environment.loader.payment_methods_loader"
+                class="sdShopEnvironment\Loader\PaymentMethodsLoader"
+        />
     </services>
 </container>
