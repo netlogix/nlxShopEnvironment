@@ -29,5 +29,11 @@
         >
             <argument type="service" id="models" />
         </service>
+        <service
+                id="sd.shop_environment.dumper.payment_methods_dumper"
+                class="sdShopEnvironment\Dumper\PaymentMethodsDumper"
+        >
+            <argument id="models" type="service"/>
+        </service>
     </services>
 </container>
