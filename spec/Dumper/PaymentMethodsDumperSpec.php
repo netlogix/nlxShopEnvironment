@@ -10,6 +10,7 @@ namespace spec\sdShopEnvironment\Dumper;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use PhpSpec\ObjectBehavior;
 use sdShopEnvironment\Dumper\DumperInterface;
 use sdShopEnvironment\Dumper\PaymentMethodsDumper;
@@ -19,11 +20,16 @@ class PaymentMethodsDumperSpec extends ObjectBehavior
 {
     public function let(
         EntityManagerInterface $entityManager,
-        ObjectRepository $paymentMethodsRepository
+        ObjectRepository $paymentMethodsRepository,
+        ClassMetadata $classMetadata
     ) {
         $entityManager
             ->getRepository(Payment::class)
             ->willReturn($paymentMethodsRepository);
+
+        $entityManager
+            ->getClassMetadata(Payment::class)
+            ->willReturn($classMetadata);
 
         $this->beConstructedWith($entityManager);
     }
@@ -48,5 +54,44 @@ class PaymentMethodsDumperSpec extends ObjectBehavior
         $this
             ->dump()
             ->shouldBe([]);
+    }
+
+    public function it_can_dump_payment_methods(
+        ObjectRepository $paymentMethodsRepository,
+        ClassMetadata $classMetadata,
+        Payment $paymentMethodOne,
+        Payment $paymentMethodTwo
+    ) {
+        $paymentMethodOne
+            ->getId()
+            ->willReturn(42);
+
+        $paymentMethodOne
+            ->getName()
+            ->willReturn('Payment Method One');
+
+        $paymentMethodTwo
+            ->getId()
+            ->willReturn(1312);
+
+        $paymentMethodTwo
+            ->getName()
+            ->willReturn('Payment Method Two');
+
+        $paymentMethodsRepository
+            ->findAll()
+            ->shouldBeCalled()
+            ->willReturn([$paymentMethodOne, $paymentMethodTwo]);
+
+        $classMetadata
+            ->getFieldNames()
+            ->willReturn(['id', 'name']);
+
+        $this
+            ->dump()
+            ->shouldBeLike([
+                42   => ['name' => 'Payment Method One'],
+                1312 => ['name' => 'Payment Method Two'],
+            ]);
     }
 }
