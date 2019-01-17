@@ -39,5 +39,9 @@
             <argument type="service" id="models"/>
             <argument type="service" id="sd.shop_environment.serializer.serializer.payment_serializer"/>
         </service>
+        <service
+                id="sd.shop_environment.loader.shipping_methods_loader"
+                class="sdShopEnvironment\Loader\ShippingMethodsLoader"
+        />
     </services>
 </container>
