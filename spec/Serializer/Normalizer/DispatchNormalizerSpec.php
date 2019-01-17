@@ -13,6 +13,7 @@ use sdShopEnvironment\Serializer\Normalizer\DispatchNormalizer;
 use Shopware\Models\Country\Country;
 use Shopware\Models\Dispatch\Dispatch;
 use Shopware\Models\Dispatch\ShippingCost;
+use Shopware\Models\Payment\Payment;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Serializer;
@@ -67,5 +68,17 @@ class DispatchNormalizerSpec extends ObjectBehavior
             ->willReturn([]);
 
         $this->setAttributeValue($object, 'costsMatrix', [1]);
+    }
+
+    public function it_will_call_serializer_on_payments_attribute(
+        \stdClass $object,
+        Serializer $serializer
+    ) {
+        $serializer
+            ->denormalize([1], Payment::class . '[]', null)
+            ->shouldBeCalled()
+            ->willReturn([]);
+
+        $this->setAttributeValue($object, 'payments', [1]);
     }
 }

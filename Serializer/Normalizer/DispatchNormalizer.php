@@ -11,6 +11,7 @@ namespace sdShopEnvironment\Serializer\Normalizer;
 use Shopware\Models\Country\Country;
 use Shopware\Models\Dispatch\Dispatch;
 use Shopware\Models\Dispatch\ShippingCost;
+use Shopware\Models\Payment\Payment;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
@@ -29,6 +30,10 @@ class DispatchNormalizer extends ObjectNormalizer
 
                 case 'costsMatrix':
                     $value = $this->serializer->denormalize($value, ShippingCost::class . '[]', $format);
+                    break;
+
+                case 'payments':
+                    $value = $this->serializer->denormalize($value, Payment::class . '[]', $format);
                     break;
             }
         }

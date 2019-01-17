@@ -49,7 +49,6 @@
                 <argument type="collection">
                     <argument type="string">id</argument> <!-- already used as array key -->
                     <argument type="string">categories</argument>
-                    <argument type="string">payments</argument>
                     <argument type="string">holidays</argument>
                     <argument type="string">attribute</argument>
                 </argument>
@@ -62,6 +61,13 @@
         >
             <argument type="service" id="sd.shop_environment.serializer.normalizer.object_normalizer"/>
             <argument type="service" id="models"/>
+        </service>
+
+        <service
+                id="sd.shop_environment.serializer.normalizer.dispatch_payment_normalizer"
+                class="sdShopEnvironment\Serializer\Normalizer\DispatchPaymentNormalizer"
+        >
+            <argument id="models" type="service"/>
         </service>
 
         <!-- Denormalizer -->
@@ -90,6 +96,7 @@
             <argument type="collection">
                 <argument type="service" id="sd.shop_environment.serializer.normalizer.country_normalizer" />
                 <argument type="service" id="sd.shop_environment.serializer.normalizer.shipping_cost_normalizer" />
+                <argument type="service" id="sd.shop_environment.serializer.normalizer.dispatch_payment_normalizer" />
                 <argument type="service" id="sd.shop_environment.serializer.normalizer.dispatch_normalizer" />
                 <argument type="service" id="sd.shop_environment.serializer.denormalizer.array_denormalizer" />
             </argument>
