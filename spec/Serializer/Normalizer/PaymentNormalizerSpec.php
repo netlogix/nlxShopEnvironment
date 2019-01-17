@@ -35,7 +35,7 @@ class PaymentNormalizerSpec extends ObjectBehavior
         $this->shouldImplement(DenormalizerInterface::class);
     }
 
-    public function it_support_payment_denormalization(Payment $payment)
+    public function it_supports_payment_denormalization(Payment $payment)
     {
         $this->supportsDenormalization($payment, Payment::class)->shouldBe(true);
     }

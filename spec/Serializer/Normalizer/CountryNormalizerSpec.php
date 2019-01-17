@@ -46,7 +46,7 @@ class CountryNormalizerSpec extends ObjectBehavior
         $this->supportsNormalization($object)->shouldBe(false);
     }
 
-    public function it_support_country_denormalization()
+    public function it_supports_country_denormalization()
     {
         $this->supportsDenormalization([], Country::class)->shouldBe(true);
     }

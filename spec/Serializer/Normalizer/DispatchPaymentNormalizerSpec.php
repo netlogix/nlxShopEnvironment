@@ -46,7 +46,7 @@ class DispatchPaymentNormalizerSpec extends ObjectBehavior
         $this->supportsNormalization($object)->shouldBe(false);
     }
 
-    public function it_support_payment_denormalization()
+    public function it_supports_payment_denormalization()
     {
         $this->supportsDenormalization([], Payment::class)->shouldBe(true);
     }
