@@ -42,5 +42,13 @@
             <argument type="service" id="sd_shop_environment.dumper.productivity_mode_config_dumper" />
             <argument type="service" id="sd_shop_environment.loader.productivity_mode_config_loader" />
         </service>
+        <service
+                id="sd_shop_environment.data_types.payment_methods"
+                class="sdShopEnvironment\DataTypes\GenericDataType"
+        >
+            <tag name="sd.data_type" root_name="payment_methods" />
+            <argument type="service" id="sd.shop_environment.dumper.payment_methods_dumper" />
+            <argument type="service" id="sd.shop_environment.loader.payment_methods_loader" />
+        </service>
     </services>
 </container>

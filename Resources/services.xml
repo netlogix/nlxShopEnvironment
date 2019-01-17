@@ -7,6 +7,7 @@
         <import resource="services/data_types.xml" />
         <import resource="services/dumpers.xml" />
         <import resource="services/loaders.xml" />
+        <import resource="services/serializer.xml" />
     </imports>
 
     <services>
