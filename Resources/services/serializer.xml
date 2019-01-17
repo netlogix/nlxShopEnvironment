@@ -6,6 +6,12 @@
     <services>
         <!-- Normalizer -->
         <service
+                id="sd.shop_environment.serializer.normalizer.object_normalizer"
+                class="Symfony\Component\Serializer\Normalizer\ObjectNormalizer"
+        >
+        </service>
+
+        <service
                 id="sd.shop_environment.serializer.normalizer.country_normalizer"
                 class="sdShopEnvironment\Serializer\Normalizer\CountryNormalizer"
         >
@@ -33,19 +39,15 @@
                     <argument type="string">attribute</argument>
                 </argument>
             </call>
-            <call method="setEntityManager">
-                <argument type="service" id="models" />
-            </call>
         </service>
 
         <service
-                class="Symfony\Component\Serializer\Normalizer\ObjectNormalizer"
+                class="sdShopEnvironment\Serializer\Normalizer\DispatchNormalizer"
                 id="sd.shop_environment.serializer.normalizer.dispatch_normalizer"
         >
             <call method="setIgnoredAttributes">
                 <argument type="collection">
                     <argument type="string">id</argument> <!-- already used as array key -->
-                    <argument type="string">costsMatrix</argument>
                     <argument type="string">categories</argument>
                     <argument type="string">payments</argument>
                     <argument type="string">holidays</argument>
@@ -54,15 +56,30 @@
             </call>
         </service>
 
+        <service
+                class="sdShopEnvironment\Serializer\Normalizer\ShippingCostNormalizer"
+                id="sd.shop_environment.serializer.normalizer.shipping_cost_normalizer"
+        >
+            <argument type="service" id="sd.shop_environment.serializer.normalizer.object_normalizer"/>
+            <argument type="service" id="models"/>
+        </service>
+
+        <!-- Denormalizer -->
+        <service
+                id="sd.shop_environment.serializer.denormalizer.array_denormalizer"
+                class="Symfony\Component\Serializer\Normalizer\ArrayDenormalizer"
+                shared="false"
+        />
         <!-- Serializer -->
         <service
                 id="sd.shop_environment.serializer.serializer.payment_serializer"
                 class="Symfony\Component\Serializer\Serializer"
         >
             <argument type="collection">
-                <argument type="service" id="sd.shop_environment.serializer.normalizer.country_normalizer" />
                 <argument type="service" id="sd.shop_environment.serializer.normalizer.shop_normalizer" />
+                <argument type="service" id="sd.shop_environment.serializer.normalizer.country_normalizer" />
                 <argument type="service" id="sd.shop_environment.serializer.normalizer.payment_normalizer" />
+                <argument type="service" id="sd.shop_environment.serializer.denormalizer.array_denormalizer" />
             </argument>
         </service>
 
@@ -72,7 +89,9 @@
         >
             <argument type="collection">
                 <argument type="service" id="sd.shop_environment.serializer.normalizer.country_normalizer" />
+                <argument type="service" id="sd.shop_environment.serializer.normalizer.shipping_cost_normalizer" />
                 <argument type="service" id="sd.shop_environment.serializer.normalizer.dispatch_normalizer" />
+                <argument type="service" id="sd.shop_environment.serializer.denormalizer.array_denormalizer" />
             </argument>
         </service>
 
