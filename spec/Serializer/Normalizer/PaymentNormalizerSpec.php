@@ -14,6 +14,7 @@ use Shopware\Models\Country\Country;
 use Shopware\Models\Payment\Payment;
 use Shopware\Models\Shop\Shop;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Serializer;
 
 class PaymentNormalizerSpec extends ObjectBehavior

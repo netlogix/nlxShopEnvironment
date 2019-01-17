@@ -84,8 +84,7 @@ class ShippingCostNormalizerSpec extends ObjectBehavior
     public function it_can_denormalize_existing_shipping_cost(
         AbstractNormalizer $normalizer,
         ShippingCost $existingShippingCost,
-        ObjectRepository $shippingCostRepository,
-        ShippingCost $existingShippingCost
+        ObjectRepository $shippingCostRepository
     ) {
         $data = ['id' => 20];
 
@@ -96,7 +95,7 @@ class ShippingCostNormalizerSpec extends ObjectBehavior
 
         $normalizer
             ->denormalize(
-                $existingShippingCost,
+                $data,
                 ShippingCost::class,
                 null,
                 Argument::withEntry('object_to_populate', $existingShippingCost->getWrappedObject())
@@ -111,7 +110,6 @@ class ShippingCostNormalizerSpec extends ObjectBehavior
 
     public function it_can_denormalize_new_shipping_cost(
         AbstractNormalizer $normalizer,
-        ShippingCost $shippingCost,
         ObjectRepository $shippingCostRepository
     ) {
         $data = ['id' => 20];
@@ -123,7 +121,7 @@ class ShippingCostNormalizerSpec extends ObjectBehavior
 
         $normalizer
             ->denormalize(
-                $shippingCost,
+                $data,
                 ShippingCost::class,
                 null,
                 Argument::withKey('object_to_populate')
