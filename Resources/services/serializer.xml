@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- Normalizer -->
+        <service
+                id="sd.shop_environment.serializer.normalizer.country_normalizer"
+                class="sdShopEnvironment\Serializer\Normalizer\CountryNormalizer"
+        >
+        </service>
+        <service
+                id="sd.shop_environment.serializer.normalizer.shop_normalizer"
+                class="sdShopEnvironment\Serializer\Normalizer\ShopNormalizer"
+        >
+        </service>
+        <service
+                id="sd.shop_environment.serializer.normalizer.payment_normalizer"
+                class="Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer"
+        >
+            <call method="setIgnoredAttributes">
+                <argument type="collection">
+                    <argument type="string">id</argument>
+                    <argument type="string">name</argument> <!-- already used as array key -->
+                    <argument type="string">ruleSets</argument>
+                    <argument type="string">paymentInstances</argument>
+                    <argument type="string">paymentData</argument>
+                    <argument type="string">plugin</argument>
+                    <argument type="string">attribute</argument>
+                </argument>
+            </call>
+        </service>
+
+
+        <!-- Serializer -->
+        <service
+                id="sd.shop_environment.serializer.serializer.payment_serializer"
+                class="Symfony\Component\Serializer\Serializer"
+        >
+            <argument type="collection">
+                <argument type="service" id="sd.shop_environment.serializer.normalizer.country_normalizer" />
+                <argument type="service" id="sd.shop_environment.serializer.normalizer.shop_normalizer" />
+                <argument type="service" id="sd.shop_environment.serializer.normalizer.payment_normalizer" />
+            </argument>
+        </service>
+    </services>
+</container>

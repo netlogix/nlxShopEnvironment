@@ -13,27 +13,25 @@ use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use sdShopEnvironment\Dumper\DumperInterface;
 use sdShopEnvironment\Dumper\PaymentMethodsDumper;
 use Shopware\Models\Payment\Payment;
 use Shopware\Models\Shop\Shop;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class PaymentMethodsDumperSpec extends ObjectBehavior
 {
     public function let(
         EntityManagerInterface $entityManager,
         ObjectRepository $paymentMethodsRepository,
-        ClassMetadata $classMetadata
+        NormalizerInterface $normalizer
     ) {
         $entityManager
             ->getRepository(Payment::class)
             ->willReturn($paymentMethodsRepository);
 
-        $entityManager
-            ->getClassMetadata(Payment::class)
-            ->willReturn($classMetadata);
-
-        $this->beConstructedWith($entityManager);
+        $this->beConstructedWith($entityManager, $normalizer);
     }
 
     public function it_is_initializable()
@@ -60,53 +58,33 @@ class PaymentMethodsDumperSpec extends ObjectBehavior
 
     public function it_can_dump_payment_methods(
         ObjectRepository $paymentMethodsRepository,
-        ClassMetadata $classMetadata,
         Payment $paymentMethodOne,
         Payment $paymentMethodTwo,
-        Shop $shopAssignedToPaymentMethodTwo
+        NormalizerInterface $normalizer
     ) {
-        $shopAssignedToPaymentMethodTwo
-            ->getId()
-            ->willReturn(161);
-
         $paymentMethodOne
             ->getName()
             ->willReturn('ac');
 
-        $paymentMethodOne
-            ->getDescription()
-            ->willReturn('Payment Method One');
-
-        $paymentMethodOne
-            ->getShops()
-            ->willReturn(new ArrayCollection());
-
         $paymentMethodTwo
             ->getName()
             ->willReturn('ab');
-
-        $paymentMethodTwo
-            ->getDescription()
-            ->willReturn('Payment Method Two');
-
-        $paymentMethodTwo
-            ->getShops()
-            ->willReturn(new ArrayCollection([$shopAssignedToPaymentMethodTwo->getWrappedObject()]));
 
         $paymentMethodsRepository
             ->findAll()
             ->shouldBeCalled()
             ->willReturn([$paymentMethodOne, $paymentMethodTwo]);
 
-        $classMetadata
-            ->getFieldNames()
-            ->willReturn(['id', 'description']);
+        $normalizer
+            ->normalize(Argument::type(Payment::class))
+            ->shouldBeCalledTimes(2)
+            ->willReturn(['data' => 'data']);
 
         $this
             ->dump()
             ->shouldBeLike([
-                'ac' => ['description' => 'Payment Method One', 'shops' => []],
-                'ab' => ['description' => 'Payment Method Two', 'shops' => [161]],
+                'ac' => ['data' => 'data'],
+                'ab' => ['data' => 'data'],
             ]);
     }
 }
