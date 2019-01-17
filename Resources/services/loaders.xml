@@ -42,6 +42,9 @@
         <service
                 id="sd.shop_environment.loader.shipping_methods_loader"
                 class="sdShopEnvironment\Loader\ShippingMethodsLoader"
-        />
+        >
+            <argument type="service" id="models"/>
+            <argument type="service" id="sd.shop_environment.serializer.serializer.dispatch_serializer"/>
+        </service>
     </services>
 </container>
