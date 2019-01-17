@@ -8,31 +8,32 @@
 
 namespace sdShopEnvironment\Serializer\Normalizer;
 
-use Doctrine\ORM\EntityManager;
 use Shopware\Models\Country\Country;
 use Shopware\Models\Payment\Payment;
 use Shopware\Models\Shop\Shop;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class PaymentNormalizer extends ObjectNormalizer
 {
-    /** @var EntityManager */
-    private $entityManager;
-
-    public function setEntityManager($entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
-
     /**
      * {@inheritdoc}
      */
-    public function denormalize($data, $class, $format = null, array $context = [])
+    public function setAttributeValue($object, $attribute, $value, $format = null, array $context = [])
     {
-        $data['shops'] =  $this->entityManager->getRepository(Shop::class)->findBy(['id' => $data['shops']]);
-        $data['countries'] = $this->entityManager->getRepository(Country::class)->findBy(['id' => $data['countries']]);
-        $data = parent::denormalize($data, $class, $format, $context);
-        return $data;
+        if ($this->serializer instanceof DenormalizerInterface) {
+            switch ($attribute) {
+                case 'countries':
+                    $value = $this->serializer->denormalize($value, Country::class . '[]', $format);
+                    break;
+
+                case 'shops':
+                    $value = $this->serializer->denormalize($value, Shop::class . '[]', $format);
+                    break;
+            }
+        }
+
+        parent::setAttributeValue($object, $attribute, $value, $format, $context);
     }
 
     /**

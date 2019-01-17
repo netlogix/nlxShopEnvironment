@@ -8,31 +8,19 @@
 
 namespace spec\sdShopEnvironment\Serializer\Normalizer;
 
-use Doctrine\Common\Persistence\ObjectRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use sdShopEnvironment\Serializer\Normalizer\PaymentNormalizer;
 use Shopware\Models\Country\Country;
 use Shopware\Models\Payment\Payment;
 use Shopware\Models\Shop\Shop;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Serializer;
 
 class PaymentNormalizerSpec extends ObjectBehavior
 {
-    public function let(
-        EntityManagerInterface $entityManager,
-        ObjectRepository $shopRepository,
-        ObjectRepository $countryRepository
-    ) {
-        $entityManager
-            ->getRepository(Shop::class)
-            ->willReturn($shopRepository);
-
-        $entityManager
-            ->getRepository(Country::class)
-            ->willReturn($countryRepository);
-
-        $this->setEntityManager($entityManager);
+    public function let(Serializer $serializer)
+    {
+        $this->setSerializer($serializer);
     }
 
     public function it_is_initializable()
@@ -40,8 +28,9 @@ class PaymentNormalizerSpec extends ObjectBehavior
         $this->shouldHaveType(PaymentNormalizer::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interfaces()
     {
+        $this->shouldImplement(NormalizerInterface::class);
         $this->shouldImplement(DenormalizerInterface::class);
     }
 
@@ -55,23 +44,27 @@ class PaymentNormalizerSpec extends ObjectBehavior
         $this->supportsDenormalization($object, \stdClass::class)->shouldBe(false);
     }
 
-    public function it_loads_shop_entites_on_denormalization(
-        ObjectRepository $shopRepository
+    public function it_will_call_serializer_on_countries_attribute(
+        \stdClass $object,
+        Serializer $serializer
     ) {
-        $shopRepository
-            ->findBy(['id' => [1, 2]])
-            ->shouldBeCalled();
+        $serializer
+            ->denormalize([1], Country::class . '[]', null)
+            ->shouldBeCalled()
+            ->willReturn([]);
 
-        $this->denormalize(['shops' => [1, 2], 'countries' => []], Payment::class);
+        $this->setAttributeValue($object, 'countries', [1]);
     }
 
-    public function it_loads_country_entites_on_denormalization(
-        ObjectRepository $countryRepository
+    public function it_will_call_serializer_on_shops_attribute(
+        \stdClass $object,
+        Serializer $serializer
     ) {
-        $countryRepository
-            ->findBy(['id' => [1, 2]])
-            ->shouldBeCalled();
+        $serializer
+            ->denormalize([1], Shop::class . '[]', null)
+            ->shouldBeCalled()
+            ->willReturn([]);
 
-        $this->denormalize(['countries' => [1, 2], 'shops' => ''], Payment::class);
+        $this->setAttributeValue($object, 'shops', [1]);
     }
 }

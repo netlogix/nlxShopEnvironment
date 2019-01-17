@@ -50,7 +50,7 @@ class DispatchNormalizerSpec extends ObjectBehavior
         Serializer $serializer
     ) {
         $serializer
-            ->denormalize([1], Country::class .'[]', null)
+            ->denormalize([1], Country::class . '[]', null)
             ->shouldBeCalled()
             ->willReturn([]);
 
@@ -62,7 +62,7 @@ class DispatchNormalizerSpec extends ObjectBehavior
         Serializer $serializer
     ) {
         $serializer
-            ->denormalize([1], ShippingCost::class .'[]', null)
+            ->denormalize([1], ShippingCost::class . '[]', null)
             ->shouldBeCalled()
             ->willReturn([]);
 
