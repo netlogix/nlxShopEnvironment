@@ -8,11 +8,22 @@
 
 namespace sdShopEnvironment\Serializer\Normalizer;
 
+use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Shopware\Models\Shop\Shop;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-class ShopNormalizer implements NormalizerInterface
+class ShopNormalizer implements NormalizerInterface, DenormalizerInterface
 {
+    /** @var ObjectRepository */
+    private $shopRepository;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->shopRepository = $entityManager->getRepository(Shop::class);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -28,5 +39,21 @@ class ShopNormalizer implements NormalizerInterface
     public function supportsNormalization($data, $format = null)
     {
         return $data instanceof Shop;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function denormalize($data, $class, $format = null, array $context = [])
+    {
+        return $this->shopRepository->find($data);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function supportsDenormalization($data, $type, $format = null)
+    {
+        return Shop::class === $type;
     }
 }
