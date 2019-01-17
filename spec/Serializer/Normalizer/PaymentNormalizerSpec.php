@@ -9,10 +9,8 @@
 namespace spec\sdShopEnvironment\Serializer\Normalizer;
 
 use Doctrine\Common\Persistence\ObjectRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use sdShopEnvironment\Serializer\Normalizer\PaymentNormalizer;
 use Shopware\Models\Country\Country;
 use Shopware\Models\Payment\Payment;
@@ -64,7 +62,6 @@ class PaymentNormalizerSpec extends ObjectBehavior
             ->findBy(['id' => [1, 2]])
             ->shouldBeCalled();
 
-
         $this->denormalize(['shops' => [1, 2], 'countries' => []], Payment::class);
     }
 
@@ -74,7 +71,6 @@ class PaymentNormalizerSpec extends ObjectBehavior
         $countryRepository
             ->findBy(['id' => [1, 2]])
             ->shouldBeCalled();
-
 
         $this->denormalize(['countries' => [1, 2], 'shops' => ''], Payment::class);
     }

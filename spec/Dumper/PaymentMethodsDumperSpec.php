@@ -8,16 +8,13 @@
 
 namespace spec\sdShopEnvironment\Dumper;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use sdShopEnvironment\Dumper\DumperInterface;
 use sdShopEnvironment\Dumper\PaymentMethodsDumper;
 use Shopware\Models\Payment\Payment;
-use Shopware\Models\Shop\Shop;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class PaymentMethodsDumperSpec extends ObjectBehavior

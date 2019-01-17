@@ -15,7 +15,6 @@ use Prophecy\Argument;
 use sdShopEnvironment\Loader\LoaderInterface;
 use sdShopEnvironment\Loader\PaymentMethodsLoader;
 use Shopware\Models\Payment\Payment;
-use Shopware\Models\Shop\Shop;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class PaymentMethodsLoaderSpec extends ObjectBehavior

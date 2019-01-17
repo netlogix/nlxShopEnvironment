@@ -9,7 +9,6 @@
 namespace spec\sdShopEnvironment\Serializer\Normalizer;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use sdShopEnvironment\Serializer\Normalizer\ShopNormalizer;
 use Shopware\Models\Shop\Shop;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
