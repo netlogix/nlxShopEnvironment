@@ -11,7 +11,7 @@ namespace sdShopEnvironment\Loader;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopware\Models\Payment\Payment;
-use Shopware\Models\Shop\Shop;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class PaymentMethodsLoader implements LoaderInterface
 {
@@ -21,14 +21,14 @@ class PaymentMethodsLoader implements LoaderInterface
     /** @var ObjectRepository */
     private $paymentMethodsRepository;
 
-    /** @var ObjectRepository */
-    private $shopRepository;
+    /** @var DenormalizerInterface */
+    private $denormalizer;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, DenormalizerInterface $denormalizer)
     {
         $this->entityManager = $entityManager;
         $this->paymentMethodsRepository = $entityManager->getRepository(Payment::class);
-        $this->shopRepository = $entityManager->getRepository(Shop::class);
+        $this->denormalizer = $denormalizer;
     }
 
     /**
@@ -61,7 +61,6 @@ class PaymentMethodsLoader implements LoaderInterface
             $this->entityManager->persist($paymentMethod);
         }
 
-        $paymentMethodData['shops'] = $this->shopRepository->findBy(['id' => $paymentMethodData['shops']]);
-        $paymentMethod->fromArray($paymentMethodData);
+        $this->denormalizer->denormalize($paymentMethodData, Payment::class, null, ['object_to_populate' => $paymentMethod]);
     }
 }

@@ -16,27 +16,20 @@ use sdShopEnvironment\Loader\LoaderInterface;
 use sdShopEnvironment\Loader\PaymentMethodsLoader;
 use Shopware\Models\Payment\Payment;
 use Shopware\Models\Shop\Shop;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class PaymentMethodsLoaderSpec extends ObjectBehavior
 {
     public function let(
         EntityManagerInterface $entityManager,
         ObjectRepository $paymentMethodsRepository,
-        ObjectRepository $shopRepository
+        DenormalizerInterface $denormalizer
     ) {
         $entityManager
             ->getRepository(Payment::class)
             ->willReturn($paymentMethodsRepository);
 
-        $shopRepository
-            ->findBy(Argument::any())
-            ->willReturn([]);
-
-        $entityManager
-            ->getRepository(Shop::class)
-            ->willReturn($shopRepository);
-
-        $this->beConstructedWith($entityManager);
+        $this->beConstructedWith($entityManager, $denormalizer);
     }
 
     public function it_is_initializable()
@@ -51,13 +44,18 @@ class PaymentMethodsLoaderSpec extends ObjectBehavior
 
     public function it_can_load_new_payment_methods(
         EntityManagerInterface $entityManager,
-        ObjectRepository $paymentMethodsRepository
+        ObjectRepository $paymentMethodsRepository,
+        DenormalizerInterface $denormalizer
     ) {
         $paymentMethodsRepository
             ->findOneBy(['name' => 'new_payment_method'])
             ->willReturn(null);
 
-        $data = ['new_payment_method' => ['description' => 'hello world', 'shops' => []]];
+        $data = ['new_payment_method' => ['description' => 'hello world']];
+
+        $denormalizer
+            ->denormalize(Argument::any(), Argument::any(), Argument::any(), Argument::any())
+            ->shouldBeCalled();
 
         $entityManager
             ->persist(Argument::type(Payment::class))
@@ -73,7 +71,8 @@ class PaymentMethodsLoaderSpec extends ObjectBehavior
     public function it_can_load_existing_payment_methods(
         EntityManagerInterface $entityManager,
         ObjectRepository $paymentMethodsRepository,
-        Payment $paymentMethod
+        Payment $paymentMethod,
+        DenormalizerInterface $denormalizer
     ) {
         $paymentMethodsRepository
             ->findOneBy(['name' => 'new_payment_method'])
@@ -81,13 +80,13 @@ class PaymentMethodsLoaderSpec extends ObjectBehavior
 
         $data = ['new_payment_method' => ['description' => 'hello world', 'shops' => []]];
 
+        $denormalizer
+            ->denormalize(Argument::any(), Argument::any(), Argument::any(), Argument::withEntry('object_to_populate', $paymentMethod->getWrappedObject()))
+            ->shouldBeCalled();
+
         $entityManager
             ->persist(Argument::any())
             ->shouldNotBeCalled();
-
-        $paymentMethod
-            ->fromArray($data['new_payment_method'])
-            ->shouldBeCalled();
 
         $entityManager
             ->flush()

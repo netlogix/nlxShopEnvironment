@@ -9,15 +9,18 @@
                 id="sd.shop_environment.serializer.normalizer.country_normalizer"
                 class="sdShopEnvironment\Serializer\Normalizer\CountryNormalizer"
         >
+            <argument type="service" id="models"/>
         </service>
         <service
                 id="sd.shop_environment.serializer.normalizer.shop_normalizer"
                 class="sdShopEnvironment\Serializer\Normalizer\ShopNormalizer"
         >
+            <argument type="service" id="models"/>
         </service>
+
         <service
+                class="sdShopEnvironment\Serializer\Normalizer\PaymentNormalizer"
                 id="sd.shop_environment.serializer.normalizer.payment_normalizer"
-                class="Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer"
         >
             <call method="setIgnoredAttributes">
                 <argument type="collection">
@@ -30,8 +33,10 @@
                     <argument type="string">attribute</argument>
                 </argument>
             </call>
+            <call method="setEntityManager">
+                <argument type="service" id="models" />
+            </call>
         </service>
-
 
         <!-- Serializer -->
         <service

@@ -37,6 +37,7 @@
                 class="sdShopEnvironment\Loader\PaymentMethodsLoader"
         >
             <argument type="service" id="models"/>
+            <argument type="service" id="sd.shop_environment.serializer.serializer.payment_serializer"/>
         </service>
     </services>
 </container>
