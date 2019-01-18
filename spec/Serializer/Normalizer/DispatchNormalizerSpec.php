@@ -9,15 +9,16 @@
 namespace spec\sdShopEnvironment\Serializer\Normalizer;
 
 use PhpSpec\ObjectBehavior;
-use sdShopEnvironment\Serializer\Normalizer\PaymentNormalizer;
+use sdShopEnvironment\Serializer\Normalizer\DispatchNormalizer;
 use Shopware\Models\Country\Country;
+use Shopware\Models\Dispatch\Dispatch;
+use Shopware\Models\Dispatch\ShippingCost;
 use Shopware\Models\Payment\Payment;
-use Shopware\Models\Shop\Shop;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Serializer;
 
-class PaymentNormalizerSpec extends ObjectBehavior
+class DispatchNormalizerSpec extends ObjectBehavior
 {
     public function let(Serializer $serializer)
     {
@@ -26,7 +27,7 @@ class PaymentNormalizerSpec extends ObjectBehavior
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType(PaymentNormalizer::class);
+        $this->shouldHaveType(DispatchNormalizer::class);
     }
 
     public function it_implements_correct_interfaces()
@@ -35,14 +36,14 @@ class PaymentNormalizerSpec extends ObjectBehavior
         $this->shouldImplement(DenormalizerInterface::class);
     }
 
-    public function it_supports_payment_denormalization(Payment $payment)
+    public function it_supports_dispatch_denormalization()
     {
-        $this->supportsDenormalization($payment, Payment::class)->shouldBe(true);
+        $this->supportsDenormalization([], Dispatch::class)->shouldBe(true);
     }
 
-    public function it_does_not_support_other_normalization(\stdClass $object)
+    public function it_does_not_support_other_denormalization()
     {
-        $this->supportsDenormalization($object, \stdClass::class)->shouldBe(false);
+        $this->supportsDenormalization([], \stdClass::class)->shouldBe(false);
     }
 
     public function it_will_call_serializer_on_countries_attribute(
@@ -62,10 +63,22 @@ class PaymentNormalizerSpec extends ObjectBehavior
         Serializer $serializer
     ) {
         $serializer
-            ->denormalize([1], Shop::class . '[]', null)
+            ->denormalize([1], ShippingCost::class . '[]', null)
             ->shouldBeCalled()
             ->willReturn([]);
 
-        $this->setAttributeValue($object, 'shops', [1]);
+        $this->setAttributeValue($object, 'costsMatrix', [1]);
+    }
+
+    public function it_will_call_serializer_on_payments_attribute(
+        \stdClass $object,
+        Serializer $serializer
+    ) {
+        $serializer
+            ->denormalize([1], Payment::class . '[]', null)
+            ->shouldBeCalled()
+            ->willReturn([]);
+
+        $this->setAttributeValue($object, 'payments', [1]);
     }
 }

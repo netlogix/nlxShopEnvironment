@@ -10,18 +10,18 @@ namespace sdShopEnvironment\Serializer\Normalizer;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Shopware\Models\Shop\Shop;
+use Shopware\Models\Payment\Payment;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-class ShopNormalizer implements NormalizerInterface, DenormalizerInterface
+class DispatchPaymentNormalizer implements NormalizerInterface, DenormalizerInterface
 {
     /** @var ObjectRepository */
-    private $shopRepository;
+    private $paymentMethodsRepository;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->shopRepository = $entityManager->getRepository(Shop::class);
+        $this->paymentMethodsRepository = $entityManager->getRepository(Payment::class);
     }
 
     /**
@@ -29,8 +29,8 @@ class ShopNormalizer implements NormalizerInterface, DenormalizerInterface
      */
     public function normalize($object, $format = null, array $context = [])
     {
-        /* @var Shop $object */
-        return $object->getId();
+        /* @var Payment $object */
+        return $object->getName();
     }
 
     /**
@@ -38,7 +38,7 @@ class ShopNormalizer implements NormalizerInterface, DenormalizerInterface
      */
     public function supportsNormalization($data, $format = null)
     {
-        return $data instanceof Shop;
+        return $data instanceof Payment;
     }
 
     /**
@@ -46,7 +46,7 @@ class ShopNormalizer implements NormalizerInterface, DenormalizerInterface
      */
     public function denormalize($data, $class, $format = null, array $context = [])
     {
-        return $this->shopRepository->find($data);
+        return $this->paymentMethodsRepository->findOneBy(['name' => $data]);
     }
 
     /**
@@ -54,6 +54,6 @@ class ShopNormalizer implements NormalizerInterface, DenormalizerInterface
      */
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return Shop::class === $type;
+        return Payment::class === $type;
     }
 }

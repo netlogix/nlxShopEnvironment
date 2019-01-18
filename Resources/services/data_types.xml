@@ -50,5 +50,13 @@
             <argument type="service" id="sd.shop_environment.dumper.payment_methods_dumper" />
             <argument type="service" id="sd.shop_environment.loader.payment_methods_loader" />
         </service>
+        <service
+                id="sd_shop_environment.data_types.shipping_methods"
+                class="sdShopEnvironment\DataTypes\GenericDataType"
+        >
+            <tag name="sd.data_type" root_name="shipping_methods" />
+            <argument type="service" id="sd.shop_environment.dumper.shipping_methods_dumper" />
+            <argument type="service" id="sd.shop_environment.loader.shipping_methods_loader" />
+        </service>
     </services>
 </container>

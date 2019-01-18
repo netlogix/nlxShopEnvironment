@@ -9,12 +9,13 @@
 namespace sdShopEnvironment\Serializer\Normalizer;
 
 use Shopware\Models\Country\Country;
+use Shopware\Models\Dispatch\Dispatch;
+use Shopware\Models\Dispatch\ShippingCost;
 use Shopware\Models\Payment\Payment;
-use Shopware\Models\Shop\Shop;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
-class PaymentNormalizer extends ObjectNormalizer
+class DispatchNormalizer extends ObjectNormalizer
 {
     /**
      * {@inheritdoc}
@@ -27,8 +28,12 @@ class PaymentNormalizer extends ObjectNormalizer
                     $value = $this->serializer->denormalize($value, Country::class . '[]', $format);
                     break;
 
-                case 'shops':
-                    $value = $this->serializer->denormalize($value, Shop::class . '[]', $format);
+                case 'costsMatrix':
+                    $value = $this->serializer->denormalize($value, ShippingCost::class . '[]', $format);
+                    break;
+
+                case 'payments':
+                    $value = $this->serializer->denormalize($value, Payment::class . '[]', $format);
                     break;
             }
         }
@@ -41,6 +46,6 @@ class PaymentNormalizer extends ObjectNormalizer
      */
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return Payment::class === $type;
+        return Dispatch::class === $type;
     }
 }

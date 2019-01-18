@@ -13,27 +13,27 @@ use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use sdShopEnvironment\Dumper\DumperInterface;
-use sdShopEnvironment\Dumper\PaymentMethodsDumper;
-use Shopware\Models\Payment\Payment;
+use sdShopEnvironment\Dumper\ShippingMethodsDumper;
+use Shopware\Models\Dispatch\Dispatch;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-class PaymentMethodsDumperSpec extends ObjectBehavior
+class ShippingMethodsDumperSpec extends ObjectBehavior
 {
     public function let(
         EntityManagerInterface $entityManager,
-        ObjectRepository $paymentMethodsRepository,
+        ObjectRepository $shippingMethodsRepository,
         NormalizerInterface $normalizer
     ) {
         $entityManager
-            ->getRepository(Payment::class)
-            ->willReturn($paymentMethodsRepository);
+            ->getRepository(Dispatch::class)
+            ->willReturn($shippingMethodsRepository);
 
         $this->beConstructedWith($entityManager, $normalizer);
     }
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType(PaymentMethodsDumper::class);
+        $this->shouldHaveType(ShippingMethodsDumper::class);
     }
 
     public function it_implements_correct_interface()
@@ -41,9 +41,9 @@ class PaymentMethodsDumperSpec extends ObjectBehavior
         $this->shouldImplement(DumperInterface::class);
     }
 
-    public function it_can_dump_empty_payment_methods(ObjectRepository $paymentMethodsRepository)
+    public function it_can_dump_empty_shipping_methods(ObjectRepository $shippingMethodsRepository)
     {
-        $paymentMethodsRepository
+        $shippingMethodsRepository
             ->findAll()
             ->shouldBeCalled()
             ->willReturn([]);
@@ -53,35 +53,35 @@ class PaymentMethodsDumperSpec extends ObjectBehavior
             ->shouldBe([]);
     }
 
-    public function it_can_dump_payment_methods(
-        ObjectRepository $paymentMethodsRepository,
-        Payment $paymentMethodOne,
-        Payment $paymentMethodTwo,
+    public function it_can_dump_shipping_methods(
+        ObjectRepository $shippingMethodsRepository,
+        Dispatch $shippingMethodOne,
+        Dispatch $shippingMethodTwo,
         NormalizerInterface $normalizer
     ) {
-        $paymentMethodOne
-            ->getName()
-            ->willReturn('ac');
+        $shippingMethodOne
+            ->getId()
+            ->willReturn(13);
 
-        $paymentMethodTwo
-            ->getName()
-            ->willReturn('ab');
+        $shippingMethodTwo
+            ->getId()
+            ->willReturn(12);
 
-        $paymentMethodsRepository
+        $shippingMethodsRepository
             ->findAll()
             ->shouldBeCalled()
-            ->willReturn([$paymentMethodOne, $paymentMethodTwo]);
+            ->willReturn([$shippingMethodOne, $shippingMethodTwo]);
 
         $normalizer
-            ->normalize(Argument::type(Payment::class))
+            ->normalize(Argument::type(Dispatch::class))
             ->shouldBeCalledTimes(2)
             ->willReturn(['data' => 'data']);
 
         $this
             ->dump()
             ->shouldBeLike([
-                'ac' => ['data' => 'data'],
-                'ab' => ['data' => 'data'],
+                13 => ['data' => 'data'],
+                12 => ['data' => 'data'],
             ]);
     }
 }
