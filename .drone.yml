@@ -4,7 +4,7 @@ workspace:
 
 pipeline:
   setup:composer:
-    image: docker.solutiondrive.de/library/composer:${PHP_VERSION}
+    image: solutiondrive/php-composer:${PHP_VERSION}
     commands:
       - ./etc/scripts/prepareComposerJson.sh
       - composer update -n --no-progress --no-suggest
@@ -13,7 +13,7 @@ pipeline:
     secrets: [ composer_auth ]
 
   test:codingstandards:
-    image: docker.solutiondrive.de/library/composer:${PHP_VERSION}
+    image: solutiondrive/php-composer:${PHP_VERSION}
     commands:
       - ./etc/scripts/checkCodingStandards.sh
     when:
@@ -22,13 +22,13 @@ pipeline:
         SHOPWARE_VERSION: \~5.5.3
 
   test:spec:
-    image: docker.solutiondrive.de/library/php-xdebug:${PHP_VERSION}
+    image: solutiondrive/php-xdebug:${PHP_VERSION}
     commands:
       - vendor/bin/phpspec-standalone.phar run --no-code-generation --format=dot
 
   # Create a artifact with the lowest possible version
   publish:create:master_archive:
-    image: docker.solutiondrive.de/library/composer:${PHP_VERSION}
+    image: solutiondrive/php-composer:${PHP_VERSION}
     commands:
       - rm -rf sdShopEnvironment-master.zip
       - rm -rf sdShopEnvironment
@@ -47,7 +47,7 @@ pipeline:
         SHOPWARE_VERSION: \~5.2.27
 
   publish:create:release_archive:
-    image: docker.solutiondrive.de/library/composer:${PHP_VERSION}
+    image: solutiondrive/php-composer:${PHP_VERSION}
     commands:
       - rm -rf sdShopEnvironment-${DRONE_TAG}.zip
       - rm -rf sdShopEnvironment
@@ -80,7 +80,7 @@ pipeline:
         SHOPWARE_VERSION: \~5.2.27
 
   notify:mail:
-    image: docker.solutiondrive.de/drone/plugin-email
+    image: drillster/drone-email
     from: ci@solutiondrive.de
     host: sslout.df.eu
     when:
