@@ -3,7 +3,7 @@
 /*
  * Created by solutionDrive GmbH
  *
- * @copyright 2018 solutionDrive GmbH
+ * @copyright solutionDrive GmbH
  */
 
 namespace sdShopEnvironment\Commands;
@@ -59,10 +59,10 @@ EOF
     {
         $errorOutput = $this->getErrorOutput($output);
 
-        $filename = trim($input->getOption('file'));
+        $filename = \trim($input->getOption('file'));
         if ('-' === $filename) {
             $filename = 'php://stdin';
-        } elseif (false === file_exists($filename)) {
+        } elseif (false === \file_exists($filename)) {
             $errorOutput->writeln('<error>File not found: ' . $filename . '</error>');
             exit(1);
         }
