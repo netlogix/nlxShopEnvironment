@@ -3,7 +3,7 @@
 /*
  * Created by solutionDrive GmbH
  *
- * @copyright 2018 solutionDrive GmbH
+ * @copyright solutionDrive GmbH
  */
 
 namespace sdShopEnvironment\Commands;
@@ -56,7 +56,7 @@ class ShopEnvironmentDumpConfigCommand extends ShopwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $filename = trim($input->getOption('file'));
+        $filename = \trim($input->getOption('file'));
         if ('-' === $filename) {
             $filename = 'php://stdout';
         }

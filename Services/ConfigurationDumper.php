@@ -3,7 +3,7 @@
 /*
  * Created by solutionDrive GmbH
  *
- * @copyright 2018 solutionDrive GmbH
+ * @copyright solutionDrive GmbH
  */
 
 namespace sdShopEnvironment\Services;
@@ -33,7 +33,7 @@ class ConfigurationDumper implements ConfigurationDumperInterface
 
         $configurationAsYaml = Yaml::dump($configuration, 4, 4, true, false);
 
-        if (false === \is_writable(dirname($exportPath)) && 'php://stdout' !== $exportPath) {
+        if (false === \is_writable(\dirname($exportPath)) && 'php://stdout' !== $exportPath) {
             \mkdir(\dirname($exportPath), 0775);
         }
 
