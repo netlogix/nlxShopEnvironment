@@ -11,12 +11,9 @@ namespace spec\sdShopEnvironment\Dumper;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use sdShopEnvironment\Dumper\DocumentsDumper;
 use sdShopEnvironment\Dumper\DumperInterface;
 use Shopware\Models\Document\Document;
-use Shopware\Models\Payment\Payment;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class DocumentsDumperSpec extends ObjectBehavior
 {

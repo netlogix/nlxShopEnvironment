@@ -99,8 +99,7 @@ class DocumentsLoaderSpec extends ObjectBehavior
 
     public function it_can_create_new_document(
         EntityManagerInterface $entityManager,
-        ObjectRepository $documentsRepository,
-        Document $document1
+        ObjectRepository $documentsRepository
     ) {
         $data = [
             'doc1' => [
@@ -120,7 +119,7 @@ class DocumentsLoaderSpec extends ObjectBehavior
 
         $persistedDocument = null;
         $entityManager->persist(Argument::that(function ($document) use (&$persistedDocument) {
-            if (false === is_a($document, Document::class)) {
+            if (false === \is_a($document, Document::class)) {
                 return false;
             }
 
