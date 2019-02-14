@@ -43,5 +43,11 @@
             <argument type="service" id="models"/>
             <argument type="service" id="sd.shop_environment.serializer.serializer.dispatch_serializer"/>
         </service>
+        <service
+                id="sd.shop_environment.dumper.documents_dumper"
+                class="sdShopEnvironment\Dumper\DocumentsDumper"
+        >
+            <argument type="service" id="models"/>
+        </service>
     </services>
 </container>
