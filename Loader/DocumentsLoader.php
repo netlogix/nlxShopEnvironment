@@ -44,7 +44,7 @@ class DocumentsLoader implements LoaderInterface
         $this->entityManager->flush();
     }
 
-    private function findOrCreateDocument(string $key): Document
+    private function findOrCreateDocument(string $key)
     {
         $repository = $this->entityManager->getRepository(Document::class);
         $document = $repository->findOneBy(['key' => $key]);
