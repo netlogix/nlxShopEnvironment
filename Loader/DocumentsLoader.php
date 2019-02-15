@@ -44,7 +44,7 @@ class DocumentsLoader implements LoaderInterface
         $this->entityManager->flush();
     }
 
-    private function findOrCreateDocument(string $key)
+    private function findOrCreateDocument($key)
     {
         $keyPropertyAndSetter = $this->getKeyPropertyAndSetter();
         $keyProperty = $keyPropertyAndSetter['property'];
