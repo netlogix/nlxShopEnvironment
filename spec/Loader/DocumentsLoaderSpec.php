@@ -106,7 +106,7 @@ class DocumentsLoaderSpec extends ObjectBehavior
         ObjectRepository $documentsRepository,
         Document $document1
     ) {
-        if (false === \method_exists($document1, 'getKey')) {
+        if (false === \method_exists($document1->getWrappedObject(), 'getKey')) {
             return;
         }
 
@@ -141,11 +141,106 @@ class DocumentsLoaderSpec extends ObjectBehavior
 
         $this->load($data);
 
-        if (\method_exists($persistedDocument, 'getKey')) {
-            Assert::eq($persistedDocument->getKey(), 'doc1');
+        Assert::eq($persistedDocument->getKey(), 'doc1');
+        Assert::eq($persistedDocument->getName(), 'documentOne');
+        Assert::eq($persistedDocument->getTemplate(), 'doc1.tpl');
+        Assert::eq($persistedDocument->getNumbers(), 'doc01');
+        Assert::eq($persistedDocument->getLeft(), 99);
+        Assert::eq($persistedDocument->getRight(), 88);
+        Assert::eq($persistedDocument->getTop(), 77);
+        Assert::eq($persistedDocument->getBottom(), 66);
+        Assert::eq($persistedDocument->getPageBreak(), 55);
+    }
+
+    public function it_can_update_existing_document_for_older_shopware(
+        EntityManagerInterface $entityManager,
+        ObjectRepository $documentsRepository,
+        Document $document1
+    ) {
+        if (true === \method_exists($document1->getWrappedObject(), 'getKey')) {
+            return;
         }
 
-        Assert::eq($persistedDocument->getName(), 'doc1');
+        $data = [
+            'documentOne' => [
+                'name'      => 'documentOne',
+                'template'  => 'doc1.tpl',
+                'numbers'   => 'doc01',
+                'left'      => 99,
+                'right'     => 88,
+                'top'       => 77,
+                'bottom'    => 66,
+                'pagebreak' => 55,
+            ],
+        ];
+
+        $documentsRepository->findOneBy(['name' => 'documentOne'])
+            ->willReturn($document1);
+
+        $document1->setName('documentOne')
+            ->shouldBeCalled();
+        $document1->setTemplate('doc1.tpl')
+            ->shouldBeCalled();
+        $document1->setNumbers('doc01')
+            ->shouldBeCalled();
+        $document1->setLeft(99)
+            ->shouldBeCalled();
+        $document1->setRight(88)
+            ->shouldBeCalled();
+        $document1->setTop(77)
+            ->shouldBeCalled();
+        $document1->setBottom(66)
+            ->shouldBeCalled();
+        $document1->setPageBreak(55)
+            ->shouldBeCalled();
+
+        $entityManager->flush()
+            ->shouldBeCalled();
+
+        $this->load($data);
+    }
+
+    public function it_can_create_new_document_for_older_shopware(
+        EntityManagerInterface $entityManager,
+        ObjectRepository $documentsRepository,
+        Document $document1
+    ) {
+        if (true === \method_exists($document1->getWrappedObject(), 'getKey')) {
+            return;
+        }
+
+        $data = [
+            'documentOne' => [
+                'name'      => 'documentOne',
+                'template'  => 'doc1.tpl',
+                'numbers'   => 'doc01',
+                'left'      => 99,
+                'right'     => 88,
+                'top'       => 77,
+                'bottom'    => 66,
+                'pagebreak' => 55,
+            ],
+        ];
+
+        $documentsRepository->findOneBy(['name' => 'documentOne'])
+            ->willReturn(null);
+
+        $persistedDocument = null;
+        $entityManager->persist(Argument::that(function ($document) use (&$persistedDocument) {
+            if (false === \is_a($document, Document::class)) {
+                return false;
+            }
+
+            $persistedDocument = $document;
+            return true;
+        }))
+            ->shouldBeCalled();
+        $entityManager->flush()
+            ->shouldBeCalled();
+
+        $this->load($data);
+
+        Assert::eq($persistedDocument->getName(), 'documentOne');
         Assert::eq($persistedDocument->getTemplate(), 'doc1.tpl');
         Assert::eq($persistedDocument->getNumbers(), 'doc01');
         Assert::eq($persistedDocument->getLeft(), 99);
