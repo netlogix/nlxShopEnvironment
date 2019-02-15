@@ -49,11 +49,15 @@ class DocumentsDumperSpec extends ObjectBehavior
             ->shouldBe([]);
     }
 
-    public function it_can_dump_document(
+    public function it_can_dump_document_for_shopware_since_5_5(
         ObjectRepository $documentsRepository,
         Document $document1,
         Document $document2
     ) {
+        if (false === \method_exists($document1->getWrappedObject(), 'getKey')) {
+            return;
+        }
+
         $document1->getKey()
             ->willReturn('doc1');
         $document1->getName()
@@ -120,4 +124,82 @@ class DocumentsDumperSpec extends ObjectBehavior
                 ],
             ]);
     }
+
+    /*
+    public function it_can_dump_document_for_older_shopware(
+        ObjectRepository $documentsRepository,
+        Document $document1,
+        Document $document2
+    ) {
+        if (true === \method_exists($document1->getWrappedObject(), 'getKey')) {
+            return;
+        }
+
+        $document1->getKey()
+            ->willReturn('doc1');
+        $document1->getName()
+            ->willReturn('documentOne');
+        $document1->getTemplate()
+            ->willReturn('doc1.tpl');
+        $document1->getNumbers()
+            ->willReturn('doc01');
+        $document1->getLeft()
+            ->willReturn(99);
+        $document1->getRight()
+            ->willReturn(88);
+        $document1->getTop()
+            ->willReturn(77);
+        $document1->getBottom()
+            ->willReturn(66);
+        $document1->getPageBreak()
+            ->willReturn(55);
+
+        $document2->getKey()
+            ->willReturn('doc2');
+        $document2->getName()
+            ->willReturn('documentTwo');
+        $document2->getTemplate()
+            ->willReturn('doc2.tpl');
+        $document2->getNumbers()
+            ->willReturn('doc02');
+        $document2->getLeft()
+            ->willReturn(99);
+        $document2->getRight()
+            ->willReturn(88);
+        $document2->getTop()
+            ->willReturn(77);
+        $document2->getBottom()
+            ->willReturn(66);
+        $document2->getPageBreak()
+            ->willReturn(55);
+
+        $documentsRepository->findAll()
+            ->shouldBeCalled()
+            ->willReturn([$document1, $document2]);
+
+        $this->dump()
+            ->shouldBeLike([
+                'doc1' => [
+                    'name'      => 'doc1',
+                    'template'  => 'doc1.tpl',
+                    'numbers'   => 'doc01',
+                    'left'      => 99,
+                    'right'     => 88,
+                    'top'       => 77,
+                    'bottom'    => 66,
+                    'pagebreak' => 55,
+                ],
+                'doc2' => [
+                    'name'      => 'doc2',
+                    'template'  => 'doc2.tpl',
+                    'numbers'   => 'doc02',
+                    'left'      => 99,
+                    'right'     => 88,
+                    'top'       => 77,
+                    'bottom'    => 66,
+                    'pagebreak' => 55,
+                ],
+            ]);
+    }
+    */
 }

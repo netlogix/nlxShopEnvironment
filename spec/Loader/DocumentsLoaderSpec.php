@@ -53,11 +53,15 @@ class DocumentsLoaderSpec extends ObjectBehavior
         $this->load([]);
     }
 
-    public function it_can_update_existing_document(
+    public function it_can_update_existing_document_for_shopware_since_5_5(
         EntityManagerInterface $entityManager,
         ObjectRepository $documentsRepository,
         Document $document1
     ) {
+        if (false === \method_exists($document1->getWrappedObject(), 'getKey')) {
+            return;
+        }
+
         $data = [
             'doc1' => [
                 'name'      => 'documentOne',
@@ -97,10 +101,15 @@ class DocumentsLoaderSpec extends ObjectBehavior
         $this->load($data);
     }
 
-    public function it_can_create_new_document(
+    public function it_can_create_new_document_for_shopware_since_5_5(
         EntityManagerInterface $entityManager,
-        ObjectRepository $documentsRepository
+        ObjectRepository $documentsRepository,
+        Document $document1
     ) {
+        if (false === \method_exists($document1, 'getKey')) {
+            return;
+        }
+
         $data = [
             'doc1' => [
                 'name'      => 'documentOne',
@@ -132,8 +141,11 @@ class DocumentsLoaderSpec extends ObjectBehavior
 
         $this->load($data);
 
-        Assert::eq($persistedDocument->getName(), 'documentOne');
-        Assert::eq($persistedDocument->getKey(), 'doc1');
+        if (\method_exists($persistedDocument, 'getKey')) {
+            Assert::eq($persistedDocument->getKey(), 'doc1');
+        }
+
+        Assert::eq($persistedDocument->getName(), 'doc1');
         Assert::eq($persistedDocument->getTemplate(), 'doc1.tpl');
         Assert::eq($persistedDocument->getNumbers(), 'doc01');
         Assert::eq($persistedDocument->getLeft(), 99);
