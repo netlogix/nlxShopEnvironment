@@ -46,5 +46,11 @@
             <argument type="service" id="models"/>
             <argument type="service" id="sd.shop_environment.serializer.serializer.dispatch_serializer"/>
         </service>
+        <service
+                id="sd.shop_environment.loader.documents_loader"
+                class="sdShopEnvironment\Loader\DocumentsLoader"
+        >
+            <argument type="service" id="models"/>
+        </service>
     </services>
 </container>
