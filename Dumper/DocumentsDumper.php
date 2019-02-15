@@ -34,7 +34,7 @@ class DocumentsDumper implements DumperInterface
 
         /** @var Document $document */
         foreach ($documents as $document) {
-            $config[$document->getKey()] = [
+            $config[$this->getIdentitifer($document)] = [
                 'name'      => $document->getName(),
                 'template'  => $document->getTemplate(),
                 'numbers'   => $document->getNumbers(),
@@ -47,5 +47,14 @@ class DocumentsDumper implements DumperInterface
         }
 
         return $config;
+    }
+
+    private function getIdentitifer(Document $document)
+    {
+        if (\method_exists($document, 'getKey')) {
+            return $document->getKey();
+        } else {
+            return $document->getName();
+        }
     }
 }

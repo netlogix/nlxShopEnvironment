@@ -46,15 +46,36 @@ class DocumentsLoader implements LoaderInterface
 
     private function findOrCreateDocument(string $key)
     {
+        $keyPropertyAndSetter = $this->getKeyPropertyAndSetter();
+        $keyProperty = $keyPropertyAndSetter['property'];
+        $keySetter = $keyPropertyAndSetter['setter'];
+
         $repository = $this->entityManager->getRepository(Document::class);
-        $document = $repository->findOneBy(['key' => $key]);
+        $document = $repository->findOneBy([$keyProperty => $key]);
 
         if (null === $document) {
             $document = new Document();
-            $document->setKey($key);
+            $document->$keySetter($key);
             $this->entityManager->persist($document);
         }
 
         return $document;
+    }
+
+    private function getKeyPropertyAndSetter()
+    {
+        $exampleDocument = new Document();
+
+        if (\method_exists($exampleDocument, 'setKey')) {
+            return [
+                'property' => 'key',
+                'setter'   => 'setKey',
+            ];
+        } else {
+            return [
+                'property' => 'name',
+                'setter'   => 'setName',
+            ];
+        }
     }
 }
