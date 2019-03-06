@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use sdShopEnvironment\Serializer\Normalizer\ShippingCostNormalizer;
+use Shopware\Models\Dispatch\Dispatch;
 use Shopware\Models\Dispatch\ShippingCost;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -69,16 +70,31 @@ class ShippingCostNormalizerSpec extends ObjectBehavior
 
     public function it_can_normalize(
         AbstractNormalizer $normalizer,
-        ShippingCost $shippingCost
+        ShippingCost $shippingCost,
+        Dispatch $dispatch
     ) {
-        $normalizer
-            ->normalize($shippingCost, Argument::any(), Argument::any())
-            ->shouldBeCalled()
-            ->willReturn(['test']);
+        $shippingCost->getFrom()
+            ->willReturn('0.100');
+        $shippingCost->getValue()
+            ->willReturn('0.20');
+        $shippingCost->getFactor()
+            ->willReturn('0.30');
+        $shippingCost->getDispatch()
+            ->willReturn($dispatch);
+
+        $dispatch->getId()
+            ->willReturn(42);
 
         $this
             ->normalize($shippingCost)
-            ->shouldBe(['test']);
+            ->shouldBe(
+                [
+                    'from'     => '0.100',
+                    'value'    => '0.20',
+                    'factor'   => '0.30',
+                    'dispatch' => 42,
+                ]
+            );
     }
 
     public function it_can_denormalize_existing_shipping_cost(
