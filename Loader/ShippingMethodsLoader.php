@@ -43,6 +43,11 @@ class ShippingMethodsLoader implements LoaderInterface
                 echo 'Error during import of shipping method ' . $id . PHP_EOL;
                 echo $throwable->getMessage();
                 continue;
+            } catch (\Exception $exception) {
+                // PHP5.6 Support
+                echo 'Error during import of shipping method ' . $id . PHP_EOL;
+                echo $exception->getMessage();
+                continue;
             }
         }
 
