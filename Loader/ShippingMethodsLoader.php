@@ -10,6 +10,7 @@ namespace sdShopEnvironment\Loader;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use http\Exception\RuntimeException;
 use Shopware\Models\Dispatch\Dispatch;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
@@ -42,6 +43,7 @@ class ShippingMethodsLoader implements LoaderInterface
             } catch (\Throwable $throwable) {
                 echo 'Error during import of shipping method ' . $id . PHP_EOL;
                 echo $throwable->getMessage();
+                continue;
             }
         }
 
@@ -56,8 +58,7 @@ class ShippingMethodsLoader implements LoaderInterface
     {
         $shippingMethod = $this->shippingMethodsRepository->find($shippingMethodId);
         if (null === $shippingMethod) {
-            $shippingMethod = new Dispatch();
-            $this->entityManager->persist($shippingMethod);
+            throw new RuntimeException('The loading configuration contains a shipping method that is not yet created in the database. We cannot create such a shipping method! ShippingMethodId: ' . $shippingMethodId);
         }
 
         $this->denormalizer->denormalize($shippingMethodData, Dispatch::class, null, ['object_to_populate' => $shippingMethod]);
