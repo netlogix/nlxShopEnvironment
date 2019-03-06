@@ -1,0 +1,7 @@
+imports:
+- { resource: '../vendor/bin/easy-coding-standard-php5.6.yml' }
+
+parameters:
+  skip:
+    SlevomatCodingStandard\Sniffs\Exceptions\ReferenceThrowableOnlySniff.ReferencedGeneralException:
+      - 'Loader/ShippingMethodsLoader.php'
