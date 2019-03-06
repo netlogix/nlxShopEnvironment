@@ -35,7 +35,7 @@ class ShippingCostNormalizer implements NormalizerInterface, DenormalizerInterfa
         $data = [
             'from'  => $object->getFrom(),
             'value' => $object->getValue(),
-            'factor' => $object->getFactor()
+            'factor' => $object->getFactor(),
         ];
         $dispatchObject = $object->getDispatch();
         if (null !== $dispatchObject) {
