@@ -57,7 +57,12 @@ class ShippingCostNormalizer implements NormalizerInterface, DenormalizerInterfa
      */
     public function denormalize($data, $class, $format = null, array $context = [])
     {
-        $shippingCost = $this->shippingCostRepository->find($data['id']);
+        $shippingCost = $this->shippingCostRepository->findOneBy(
+            [
+                'from'     => $data['from'],
+                'dispatch' => $data['dispatch'],
+            ]
+        );
         if (null === $shippingCost) {
             $shippingCost = new ShippingCost();
         }

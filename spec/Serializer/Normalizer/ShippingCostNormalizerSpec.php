@@ -102,10 +102,18 @@ class ShippingCostNormalizerSpec extends ObjectBehavior
         ShippingCost $existingShippingCost,
         ObjectRepository $shippingCostRepository
     ) {
-        $data = ['id' => 20];
+        $data = [
+            'from'     => '0.100',
+            'dispatch' => 42,
+        ];
 
         $shippingCostRepository
-            ->find(20)
+            ->findOneBy(
+                [
+                    'from'      => $data['from'],
+                    'dispatch'  => $data['dispatch'],
+                ]
+            )
             ->shouldBeCalled()
             ->willReturn($existingShippingCost);
 
@@ -128,10 +136,18 @@ class ShippingCostNormalizerSpec extends ObjectBehavior
         AbstractNormalizer $normalizer,
         ObjectRepository $shippingCostRepository
     ) {
-        $data = ['id' => 20];
+        $data = [
+            'from'     => '0.100',
+            'dispatch' => 42,
+        ];
 
         $shippingCostRepository
-            ->find(20)
+            ->findOneBy(
+                [
+                    'from'      => $data['from'],
+                    'dispatch'  => $data['dispatch'],
+                ]
+            )
             ->shouldBeCalled()
             ->willReturn(null);
 
