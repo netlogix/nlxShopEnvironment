@@ -41,7 +41,7 @@ class ShippingMethodsLoaderSpec extends ObjectBehavior
         $this->shouldImplement(LoaderInterface::class);
     }
 
-    public function it_can_load_new_shipping_methods(
+    public function it_aborts_if_it_is_an_unknown_id(
         EntityManagerInterface $entityManager,
         ObjectRepository $shippingMethodsRepository,
         DenormalizerInterface $denormalizer
@@ -54,11 +54,7 @@ class ShippingMethodsLoaderSpec extends ObjectBehavior
 
         $denormalizer
             ->denormalize(Argument::any(), Argument::any(), Argument::any(), Argument::any())
-            ->shouldBeCalled();
-
-        $entityManager
-            ->persist(Argument::type(Dispatch::class))
-            ->shouldBeCalled();
+            ->shouldNotBeCalled();
 
         $entityManager
             ->flush()
