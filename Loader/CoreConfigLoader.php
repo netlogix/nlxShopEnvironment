@@ -128,7 +128,7 @@ class CoreConfigLoader implements LoaderInterface
      * @param string           $formName
      * @param array            $elementInformation
      *
-     * @return Form
+     * @return Form|null
      */
     private function findOrCreateForm(ObjectRepository $configFormRepository, $formName, $elementInformation)
     {
@@ -153,6 +153,10 @@ class CoreConfigLoader implements LoaderInterface
         return $form;
     }
 
+    /**
+     * @param Form       $form
+     * @param string[][] $elementInformation
+     */
     private function updateFormData(Form $form, $elementInformation)
     {
         $form->setName($elementInformation['form']['name']);
