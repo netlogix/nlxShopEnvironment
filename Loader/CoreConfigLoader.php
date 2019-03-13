@@ -144,10 +144,8 @@ class CoreConfigLoader implements LoaderInterface
             if (null === $form) {
                 $form = new Form();
                 $this->entityManager->persist($form);
-                $this->updateFormData($form, $elementInformation);
-            } else {
-                $this->updateFormData($form, $elementInformation);
             }
+            $this->updateFormData($form, $elementInformation);
         }
 
         return $form;
