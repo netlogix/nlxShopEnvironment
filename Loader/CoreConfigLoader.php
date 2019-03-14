@@ -53,6 +53,9 @@ class CoreConfigLoader implements LoaderInterface
                 // Load form if it is set
                 if (self::NO_FORM_NAME !== $nameOfBackendForm) {
                     $form = $this->findOrCreateForm($configFormRepository, $nameOfBackendForm, $elementInformation);
+                    if (null === $form) {
+                        continue;
+                    }
                 } else {
                     $form = null;
                 }
@@ -94,6 +97,9 @@ class CoreConfigLoader implements LoaderInterface
                 // Load form if it is set
                 if (self::NO_FORM_NAME !== $nameOfBackendForm) {
                     $form = $this->findOrCreateForm($configFormRepository, $nameOfBackendForm, $elementInformation);
+                    if (null === $form) {
+                        continue;
+                    }
                 } else {
                     $form = null;
                 }
@@ -122,7 +128,7 @@ class CoreConfigLoader implements LoaderInterface
      * @param string           $formName
      * @param array            $elementInformation
      *
-     * @return Form
+     * @return Form|null
      */
     private function findOrCreateForm(ObjectRepository $configFormRepository, $formName, $elementInformation)
     {
@@ -131,20 +137,30 @@ class CoreConfigLoader implements LoaderInterface
          * @todo for proper creation of form we would also need the plugin (there is a relation between forms and plugins)
          * @todo look at /vendor/shopware/shopware/engine/Shopware/Models/Config/Form.php:42
          */
+        /** @var Form|null $form */
         $form = $configFormRepository->findOneBy(['name' => $formName]);
-        if (null === $form) {
-            $form = new Form();
-            $this->entityManager->persist($form);
-        }
 
         if (\array_key_exists('form', $elementInformation)) {
-            $form->setName($elementInformation['form']['name']);
-            $form->setLabel($elementInformation['form']['label']);
-            $form->setDescription($elementInformation['form']['description']);
-            $form->setPosition($elementInformation['form']['position']);
+            if (null === $form) {
+                $form = new Form();
+                $this->entityManager->persist($form);
+            }
+            $this->updateFormData($form, $elementInformation);
         }
 
         return $form;
+    }
+
+    /**
+     * @param Form       $form
+     * @param string[][] $elementInformation
+     */
+    private function updateFormData(Form $form, array $elementInformation)
+    {
+        $form->setName($elementInformation['form']['name']);
+        $form->setLabel($elementInformation['form']['label']);
+        $form->setDescription($elementInformation['form']['description']);
+        $form->setPosition($elementInformation['form']['position']);
     }
 
     /**
