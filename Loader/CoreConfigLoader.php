@@ -155,7 +155,7 @@ class CoreConfigLoader implements LoaderInterface
      * @param Form       $form
      * @param string[][] $elementInformation
      */
-    private function updateFormData(Form $form, $elementInformation)
+    private function updateFormData(Form $form, array $elementInformation)
     {
         $form->setName($elementInformation['form']['name']);
         $form->setLabel($elementInformation['form']['label']);
