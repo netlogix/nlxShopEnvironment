@@ -29,6 +29,21 @@ class MediaManagerDumper implements DumperInterface
         $repository = $this->entityManager->getRepository(Album::class);
         $albums = $repository->findAll();
 
+        /** @var Album $album */
+        foreach ($albums as $album) {
+            $parent = $album->getParent();
+            if (null !== $parent) {
+                $parent = $parent->getId();
+            }
+
+            $config[$album->getId()] = [
+                'name'  => $album->getName(),
+                'parentID' => $parent,
+                'position' => $album->getPosition(),
+                'garbage_collectable' => $album->getGarbageCollectable(),
+            ];
+        }
+
         return $config;
     }
 }
