@@ -52,13 +52,17 @@ class MediaManagerDumperSpec extends ObjectBehavior
             ->shouldBe([]);
     }
 
-    public function it_can_dump_album_data(
+    public function it_can_dump_album_data_in_shopware_54_and_above(
         ObjectRepository $albumRepository,
         Album $album1,
         Settings $settingsAlbum1,
         Album $album2,
         Settings $settingsAlbum2
     ) {
+        if (false === \method_exists($album1->getWrappedObject, 'getGarbageCollectable')) {
+            return;
+        }
+
         $this->prepareParametersForDump($albumRepository, $album1, $settingsAlbum1, $album2, $settingsAlbum2);
 
         $dump = $this->dump();
@@ -116,6 +120,8 @@ class MediaManagerDumperSpec extends ObjectBehavior
             'thumbnail_high_dpi_quality' => 75,
         ]);
     }
+
+    # TODO: Adds specs for shopware prior 5.4
 
     private function prepareParametersForDump(
         ObjectRepository $albumRepository,

@@ -93,13 +93,17 @@ class MediaManagerLoaderSpec extends ObjectBehavior
         $this->load($data);
     }
 
-    public function it_can_update_existing_album(
+    public function it_can_update_existing_album_in_shopware_54_and_above(
         EntityManagerInterface $entityManager,
         ObjectRepository $albumRepository,
         Album $album,
         ObjectRepository $settingsRepository,
         Settings $settings
     ) {
+        if (false === \method_exists($album->getWrappedObject, 'setGarbageCollectable')) {
+            return;
+        }
+
         $data = [
             -1 => [
                 'name' => 'Album1',
@@ -152,4 +156,6 @@ class MediaManagerLoaderSpec extends ObjectBehavior
 
         $this->load($data);
     }
+
+    # TODO: Adds specs for shopware prior 5.4
 }
