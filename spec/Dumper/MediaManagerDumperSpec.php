@@ -3,7 +3,7 @@
 /*
  * Created by solutionDrive GmbH
  *
- * @copyright 2018 solutionDrive GmbH
+ * @copyright solutionDrive GmbH
  */
 
 namespace spec\sdShopEnvironment\Dumper;
@@ -59,7 +59,7 @@ class MediaManagerDumperSpec extends ObjectBehavior
         Album $album2,
         Settings $settingsAlbum2
     ) {
-        if (false === \method_exists($album1->getWrappedObject, 'getGarbageCollectable')) {
+        if (false === \method_exists($album1->getWrappedObject(), 'getGarbageCollectable')) {
             return;
         }
 
@@ -121,7 +121,7 @@ class MediaManagerDumperSpec extends ObjectBehavior
         ]);
     }
 
-    # TODO: Adds specs for shopware prior 5.4
+    // TODO: Adds specs for shopware prior 5.4
 
     private function prepareParametersForDump(
         ObjectRepository $albumRepository,

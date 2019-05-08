@@ -3,7 +3,7 @@
 /*
  * Created by solutionDrive GmbH
  *
- * @copyright 2018 solutionDrive GmbH
+ * @copyright solutionDrive GmbH
  */
 
 namespace spec\sdShopEnvironment\Loader;
@@ -100,7 +100,7 @@ class MediaManagerLoaderSpec extends ObjectBehavior
         ObjectRepository $settingsRepository,
         Settings $settings
     ) {
-        if (false === \method_exists($album->getWrappedObject, 'setGarbageCollectable')) {
+        if (false === \method_exists($album->getWrappedObject(), 'setGarbageCollectable')) {
             return;
         }
 
@@ -157,5 +157,5 @@ class MediaManagerLoaderSpec extends ObjectBehavior
         $this->load($data);
     }
 
-    # TODO: Adds specs for shopware prior 5.4
+    // TODO: Adds specs for shopware prior 5.4
 }
