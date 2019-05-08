@@ -11,6 +11,7 @@ namespace spec\sdShopEnvironment\Loader;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use sdShopEnvironment\Loader\LoaderInterface;
 use sdShopEnvironment\Loader\MediaManagerLoader;
 use Shopware\Models\Media\Album;
@@ -39,5 +40,18 @@ class MediaManagerLoaderSpec extends ObjectBehavior
     public function it_implements_correct_interface()
     {
         $this->shouldImplement(LoaderInterface::class);
+    }
+
+    public function it_can_handle_empty_config(
+        EntityManagerInterface $entityManager,
+        ObjectRepository $albumRepository
+    ) {
+        $albumRepository->findOneBy(Argument::any())
+            ->shouldNotBeCalled();
+
+        $entityManager->flush()
+            ->shouldBeCalled();
+
+        $this->load([]);
     }
 }

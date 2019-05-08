@@ -23,6 +23,10 @@ class MediaManagerLoader implements LoaderInterface
 
     public function load($config)
     {
-        // TODO: Implement load() method.
+        foreach ($config as $key => $configElement) {
+
+        }
+
+        $this->entityManager->flush();
     }
 }
