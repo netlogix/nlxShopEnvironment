@@ -66,5 +66,13 @@
             <argument type="service" id="sd.shop_environment.dumper.documents_dumper" />
             <argument type="service" id="sd.shop_environment.loader.documents_loader" />
         </service>
+        <service
+                id="sd_shop_environment.data_types.media_manager"
+                class="sdShopEnvironment\DataTypes\GenericDataType"
+        >
+            <tag name="sd.data_type" root_name="media_manager" />
+            <argument type="service" id="sd.shop_environment.dumper.media_manager_dumper" />
+            <argument type="service" id="sd.shop_environment.loader.media_manager_loader" />
+        </service>
     </services>
 </container>

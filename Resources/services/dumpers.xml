@@ -49,5 +49,11 @@
         >
             <argument type="service" id="models"/>
         </service>
+        <service
+                id="sd.shop_environment.dumper.media_manager_dumper"
+                class="sdShopEnvironment\Dumper\MediaManagerDumper"
+        >
+            <argument type="service" id="models"/>
+        </service>
     </services>
 </container>

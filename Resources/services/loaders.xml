@@ -52,5 +52,11 @@
         >
             <argument type="service" id="models"/>
         </service>
+        <service
+                id="sd.shop_environment.loader.media_manager_loader"
+                class="sdShopEnvironment\Loader\MediaManagerLoader"
+        >
+            <argument type="service" id="models"/>
+        </service>
     </services>
 </container>
