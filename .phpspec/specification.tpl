@@ -19,7 +19,7 @@ class %name% extends ObjectBehavior
         $this->shouldHaveType(%subject_class%::class);
     }
 
-    public function it_implements_%subject_class%_interface()
+    public function it_implements_correct_interface()
     {
         $this->shouldImplement(%subject_class%Interface::class);
     }
