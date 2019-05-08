@@ -31,8 +31,7 @@ class MediaManagerLoader implements LoaderInterface
         foreach ($config as $key => $configElement) {
             $album = $albumRepository->find($key);
             if (null === $album) {
-                $album = new Album();
-                $this->entityManager->persist($album);
+                throw new \RuntimeException('The loading configuration contains a media manager album that is not yet created in the database. We cannot create such an album! AlbumId: ' . $key);
             }
             $album->setName($configElement['name']);
             $parentId = $configElement['parentID'];

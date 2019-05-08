@@ -55,10 +55,8 @@ class MediaManagerLoaderSpec extends ObjectBehavior
         $this->load([]);
     }
 
-    public function it_can_create_new_album(
-        EntityManagerInterface $entityManager,
-        ObjectRepository $albumRepository,
-        ObjectRepository $settingsRepository
+    public function it_cannot_create_a_new_album(
+        ObjectRepository $albumRepository
     ) {
         $data = [
             -1 => [
@@ -79,18 +77,9 @@ class MediaManagerLoaderSpec extends ObjectBehavior
 
         $albumRepository->find(-1)
             ->willReturn(null);
-        $entityManager->persist(Argument::type(Album::class))
-            ->shouldBeCalled();
 
-        $settingsRepository->findOneBy(Argument::any())
-            ->willReturn(null);
-        $entityManager->persist(Argument::type(Settings::class))
-            ->shouldBeCalled();
-
-        $entityManager->flush()
-            ->shouldBeCalled();
-
-        $this->load($data);
+        $this->shouldThrow(\RuntimeException::class)
+            ->during('load', [$data]);
     }
 
     public function it_can_update_existing_album_in_shopware_54_and_above(
