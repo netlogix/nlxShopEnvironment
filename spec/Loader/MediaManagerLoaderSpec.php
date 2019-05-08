@@ -73,7 +73,7 @@ class MediaManagerLoaderSpec extends ObjectBehavior
                     'thumbnail_high_dpi' => false,
                     'thumbnail_quality' => 80,
                     'thumbnail_high_dpi_quality' => 75,
-                ]
+                ],
             ],
         ];
 
@@ -113,7 +113,7 @@ class MediaManagerLoaderSpec extends ObjectBehavior
                     'thumbnail_high_dpi' => false,
                     'thumbnail_quality' => 80,
                     'thumbnail_high_dpi_quality' => 75,
-                ]
+                ],
             ],
         ];
 

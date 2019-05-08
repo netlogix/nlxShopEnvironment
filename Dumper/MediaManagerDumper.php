@@ -3,7 +3,7 @@
 /*
  * Created by solutionDrive GmbH
  *
- * @copyright 2018 solutionDrive GmbH
+ * @copyright solutionDrive GmbH
  */
 
 namespace sdShopEnvironment\Dumper;
@@ -45,7 +45,7 @@ class MediaManagerDumper implements DumperInterface
                 'garbage_collectable' => $album->getGarbageCollectable(),
                 'settings' => [
                     'create_thumbnails' => $settings->getCreateThumbnails(),
-                    'thumbnail_size' => implode(';', $settings->getThumbnailSize()),
+                    'thumbnail_size' => \implode(';', $settings->getThumbnailSize()),
                     'icon' => $settings->getIcon(),
                     'thumbnail_high_dpi' => $settings->isThumbnailHighDpi(),
                     'thumbnail_quality' => $settings->getThumbnailQuality(),
