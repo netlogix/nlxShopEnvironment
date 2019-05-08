@@ -40,4 +40,15 @@ class MediaManagerDumperSpec extends ObjectBehavior
     {
         $this->shouldImplement(DumperInterface::class);
     }
+
+    public function it_can_dump_empty_albums(
+        ObjectRepository $albumRepository
+    ) {
+        $albumRepository->findAll()
+            ->shouldBeCalled()
+            ->willReturn([]);
+
+        $this->dump()
+            ->shouldBe([]);
+    }
 }

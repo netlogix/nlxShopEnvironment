@@ -9,6 +9,7 @@
 namespace sdShopEnvironment\Dumper;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopware\Models\Media\Album;
 
 class MediaManagerDumper implements DumperInterface
 {
@@ -23,6 +24,11 @@ class MediaManagerDumper implements DumperInterface
 
     public function dump()
     {
-        // TODO: Implement dump() method.
+        $config = [];
+
+        $repository = $this->entityManager->getRepository(Album::class);
+        $albums = $repository->findAll();
+
+        return $config;
     }
 }
