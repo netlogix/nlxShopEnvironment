@@ -36,11 +36,21 @@ class MediaManagerDumper implements DumperInterface
                 $parent = $parent->getId();
             }
 
+            $settings = $album->getSettings();
+
             $config[$album->getId()] = [
                 'name'  => $album->getName(),
                 'parentID' => $parent,
                 'position' => $album->getPosition(),
                 'garbage_collectable' => $album->getGarbageCollectable(),
+                'settings' => [
+                    'create_thumbnails' => $settings->getCreateThumbnails(),
+                    'thumbnail_size' => implode(';', $settings->getThumbnailSize()),
+                    'icon' => $settings->getIcon(),
+                    'thumbnail_high_dpi' => $settings->isThumbnailHighDpi(),
+                    'thumbnail_quality' => $settings->getThumbnailQuality(),
+                    'thumbnail_high_dpi_quality' => $settings->getThumbnailHighDpiQuality(),
+                ],
             ];
         }
 
