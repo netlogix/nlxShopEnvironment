@@ -20,13 +20,10 @@ class MediaManagerDumperSpec extends ObjectBehavior
 {
     public function let(
         EntityManagerInterface $entityManager,
-        ObjectRepository $albumRepository,
-        ObjectRepository $settingsRepository
+        ObjectRepository $albumRepository
     ) {
         $entityManager->getRepository(Album::class)
             ->willReturn($albumRepository);
-        $entityManager->getRepository(Settings::class)
-            ->willReturn($settingsRepository);
 
         $this->beConstructedWith($entityManager);
     }
