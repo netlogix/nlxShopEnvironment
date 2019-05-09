@@ -25,6 +25,10 @@ class MediaManagerLoader implements LoaderInterface
 
     public function load($config)
     {
+        if (false === \method_exists(Album::class, 'getGarbageCollectable')) {
+            throw new \RuntimeException('The "MediaManagerLoader::load" method is not yet tested in this version of shopware. Only tested in shopware 5.4 and above!');
+        }
+
         $albumRepository = $this->entityManager->getRepository(Album::class);
         $settingsRepository = $this->entityManager->getRepository(Settings::class);
 

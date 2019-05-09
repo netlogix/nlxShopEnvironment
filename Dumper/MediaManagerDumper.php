@@ -24,6 +24,10 @@ class MediaManagerDumper implements DumperInterface
 
     public function dump()
     {
+        if (false === \method_exists(Album::class, 'getGarbageCollectable')) {
+            throw new \RuntimeException('The "MediaManagerDumper::dump" method is not yet tested in this version of shopware. Only tested in shopware 5.4 and above!');
+        }
+
         $config = [];
 
         $repository = $this->entityManager->getRepository(Album::class);
