@@ -41,6 +41,10 @@ class MediaManagerDumperSpec extends ObjectBehavior
     public function it_can_dump_empty_albums(
         ObjectRepository $albumRepository
     ) {
+        if (false === \method_exists(Album::class, 'getGarbageCollectable')) {
+            return;
+        }
+
         $albumRepository->findAll()
             ->shouldBeCalled()
             ->willReturn([]);
@@ -56,7 +60,7 @@ class MediaManagerDumperSpec extends ObjectBehavior
         Album $album2,
         Settings $settingsAlbum2
     ) {
-        if (false === \method_exists($album1->getWrappedObject(), 'getGarbageCollectable')) {
+        if (false === \method_exists(Album::class, 'getGarbageCollectable')) {
             return;
         }
 

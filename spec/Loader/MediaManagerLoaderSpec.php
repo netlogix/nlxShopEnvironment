@@ -46,6 +46,10 @@ class MediaManagerLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ObjectRepository $albumRepository
     ) {
+        if (false === \method_exists(Album::class, 'setGarbageCollectable')) {
+            return;
+        }
+
         $albumRepository->findOneBy(Argument::any())
             ->shouldNotBeCalled();
 
@@ -58,6 +62,10 @@ class MediaManagerLoaderSpec extends ObjectBehavior
     public function it_cannot_create_a_new_album(
         ObjectRepository $albumRepository
     ) {
+        if (false === \method_exists(Album::class, 'setGarbageCollectable')) {
+            return;
+        }
+
         $data = [
             -1 => [
                 'name' => 'Album1',
@@ -89,7 +97,7 @@ class MediaManagerLoaderSpec extends ObjectBehavior
         ObjectRepository $settingsRepository,
         Settings $settings
     ) {
-        if (false === \method_exists($album->getWrappedObject(), 'setGarbageCollectable')) {
+        if (false === \method_exists(Album::class, 'setGarbageCollectable')) {
             return;
         }
 
