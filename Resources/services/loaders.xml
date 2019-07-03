@@ -58,5 +58,11 @@
         >
             <argument type="service" id="models"/>
         </service>
+        <service
+                id="sd.shop_environment.loader.category_loader"
+                class="sdShopEnvironment\Loader\CategoryLoader"
+        >
+            <argument type="service" id="models"/>
+        </service>
     </services>
 </container>

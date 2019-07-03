@@ -55,5 +55,11 @@
         >
             <argument type="service" id="models"/>
         </service>
+        <service
+                id="sd.shop_environment.dumper.category_dumper"
+                class="sdShopEnvironment\Dumper\CategoryDumper"
+        >
+            <argument type="service" id="models"/>
+        </service>
     </services>
 </container>
