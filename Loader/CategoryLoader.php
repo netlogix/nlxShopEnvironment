@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace sdShopEnvironment\Loader;
 
-
 use Doctrine\ORM\EntityManagerInterface;
 use Shopware\Models\Category\Category;
 use Shopware\Models\Search\CustomSorting;
@@ -26,7 +25,7 @@ class CategoryLoader implements LoaderInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function load($config)
     {
@@ -35,7 +34,7 @@ class CategoryLoader implements LoaderInterface
             $category = $categoryRepository->findOneBy(['name' => $categoryName]);
 
             if (null === $category) {
-                throw new \RuntimeException(sprintf('The loading configuration contains the category %s that is not created in the database', $categoryName));
+                throw new \RuntimeException(\sprintf('The loading configuration contains the category %s that is not created in the database', $categoryName));
             }
             $sortingIdsText = $this->generateSortingIds($categoryData['sortings']);
             $category->setSortingIds($sortingIdsText);
@@ -46,7 +45,7 @@ class CategoryLoader implements LoaderInterface
     /**
      * @param string[] $sortingNames
      */
-    private function generateSortingIds(array $sortingNames): string
+    private function generateSortingIds(array $sortingNames)
     {
         $sortings = $this->getSortings($sortingNames);
         $sortingIdsText = '';
@@ -59,9 +58,10 @@ class CategoryLoader implements LoaderInterface
 
     /**
      * @param string[] $sortingNames
+     *
      * @return CustomSorting[]
      */
-    private function getSortings($sortingNames): array
+    private function getSortings($sortingNames)
     {
         $sortingRepository = $this->entityManager->getRepository(CustomSorting::class);
         $sortings = [];
@@ -69,7 +69,7 @@ class CategoryLoader implements LoaderInterface
             $sorting = $sortingRepository->findOneBy(['label' => $sortingName]);
 
             if (null === $sorting) {
-                throw new \RuntimeException(sprintf('The loading configuration contains the sorting %s that is not created in the database', $sortingName));
+                throw new \RuntimeException(\sprintf('The loading configuration contains the sorting %s that is not created in the database', $sortingName));
             }
             $sortings[] = $sorting;
         }
