@@ -59,7 +59,7 @@ class CategoryLoaderSpec extends ObjectBehavior
         ObjectRepository $customSortingRepository,
         Category $category1
     ) {
-        if (class_exists('CustomSorting')) {
+        if (\class_exists('CustomSorting')) {
             $customSorting1 = new CustomSorting();
             $customSorting2 = new CustomSorting();
         } else {
