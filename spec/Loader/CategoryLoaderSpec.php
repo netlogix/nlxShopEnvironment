@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /*
  * Created by solutionDrive GmbH
@@ -58,10 +57,15 @@ class CategoryLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ObjectRepository $categoryRepository,
         ObjectRepository $customSortingRepository,
-        Category $category1,
-        CustomSorting $customSorting1,
-        CustomSorting $customSorting2
+        Category $category1
     ) {
+        if (class_exists('CustomSorting')) {
+            $customSorting1 = new CustomSorting();
+            $customSorting2 = new CustomSorting();
+        } else {
+            return;
+        }
+
         $config = [
             'ALL' => [
                 'sortings' => [
