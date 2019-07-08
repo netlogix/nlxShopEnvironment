@@ -1,3 +1,4 @@
+bootstrap: phpspec-bootstrap.php
 suites:
   default:
     namespace: sdShopEnvironment
