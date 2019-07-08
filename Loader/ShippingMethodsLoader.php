@@ -52,7 +52,11 @@ class ShippingMethodsLoader implements LoaderInterface
         $this->entityManager->flush();
     }
 
-    private function outputException(string $id, \Exception $exception)
+    /**
+     * @param int        $id
+     * @param \Exception $exception
+     */
+    private function outputException($id, \Exception $exception)
     {
         if (!\defined('PHPSPEC')) {
             echo 'Error during import of shipping method ' . $id . PHP_EOL;
