@@ -10,6 +10,7 @@ namespace spec\sdShopEnvironment\Dumper;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpSpec\Exception\Example\SkippingException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use sdShopEnvironment\Loader\FacetLoader;
@@ -24,6 +25,9 @@ class FacetLoaderSpec extends ObjectBehavior
         ObjectRepository $facetRepository,
         DenormalizerInterface $denormalizer
     ) {
+        if (\class_exists('CustomFacet')) {
+            throw new SkippingException('Facets are not supported by this shopware version');
+        }
         $entityManager
             ->getRepository(CustomFacet::class)
             ->willReturn($facetRepository);
@@ -66,9 +70,9 @@ class FacetLoaderSpec extends ObjectBehavior
     public function it_can_load_existing_shipping_methods(
         EntityManagerInterface $entityManager,
         ObjectRepository $facetRepository,
-        CustomFacet $facet,
         DenormalizerInterface $denormalizer
     ) {
+        $facet = new CustomFacet();
         $facetRepository
             ->findOneBy(['name' => 'Preis'])
             ->willReturn($facet);

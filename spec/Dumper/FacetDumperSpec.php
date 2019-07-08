@@ -10,6 +10,7 @@ namespace spec\sdShopEnvironment\Dumper;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpSpec\Exception\Example\SkippingException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use sdShopEnvironment\Dumper\DumperInterface;
@@ -24,6 +25,9 @@ class FacetDumperSpec extends ObjectBehavior
         ObjectRepository $facetRepository,
         NormalizerInterface $normalizer
     ) {
+        if (\class_exists('CustomFacet')) {
+            throw new SkippingException('Facets are not supported by this shopware version');
+        }
         $entityManager
             ->getRepository(CustomFacet::class)
             ->willReturn($facetRepository);
@@ -56,10 +60,10 @@ class FacetDumperSpec extends ObjectBehavior
 
     public function it_can_dump_facets(
         ObjectRepository $facetRepository,
-        CustomFacet $facet1,
-        CustomFacet $facet2,
         NormalizerInterface $normalizer
     ) {
+        $facet1 = new CustomFacet();
+        $facet2 = new CustomFacet();
         $facet1
             ->getName()
             ->willReturn('Preis');
