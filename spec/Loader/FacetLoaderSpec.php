@@ -25,7 +25,7 @@ class FacetLoaderSpec extends ObjectBehavior
         ObjectRepository $facetRepository,
         DenormalizerInterface $denormalizer
     ) {
-        if (!\class_exists('CustomFacet')) {
+        if (!\class_exists('Shopware\Models\Search\CustomFacet')) {
             throw new SkippingException('Facets are not supported by this shopware version');
         }
         $entityManager
