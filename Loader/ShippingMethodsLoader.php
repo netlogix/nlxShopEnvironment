@@ -10,7 +10,6 @@ namespace sdShopEnvironment\Loader;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpSpec\Process\ReRunner\PlatformSpecificReRunner;
 use Shopware\Models\Dispatch\Dispatch;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
