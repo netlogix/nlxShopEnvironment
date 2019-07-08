@@ -47,10 +47,10 @@ class FacetLoaderSpec extends ObjectBehavior
         DenormalizerInterface $denormalizer
     ) {
         $facetRepository
-            ->find(13)
+            ->findOneBy(['name' => 'Preis'])
             ->willReturn(null);
 
-        $data = [13 => ['description' => 'hello world']];
+        $data = ['Preis' => ['description' => 'hello world']];
 
         $denormalizer
             ->denormalize(Argument::any(), Argument::any(), Argument::any(), Argument::any())
