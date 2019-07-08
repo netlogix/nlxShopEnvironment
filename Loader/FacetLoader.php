@@ -46,7 +46,7 @@ class FacetLoader implements LoaderInterface
                 echo 'Error during import of facet ' . $facetName . PHP_EOL;
                 echo $throwable->getMessage();
                 continue;
-            } catch (\Exception $exception) {
+            } catch (\Throwable $exception) {
                 // PHP5.6 Support
                 echo 'Error during import of facet ' . $facetName . PHP_EOL;
                 echo $exception->getMessage();

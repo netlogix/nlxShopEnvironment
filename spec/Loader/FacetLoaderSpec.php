@@ -12,15 +12,10 @@ use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use sdShopEnvironment\Dumper\DumperInterface;
-use sdShopEnvironment\Dumper\FacetDumper;
 use sdShopEnvironment\Loader\FacetLoader;
 use sdShopEnvironment\Loader\LoaderInterface;
-use sdShopEnvironment\Loader\ShippingMethodsLoader;
-use Shopware\Models\Dispatch\Dispatch;
 use Shopware\Models\Search\CustomFacet;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class FacetLoaderSpec extends ObjectBehavior
 {
