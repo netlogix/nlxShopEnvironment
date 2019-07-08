@@ -70,9 +70,9 @@ class FacetLoaderSpec extends ObjectBehavior
     public function it_can_load_existing_shipping_methods(
         EntityManagerInterface $entityManager,
         ObjectRepository $facetRepository,
+        CustomFacet $facet,
         DenormalizerInterface $denormalizer
     ) {
-        $facet = new CustomFacet();
         $facetRepository
             ->findOneBy(['name' => 'Preis'])
             ->willReturn($facet);
