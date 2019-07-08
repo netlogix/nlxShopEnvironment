@@ -61,5 +61,12 @@
         >
             <argument type="service" id="models"/>
         </service>
+        <service
+                id="sd.shop_environment.dumper.facet_dumper"
+                class="sdShopEnvironment\Dumper\FacetDumper"
+        >
+            <argument type="service" id="models"/>
+            <argument type="service" id="sd.shop_environment.serializer.serializer.custom_facet_serializer"/>
+        </service>
     </services>
 </container>

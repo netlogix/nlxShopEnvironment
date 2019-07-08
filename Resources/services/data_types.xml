@@ -82,5 +82,13 @@
             <argument type="service" id="sd.shop_environment.dumper.category_dumper"/>
             <argument type="service" id="sd.shop_environment.loader.category_loader"/>
         </service>
+        <service
+                id="sd.shop_environment.data_types.facet"
+                class="sdShopEnvironment\DataTypes\GenericDataType"
+        >
+            <tag name="sd.data_type" root_name="facets"/>
+            <argument type="service" id="sd.shop_environment.dumper.facet_dumper"/>
+            <argument type="service" id="sd.shop_environment.loader.facet_loader"/>
+        </service>
     </services>
 </container>

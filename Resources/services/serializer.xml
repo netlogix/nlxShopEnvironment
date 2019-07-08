@@ -70,6 +70,12 @@
             <argument id="models" type="service"/>
         </service>
 
+        <service
+                id="sd.shop_environment.serializer.normalizer.custom_facet_normalizer"
+                class="sdShopEnvironment\Serializer\Normalizer\CustomFacetNormalizer"
+        >
+        </service>
+
         <!-- Denormalizer -->
         <service
                 id="sd.shop_environment.serializer.denormalizer.array_denormalizer"
@@ -98,6 +104,16 @@
                 <argument type="service" id="sd.shop_environment.serializer.normalizer.shipping_cost_normalizer" />
                 <argument type="service" id="sd.shop_environment.serializer.normalizer.dispatch_payment_normalizer" />
                 <argument type="service" id="sd.shop_environment.serializer.normalizer.dispatch_normalizer" />
+                <argument type="service" id="sd.shop_environment.serializer.denormalizer.array_denormalizer" />
+            </argument>
+        </service>
+
+        <service
+                id="sd.shop_environment.serializer.serializer.custom_facet_serializer"
+                class="Symfony\Component\Serializer\Serializer"
+        >
+            <argument type="collection">
+                <argument type="service" id="sd.shop_environment.serializer.normalizer.custom_facet_normalizer" />
                 <argument type="service" id="sd.shop_environment.serializer.denormalizer.array_denormalizer" />
             </argument>
         </service>
