@@ -64,5 +64,12 @@
         >
             <argument type="service" id="models"/>
         </service>
+        <service
+                id="sd.shop_environment.loader.facet_loader"
+                class="sdShopEnvironment\Loader\FacetLoader"
+        >
+            <argument type="service" id="models"/>
+            <argument type="service" id="sd.shop_environment.serializer.serializer.custom_facet_serializer"/>
+        </service>
     </services>
 </container>

@@ -40,18 +40,28 @@ class ShippingMethodsLoader implements LoaderInterface
             try {
                 $this->importShippingMethod($id, $shippingMethodData);
             } catch (\Throwable $throwable) {
-                echo 'Error during import of shipping method ' . $id . PHP_EOL;
-                echo $throwable->getMessage();
+                $this->outputException($id, $throwable);
                 continue;
             } catch (\Exception $exception) {
                 // PHP5.6 Support
-                echo 'Error during import of shipping method ' . $id . PHP_EOL;
-                echo $exception->getMessage();
+                $this->outputException($id, $exception);
                 continue;
             }
         }
 
         $this->entityManager->flush();
+    }
+
+    /**
+     * @param int        $id
+     * @param \Exception $exception
+     */
+    private function outputException($id, \Exception $exception)
+    {
+        if (!\defined('PHPSPEC')) {
+            echo 'Error during import of shipping method ' . $id . PHP_EOL;
+            echo $exception->getMessage();
+        }
     }
 
     /**
