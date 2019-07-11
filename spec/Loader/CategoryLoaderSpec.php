@@ -162,8 +162,8 @@ class CategoryLoaderSpec extends ObjectBehavior
             [
                 ':sortingIds' => $sortingIdsText,
                 ':path' => '%|' . 4 . '|%',
-        ]
-            )->shouldBeCalled();
+            ]
+        )->shouldBeCalled();
 
         $entityManager->getConnection()
             ->willReturn($connection);
