@@ -155,7 +155,7 @@ class CategoryLoaderSpec extends ObjectBehavior
             ->willReturn($sortingIdsText);
 
         $category1->getId()
-            ->wilReturn(4);
+            ->willReturn(4);
 
         $connection->executeUpdate(
             'UPDATE s_categories SET `sorting_ids` = :sortingIds WHERE path LIKE :path',
