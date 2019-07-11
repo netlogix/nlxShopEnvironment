@@ -9,6 +9,7 @@
 namespace spec\sdShopEnvironment\Loader;
 
 use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -96,6 +97,76 @@ class CategoryLoaderSpec extends ObjectBehavior
 
         $customSortingRepository->findOneBy(['label' => 'Test2'])
             ->willReturn($customSorting2);
+
+        $entityManager->flush()
+            ->shouldBeCalled();
+
+        $this->load($config);
+    }
+
+    public function it_can_copy_sortings_from_parent_to_child_categories(
+        EntityManagerInterface $entityManager,
+        ObjectRepository $categoryRepository,
+        ObjectRepository $customSortingRepository,
+        Category $category1,
+        Connection $connection
+    ) {
+        if (\class_exists('CustomSorting')) {
+            $customSorting1 = new CustomSorting();
+            $customSorting2 = new CustomSorting();
+        } else {
+            return;
+        }
+
+        $config = [
+            'ALL' => [
+                'sortings' => [
+                    'Test1',
+                    'Test2',
+                ],
+                'copyCategory' => true,
+            ],
+        ];
+
+        $sortingIdsText = '|1|2';
+
+        $categoryRepository->findOneBy(['name' => 'ALL'])
+            ->willReturn($category1);
+
+        $category1->setSortingIds($sortingIdsText)
+            ->shouldBeCalled();
+
+        $entityManager->getRepository(CustomSorting::class)
+            ->willReturn($customSortingRepository);
+
+        $customSorting1->getId()
+            ->willReturn(1);
+
+        $customSortingRepository->findOneBy(['label' => 'Test1'])
+            ->willReturn($customSorting1);
+
+        $customSorting2->getId()
+            ->willReturn(2);
+
+        $customSortingRepository->findOneBy(['label' => 'Test2'])
+            ->willReturn($customSorting2);
+
+        $category1->getSortingIds()
+            ->willReturn($sortingIdsText);
+
+        $category1->getId()
+            ->wilReturn(4);
+
+        $connection->executeUpdate(
+            'UPDATE s_categories SET `sorting_ids` = :sortingIds WHERE path LIKE :path',
+            [
+                ':sortingIds' => $sortingIdsText,
+                ':path' => '%|' . 4 . '|%',
+        ]
+            )->shouldBeCalled();
+
+        $entityManager->getConnection()
+            ->willReturn($connection);
 
         $entityManager->flush()
             ->shouldBeCalled();

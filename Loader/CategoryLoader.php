@@ -37,6 +37,10 @@ class CategoryLoader implements LoaderInterface
             }
             $sortingIdsText = $this->generateSortingIds($categoryData['sortings']);
             $category->setSortingIds($sortingIdsText);
+
+            if (isset($categoryData['copyCategory']) && true === $categoryData['copyCategory']) {
+                $this->copyCategorySettings($category);
+            }
         }
         $this->entityManager->flush();
     }
@@ -53,6 +57,17 @@ class CategoryLoader implements LoaderInterface
             $sortingIdsText = $sortingIdsText . '|' . $sorting->getId();
         }
         return $sortingIdsText;
+    }
+
+    private function copyCategorySettings(Category $category)
+    {
+        $this->entityManager->getConnection()->executeUpdate(
+            'UPDATE s_categories SET `sorting_ids` = :sortingIds WHERE path LIKE :path',
+            [
+                ':sortingIds' => (string) $category->getSortingIds(),
+                ':path' => '%|' . $category->getId() . '|%',
+            ]
+        );
     }
 
     /**
