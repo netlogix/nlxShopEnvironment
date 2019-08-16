@@ -23,7 +23,6 @@ class sdShopEnvironment extends Plugin
      */
     public function build(ContainerBuilder $container)
     {
-        $container->setParameter('sd_shop_environment.plugin_dir', $this->getPath());
         parent::build($container);
 
         $container->addCompilerPass(new DataTypeCompilerPass());
