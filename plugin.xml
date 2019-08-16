@@ -3,7 +3,7 @@
         xsi:noNamespaceSchemaLocation="../../../engine/Shopware/Components/Plugin/schema/plugin.xsd">
     <label lang="de">sdShopEnvironment</label>
     <label lang="en">sdShopEnvironment</label>
-    <version>1.0.0</version>
+    <version>1.6.0</version>
     <copyright>(c) solutionDrive GmbH</copyright>
     <license>proprietary</license>
     <link>http://store.shopware.com</link>
@@ -14,5 +14,49 @@
     <changelog version="1.0.0">
         <changes lang="de">Erste Veröffentlichung</changes>
         <changes lang="en">Initial Release</changes>
+    </changelog>
+    <changelog version="1.1.0">
+        <changes lang="de">Shopware 5.5 Support</changes>
+        <changes lang="en">Adds shopware 5.5 support</changes>
+    </changelog>
+    <changelog version="1.1.1">
+        <changes lang="de">Beheben eines Fehlers beim Theme-Konfiguration laden</changes>
+        <changes lang="en">Fix a theme-config loading error</changes>
+    </changelog>
+    <changelog version="1.2.0">
+        <changes lang="de">Versand- und Zahlungsarten Support</changes>
+        <changes lang="en">Shipping- and payment method support</changes>
+    </changelog>
+    <changelog version="1.3.0">
+        <changes lang="de">Dokumentensupport</changes>
+        <changes lang="en">Document support</changes>
+    </changelog>
+    <changelog version="1.3.1">
+        <changes lang="de">Beheben eines Fehlers bei den Versand- und Zahlungsarten</changes>
+        <changes lang="en">Fixes an error with shipping- and payment methods</changes>
+    </changelog>
+    <changelog version="1.3.2">
+        <changes lang="de">Beheben eines Fehlers beim Laden der Konfiguration</changes>
+        <changes lang="en">Fixes an error with configuration loading</changes>
+    </changelog>
+    <changelog version="1.4.0">
+        <changes lang="de">Media Manager Support</changes>
+        <changes lang="en">Media manager support</changes>
+    </changelog>
+    <changelog version="1.4.1">
+        <changes lang="de">Kategorie Konfiguration Support</changes>
+        <changes lang="en">Category configuration support</changes>
+    </changelog>
+    <changelog version="1.5.0">
+        <changes lang="de">Facet Support</changes>
+        <changes lang="en">Facet support</changes>
+    </changelog>
+    <changelog version="1.5.1">
+        <changes lang="de">Kategorie 'Sortierungseinstellung' Support</changes>
+        <changes lang="en">Category 'sortingsettings' support</changes>
+    </changelog>
+    <changelog version="1.6.0">
+        <changes lang="de">Infrastrukturanpassungen</changes>
+        <changes lang="en">Infrastructure changes</changes>
     </changelog>
 </plugin>
