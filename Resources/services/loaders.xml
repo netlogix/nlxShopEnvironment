@@ -71,5 +71,10 @@
             <argument type="service" id="models"/>
             <argument type="service" id="sd.shop_environment.serializer.serializer.custom_facet_serializer"/>
         </service>
+        <service
+                id="sd.shop_environment.loader.search_fields_loader"
+                class="sdShopEnvironment\Loader\SearchFieldsLoader"
+        />
+
     </services>
 </container>
