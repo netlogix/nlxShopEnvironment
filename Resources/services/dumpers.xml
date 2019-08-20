@@ -71,6 +71,8 @@
         <service
                 id="sd.shop_environment.dumper.search_fields_dumper"
                 class="sdShopEnvironment\Dumper\SearchFieldsDumper"
-        />
+        >
+            <argument type="service" id="models"/>
+        </service>
     </services>
 </container>
