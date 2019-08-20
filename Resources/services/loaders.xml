@@ -74,7 +74,9 @@
         <service
                 id="sd.shop_environment.loader.search_fields_loader"
                 class="sdShopEnvironment\Loader\SearchFieldsLoader"
-        />
+        >
+            <argument type="service" id="models"/>
+        </service>
 
     </services>
 </container>
