@@ -90,5 +90,13 @@
             <argument type="service" id="sd.shop_environment.dumper.facet_dumper"/>
             <argument type="service" id="sd.shop_environment.loader.facet_loader"/>
         </service>
+        <service
+                id="sd_shop_environment.data_types.search_fields"
+                class="sdShopEnvironment\DataTypes\GenericDataType"
+        >
+            <tag name="sd.data_type" root_name="search_fields" />
+            <argument type="service" id="sd.shop_environment.dumper.search_fields_dumper" />
+            <argument type="service" id="sd.shop_environment.loader.search_fields_loader" />
+        </service>
     </services>
 </container>
