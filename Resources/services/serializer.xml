@@ -78,7 +78,7 @@
 
         <service
                 id="sd.shop_environment.serializer.normalizer.payment_rules"
-                class="Symfony\Component\Serializer\Normalizer\ObjectNormalizer"
+                class="sdShopEnvironment\Serializer\Normalizer\PaymentRuleNormalizer"
         >
             <call method="setIgnoredAttributes">
                 <argument type="collection">
