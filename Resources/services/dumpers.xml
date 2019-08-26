@@ -74,5 +74,9 @@
         >
             <argument type="service" id="models"/>
         </service>
+        <service
+                id="sd.shop_environment.dumper.payment_rules_dumper"
+                class="sdShopEnvironment\Dumper\PaymentRulesDumper"
+        />
     </services>
 </container>
