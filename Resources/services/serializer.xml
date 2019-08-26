@@ -82,7 +82,6 @@
         >
             <call method="setIgnoredAttributes">
                 <argument type="collection">
-                    <argument type="string">id</argument>
                     <argument type="string">paymentId</argument>
                 </argument>
             </call>
