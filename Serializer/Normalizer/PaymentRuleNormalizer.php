@@ -13,7 +13,7 @@ use Shopware\Models\Payment\RuleSet;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 
-class PaymentRuleNormalizer  extends PropertyNormalizer
+class PaymentRuleNormalizer extends PropertyNormalizer
 {
     public function setAttributeValue($object, $attribute, $value, $format = null, array $context = [])
     {
