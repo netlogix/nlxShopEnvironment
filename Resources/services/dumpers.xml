@@ -74,5 +74,12 @@
         >
             <argument type="service" id="models"/>
         </service>
+        <service
+                id="sd.shop_environment.dumper.payment_rules_dumper"
+                class="sdShopEnvironment\Dumper\PaymentRulesDumper"
+        >
+            <argument type="expression">service('models').getRepository('Shopware\\Models\\Payment\\RuleSet')</argument>
+            <argument type="service" id="sd.shop_environment.serializer.serializer.payment_rules"/>
+        </service>
     </services>
 </container>

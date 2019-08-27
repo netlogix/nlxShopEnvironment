@@ -98,5 +98,13 @@
             <argument type="service" id="sd.shop_environment.dumper.search_fields_dumper" />
             <argument type="service" id="sd.shop_environment.loader.search_fields_loader" />
         </service>
+        <service
+                id="sd_shop_environment.data_types.payment_rules"
+                class="sdShopEnvironment\DataTypes\GenericDataType"
+        >
+            <tag name="sd.data_type" root_name="payment_rules" />
+            <argument type="service" id="sd.shop_environment.dumper.payment_rules_dumper" />
+            <argument type="service" id="sd.shop_environment.loader.payment_rules_loader" />
+        </service>
     </services>
 </container>
