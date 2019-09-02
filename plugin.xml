@@ -68,7 +68,7 @@
         <changes lang="en">PaymentRules Support + Customergroups import</changes>
     </changelog>
     <changelog version="1.8.1">
-        <changes lang="de">Namespace 'Customer/Group' hinzugefügt </changes>
+        <changes lang="de">Namespace 'Customer/Group' hinzugefügt</changes>
         <changes lang="en">Add 'Customer/Group' namespace</changes>
     </changelog>
 </plugin>
