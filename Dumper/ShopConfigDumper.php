@@ -45,6 +45,7 @@ class ShopConfigDumper implements DumperInterface
                 'CustomerScope' => $shop->getCustomerScope(),
                 'Default'       => $shop->getDefault(),
                 'Active'        => $shop->getActive(),
+                'CustomerGroup' => $shop->getCustomerGroup()->getId(),
             ];
         }
 

@@ -50,6 +50,10 @@ class ShopConfigLoader implements LoaderInterface
                         $parameter . ' (shop: ' . $id . ')' . PHP_EOL;
                 }
 
+                if ('CustomerGroup' === $parameter) {
+                    $value = $this->getCustomerGroup($value);
+                }
+
                 $shop->$setter($value);
             }
 
@@ -57,5 +61,11 @@ class ShopConfigLoader implements LoaderInterface
         }
 
         $this->entityManager->flush();
+    }
+
+    private function getCustomerGroup($customerGroupId): Group
+    {
+        $customerGroupRepo = $this->entityManager->getRepository(Group::class);
+        return $customerGroupRepo->find($customerGroupId);
     }
 }
