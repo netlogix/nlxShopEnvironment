@@ -9,6 +9,7 @@
 namespace sdShopEnvironment\Loader;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopware\Models\Customer\Group;
 use Shopware\Models\Shop\Shop;
 
 class ShopConfigLoader implements LoaderInterface
