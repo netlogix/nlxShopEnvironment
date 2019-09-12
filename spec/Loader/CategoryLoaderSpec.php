@@ -109,6 +109,10 @@ class CategoryLoaderSpec extends ObjectBehavior
         ObjectRepository $categoryRepository,
         Category $category
     ) {
+        if (false === \class_exists('CustomSorting')) {
+            return;
+        }
+
         $config = [
             'ALL' => [
                 'ProductBoxLayout' => 'list',
