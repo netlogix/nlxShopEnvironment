@@ -54,7 +54,7 @@ class CategoryDumperSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ObjectRepository $categoryRepository,
         ObjectRepository $customSortingRepository,
-        Category $category1
+        Category $category
     ) {
         if (\class_exists('CustomSorting')) {
             $customSorting1 = new CustomSorting();
@@ -63,11 +63,14 @@ class CategoryDumperSpec extends ObjectBehavior
             return;
         }
 
+        $category->getProductBoxLayout()
+            ->willReturn('testLayout');
+
         $this->prepareParametersForDump(
             $entityManager,
             $categoryRepository,
             $customSortingRepository,
-            $category1,
+            $category,
             $customSorting1,
             $customSorting2
         );
@@ -75,6 +78,7 @@ class CategoryDumperSpec extends ObjectBehavior
         $this->dump()
             ->shouldBeLike([
                 'ALL' => [
+                    'productBoxLaxout' => 'testLayout',
                     'sortings' => [
                         'Test1',
                         'Test2',

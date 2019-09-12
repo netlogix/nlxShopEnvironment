@@ -36,6 +36,7 @@ class CategoryDumper implements DumperInterface
         /** @var Category $category */
         foreach ($categories as $category) {
             $config[$category->getName()] = [
+                'productBoxLaxout' => $category->getProductBoxLayout(),
                 'sortings' =>  $this->getSortings($category),
             ];
         }
