@@ -63,7 +63,7 @@ class CategoryLoaderSpec extends ObjectBehavior
     ) {
         $config = [
             'ALL' => [
-                'ProductBoxLayout' => 'list'
+                'ProductBoxLayout' => 'list',
             ],
         ];
 
@@ -87,7 +87,7 @@ class CategoryLoaderSpec extends ObjectBehavior
     ) {
         $config = [
             'ALL' => [
-                'testMethod' => 'list'
+                'testMethod' => 'list',
             ],
         ];
 
@@ -111,7 +111,7 @@ class CategoryLoaderSpec extends ObjectBehavior
     ) {
         $config = [
             'ALL' => [
-                'ProductBoxLayout' => 'list'
+                'ProductBoxLayout' => 'list',
             ],
         ];
 

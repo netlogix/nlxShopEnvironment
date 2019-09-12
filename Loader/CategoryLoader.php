@@ -58,7 +58,7 @@ class CategoryLoader implements LoaderInterface
                 continue;
             }
 
-            if (false === method_exists($category, $setter)) {
+            if (false === \method_exists($category, $setter)) {
                 throw new \RuntimeException(\sprintf('Property could not be imported as it does not exist: %s (category: %s)', $parameter, $category->getName()));
             }
 
