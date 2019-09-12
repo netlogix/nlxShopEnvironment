@@ -28,21 +28,45 @@ class CategoryLoader implements LoaderInterface
      */
     public function load($config)
     {
-        foreach ($config as $categoryName => $categoryData) {
-            $categoryRepository = $this->entityManager->getRepository(Category::class);
+        $categoryRepository = $this->entityManager->getRepository(Category::class);
+
+        foreach ($config as $categoryName => $categoryConfig) {
             $category = $categoryRepository->findOneBy(['name' => $categoryName]);
 
             if (null === $category) {
                 throw new \RuntimeException(\sprintf('The loading configuration contains the category %s that is not created in the database', $categoryName));
             }
-            $sortingIdsText = $this->generateSortingIds($categoryData['sortings']);
-            $category->setSortingIds($sortingIdsText);
+            $this->setCategoryConfig($category, $categoryConfig);
 
-            if (isset($categoryData['copyCategory']) && true === $categoryData['copyCategory']) {
-                $this->copyCategorySettings($category);
-            }
+            $this->entityManager->persist($category);
         }
         $this->entityManager->flush();
+    }
+
+    /**
+     * @param mixed[] $categoryConfig
+     */
+    private function setCategoryConfig(Category $category, array $categoryConfig)
+    {
+        foreach ($categoryConfig as $parameter => $value) {
+            $setter = 'set' . $parameter;
+
+            if ('copyCategory' === $parameter) {
+                if (true === $value) {
+                    $this->copyCategorySettings($category);
+                }
+                continue;
+            }
+
+            if (false === \method_exists($category, $setter)) {
+                throw new \RuntimeException(\sprintf('Property could not be imported as it does not exist: %s (category: %s)', $parameter, $category->getName()));
+            }
+
+            if ('SortingIds' === $parameter) {
+                $value = $this->generateSortingIds($value);
+            }
+            $category->$setter($value);
+        }
     }
 
     /**
@@ -75,7 +99,7 @@ class CategoryLoader implements LoaderInterface
      *
      * @return CustomSorting[]
      */
-    private function getSortings($sortingNames)
+    private function getSortings(array $sortingNames)
     {
         $sortingRepository = $this->entityManager->getRepository(CustomSorting::class);
         $sortings = [];

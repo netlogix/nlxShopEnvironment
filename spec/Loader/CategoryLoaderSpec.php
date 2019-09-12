@@ -48,17 +48,100 @@ class CategoryLoaderSpec extends ObjectBehavior
         $categoryRepository->findOneBy(Argument::any())
             ->shouldNotBeCalled();
 
+        $entityManager->persist(Argument::any())
+            ->shouldNotBeCalled();
+
         $entityManager->flush()
             ->shouldBeCalled();
 
         $this->load([]);
     }
 
+    public function it_cannot_update_existing_category_if_category_was_not_found(
+        EntityManagerInterface $entityManager,
+        ObjectRepository $categoryRepository
+    ) {
+        $config = [
+            'ALL' => [
+                'ProductBoxLayout' => 'list',
+            ],
+        ];
+
+        $categoryRepository->findOneBy(Argument::any())
+            ->willReturn(null);
+
+        $entityManager->persist(Argument::any())
+            ->shouldNotBeCalled();
+
+        $entityManager->flush()
+            ->shouldNotBeCalled();
+
+        $this->shouldThrow(\RuntimeException::class)
+            ->during('load', [$config]);
+    }
+
+    public function it_cannot_update_existing_category_if_setter_not_exist(
+        EntityManagerInterface $entityManager,
+        ObjectRepository $categoryRepository,
+        Category $category
+    ) {
+        $config = [
+            'ALL' => [
+                'testMethod' => 'list',
+            ],
+        ];
+
+        $categoryRepository->findOneBy(Argument::any())
+            ->willReturn($category);
+
+        $entityManager->persist(Argument::any())
+            ->shouldNotBeCalled();
+
+        $entityManager->flush()
+            ->shouldNotBeCalled();
+
+        $this->shouldThrow(\RuntimeException::class)
+            ->during('load', [$config]);
+    }
+
     public function it_can_update_existing_category(
         EntityManagerInterface $entityManager,
         ObjectRepository $categoryRepository,
+        Category $category
+    ) {
+        if (false === \class_exists('CustomSorting')) {
+            return;
+        }
+
+        $config = [
+            'ALL' => [
+                'ProductBoxLayout' => 'list',
+            ],
+        ];
+
+        $categoryRepository->findOneBy(['name' => 'ALL'])
+            ->willReturn($category);
+
+        $category->setProductBoxLayout('list')
+            ->shouldBeCalled();
+
+        $category->setSortingIds(Argument::any())
+            ->shouldNotBeCalled();
+
+        $entityManager->persist($category)
+            ->shouldBeCalled();
+
+        $entityManager->flush()
+            ->shouldBeCalled();
+
+        $this->load($config);
+    }
+
+    public function it_can_update_existing_category_sorting(
+        EntityManagerInterface $entityManager,
+        ObjectRepository $categoryRepository,
         ObjectRepository $customSortingRepository,
-        Category $category1
+        Category $category
     ) {
         if (\class_exists('CustomSorting')) {
             $customSorting1 = new CustomSorting();
@@ -69,7 +152,7 @@ class CategoryLoaderSpec extends ObjectBehavior
 
         $config = [
             'ALL' => [
-                'sortings' => [
+                'SortingIds' => [
                     'Test1',
                     'Test2',
                 ],
@@ -78,9 +161,9 @@ class CategoryLoaderSpec extends ObjectBehavior
         $sortingIdsText = '|1|2';
 
         $categoryRepository->findOneBy(['name' => 'ALL'])
-            ->willReturn($category1);
+            ->willReturn($category);
 
-        $category1->setSortingIds($sortingIdsText)
+        $category->setSortingIds($sortingIdsText)
             ->shouldBeCalled();
 
         $entityManager->getRepository(CustomSorting::class)
@@ -108,7 +191,7 @@ class CategoryLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ObjectRepository $categoryRepository,
         ObjectRepository $customSortingRepository,
-        Category $category1,
+        Category $category,
         Connection $connection
     ) {
         if (\class_exists('CustomSorting')) {
@@ -120,7 +203,7 @@ class CategoryLoaderSpec extends ObjectBehavior
 
         $config = [
             'ALL' => [
-                'sortings' => [
+                'SortingIds' => [
                     'Test1',
                     'Test2',
                 ],
@@ -131,9 +214,9 @@ class CategoryLoaderSpec extends ObjectBehavior
         $sortingIdsText = '|1|2';
 
         $categoryRepository->findOneBy(['name' => 'ALL'])
-            ->willReturn($category1);
+            ->willReturn($category);
 
-        $category1->setSortingIds($sortingIdsText)
+        $category->setSortingIds($sortingIdsText)
             ->shouldBeCalled();
 
         $entityManager->getRepository(CustomSorting::class)
@@ -151,10 +234,10 @@ class CategoryLoaderSpec extends ObjectBehavior
         $customSortingRepository->findOneBy(['label' => 'Test2'])
             ->willReturn($customSorting2);
 
-        $category1->getSortingIds()
+        $category->getSortingIds()
             ->willReturn($sortingIdsText);
 
-        $category1->getId()
+        $category->getId()
             ->willReturn(4);
 
         $connection->executeUpdate(
