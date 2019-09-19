@@ -247,7 +247,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
                 'Category' => 'Human',
                 'Locale' => 'bd_Bad',
                 'Main' => 2,
-            ]
+            ],
         ];
 
         $shopRepository->find(1)
@@ -299,8 +299,8 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         $this->load($config);
     }
 
-    private function reflectionClassHelper($reflectionClass, $method,  $returnValue) {
-
+    private function reflectionClassHelper($reflectionClass, $method, $returnValue)
+    {
         foreach (self::RELATION_LIST as $relationMethod) {
             $reflectionClass->hasMethod($method . $relationMethod)
                 ->willReturn($returnValue);
