@@ -51,5 +51,12 @@
             <argument type="service" id="sd_shop_environment.services.configuration_loader"/>
             <tag name="console.command"/>
         </service>
+
+        <!-- Factories -->
+        <service
+                id="sd_shop_environment.factory.reflrection_class_factory"
+                class="sdShopEnvironment\Factory\ReflectionClassFactory"
+        >
+        </service>
     </services>
 </container>

@@ -9,6 +9,7 @@
                 class="sdShopEnvironment\Loader\ShopConfigLoader"
         >
             <argument type="service" id="models" />
+            <argument type="service" id="sd_shop_environment.factory.reflrection_class_factory"/>
         </service>
         <service
                 id="sd_shop_environment.loader.core_config_loader"
