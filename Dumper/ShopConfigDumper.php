@@ -46,6 +46,9 @@ class ShopConfigDumper implements DumperInterface
                 'Default'       => $shop->getDefault(),
                 'Active'        => $shop->getActive(),
                 'CustomerGroup' => $shop->getCustomerGroup()->getId(),
+                'Category'      => $shop->getCategory()->getName(),
+                'Locale'        => $shop->getLocale()->getLocale(),
+                'Main'          => $shop->getMain()->getId(),
             ];
         }
 
