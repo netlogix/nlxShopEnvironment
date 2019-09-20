@@ -33,8 +33,8 @@ class ShippingMethodsDumper implements DumperInterface
     public function dump()
     {
         $shippingMethods = [];
-        foreach ($this->shippingMethodsRepository->findAll() as $paymentMethod) {
-            $shippingMethods[$paymentMethod->getId()] = $this->normalizer->normalize($paymentMethod);
+        foreach ($this->shippingMethodsRepository->findAll() as $shippingMethog) {
+            $shippingMethods[$shippingMethog->getId()] = $this->normalizer->normalize($shippingMethog);
         }
 
         return $shippingMethods;
