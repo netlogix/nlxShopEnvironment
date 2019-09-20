@@ -18,6 +18,7 @@ use sdShopEnvironment\Loader\LoaderInterface;
 use sdShopEnvironment\Loader\ShopConfigLoader;
 use Shopware\Models\Category\Category;
 use Shopware\Models\Customer\Group;
+use Shopware\Models\Shop\Currency;
 use Shopware\Models\Shop\Locale;
 use Shopware\Models\Shop\Shop;
 
@@ -28,6 +29,8 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         'Category',
         'Locale',
         'Main',
+        'Currency',
+        'Fallback',
     ];
 
     public function let(
@@ -233,10 +236,12 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         ObjectRepository $groupRepository,
         ObjectRepository $categoryRepository,
         ObjectRepository $localeRepository,
+        ObjectRepository $currencyRepository,
         Shop $shop,
         Group $group,
         Category $category,
         Locale $locale,
+        Currency $currency,
         Shop $mainShop,
         \ReflectionClass $shopReflectionClass,
         \ReflectionClass $shopConfigLoaderReflectionClass
@@ -246,7 +251,9 @@ class ShopConfigLoaderSpec extends ObjectBehavior
                 'CustomerGroup' => 'Villains',
                 'Category' => 'Human',
                 'Locale' => 'bd_Bad',
+                'Currency'  => 'EUR',
                 'Main' => 2,
+                'Fallback' => 1,
             ],
         ];
 
@@ -275,6 +282,12 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         $localeRepository->findOneBy(['locale' => 'bd_Bad'])
             ->willReturn($locale);
 
+        $entityManager->getRepository(Currency::class)
+            ->willReturn($currencyRepository);
+
+        $currencyRepository->findOneBy(['currency' => 'EUR'])
+            ->willReturn($currency);
+
         $shopRepository->find(2)
             ->willReturn($mainShop);
 
@@ -287,7 +300,13 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         $shop->setLocale($locale)
             ->shouldBeCalled();
 
+        $shop->setCurrency($currency)
+            ->shouldBeCalled();
+
         $shop->setMain($mainShop)
+            ->shouldBeCalled();
+
+        $shop->setFallback($shop)
             ->shouldBeCalled();
 
         $entityManager->persist($shop)
