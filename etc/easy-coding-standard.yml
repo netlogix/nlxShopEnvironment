@@ -5,3 +5,5 @@ parameters:
   skip:
     SlevomatCodingStandard\Sniffs\Exceptions\ReferenceThrowableOnlySniff.ReferencedGeneralException:
       - 'Loader/ShippingMethodsLoader.php'
+    SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff.UnusedMethod:
+      - 'Loader/ShopConfigLoader.php'
