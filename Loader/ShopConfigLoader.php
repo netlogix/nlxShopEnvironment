@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use sdShopEnvironment\Factory\ReflectionClassFactoryInterface;
 use Shopware\Models\Category\Category;
 use Shopware\Models\Customer\Group;
+use Shopware\Models\Shop\Currency;
 use Shopware\Models\Shop\Locale;
 use Shopware\Models\Shop\Shop;
 
@@ -23,6 +24,8 @@ class ShopConfigLoader implements LoaderInterface
         'Category',
         'Locale',
         'Main',
+        'Currency',
+        'Fallback',
     ];
 
     /** @var ObjectRepository */
@@ -126,7 +129,30 @@ class ShopConfigLoader implements LoaderInterface
         return $locale;
     }
 
+    private function getCurrency($currencyKey): Currency
+    {
+        $currencyRepo = $this->entityManager->getRepository(Currency::class);
+        $currency = $currencyRepo->findOneBy(['currency' => $currencyKey]);
+
+        if (null === $currency) {
+            throw new \RuntimeException('The currency' . $currencyKey . ' not exist');
+        }
+
+        return $currency;
+    }
+
     private function getMain($shopId): Shop
+    {
+        $shop = $this->shopRepo->find($shopId);
+
+        if (null === $shop) {
+            throw new \RuntimeException('The shop' . $shopId . ' not exist');
+        }
+
+        return $shop;
+    }
+
+    private function getFallback($shopId): Shop
     {
         $shop = $this->shopRepo->find($shopId);
 
