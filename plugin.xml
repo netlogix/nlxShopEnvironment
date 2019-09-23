@@ -83,4 +83,8 @@
         <changes lang="de">Schreibfehler ausgebessert</changes>
         <changes lang="en">Fixed wording</changes>
     </changelog>
+    <changelog version="1.11.0">
+        <changes lang="de">Möglichkeit hinzugefügt um die Währung und den Fallback eines Shops zu konfigurieren</changes>
+        <changes lang="en">Add option to configure currency and fallback</changes>
+    </changelog>
 </plugin>
