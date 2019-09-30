@@ -57,7 +57,7 @@ class CategoryLoader implements LoaderInterface
                 }
                 continue;
             }
-            
+
             if ($this->isParameter('sortings', $parameter) || $this->isParameter('SortingIds', $parameter)) {
                 $value = $this->generateSortingIds($value);
                 $setter = 'setSortingIds';
@@ -119,6 +119,6 @@ class CategoryLoader implements LoaderInterface
         string $searchParameter,
         string $givenParameter
     ): bool {
-        return strtolower($searchParameter) === strtolower($givenParameter);
+        return \strtolower($searchParameter) === \strtolower($givenParameter);
     }
 }
