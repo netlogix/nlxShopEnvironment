@@ -51,7 +51,7 @@ class CategoryLoader implements LoaderInterface
         foreach ($categoryConfig as $parameter => $value) {
             $setter = 'set' . $parameter;
 
-            if ('copyCategory' === $parameter) {
+            if ($this->isParameter('copyCategory', $parameter)) {
                 if (true === $value) {
                     $this->copyCategorySettings($category);
                 }
@@ -62,8 +62,9 @@ class CategoryLoader implements LoaderInterface
                 throw new \RuntimeException(\sprintf('Property could not be imported as it does not exist: %s (category: %s)', $parameter, $category->getName()));
             }
 
-            if ('SortingIds' === $parameter) {
+            if ($this->isParameter('sortings', $parameter) || $this->isParameter('SortingIds', $parameter)) {
                 $value = $this->generateSortingIds($value);
+                $setter = 'setSortingIds';
             }
             $category->$setter($value);
         }
@@ -112,5 +113,12 @@ class CategoryLoader implements LoaderInterface
             $sortings[] = $sorting;
         }
         return $sortings;
+    }
+
+    private function isParameter(
+        string $searchParameter,
+        string $givenParameter
+    ): bool {
+        return strtolower($searchParameter) === strtolower($givenParameter);
     }
 }
