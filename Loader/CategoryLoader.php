@@ -57,14 +57,14 @@ class CategoryLoader implements LoaderInterface
                 }
                 continue;
             }
-
-            if (false === \method_exists($category, $setter)) {
-                throw new \RuntimeException(\sprintf('Property could not be imported as it does not exist: %s (category: %s)', $parameter, $category->getName()));
-            }
-
+            
             if ($this->isParameter('sortings', $parameter) || $this->isParameter('SortingIds', $parameter)) {
                 $value = $this->generateSortingIds($value);
                 $setter = 'setSortingIds';
+            }
+
+            if (false === \method_exists($category, $setter)) {
+                throw new \RuntimeException(\sprintf('Property could not be imported as it does not exist: %s (category: %s)', $parameter, $category->getName()));
             }
             $category->$setter($value);
         }
