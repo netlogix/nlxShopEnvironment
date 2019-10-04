@@ -44,7 +44,7 @@ class ShopEntityRelationHelper implements ShopEntityRelationHelperInterface
 
     public function getEntity($entityName, $value): ModelEntity
     {
-        switch($entityName) {
+        switch ($entityName) {
             case self::RELATION_ENTITY_LIST['CUSTOMER_GROUP']:
                 $class = Group::class;
                 $key = 'key';
@@ -77,15 +77,14 @@ class ShopEntityRelationHelper implements ShopEntityRelationHelperInterface
                 return $this->find($class, $key, $value, $errorMessage);
             default:
                 throw new \RuntimeException('The entity: ' . $entityName . ' ist not registered yet');
-
         }
     }
 
     private function find(
-        string $class,
-        string $key,
-        string $value,
-        string $errorMessage
+        $class,
+        $key,
+        $value,
+        $errorMessage
     ): ModelEntity {
         $repo = $this->entityManager->getRepository($class);
         $entity = $repo->findOneBy([$key => $value]);

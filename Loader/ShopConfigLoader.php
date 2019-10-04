@@ -12,10 +12,6 @@ use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use sdShopEnvironment\Factory\ReflectionClassFactoryInterface;
 use sdShopEnvironment\Services\Shop\ShopEntityRelationHelperInterface;
-use Shopware\Models\Category\Category;
-use Shopware\Models\Customer\Group;
-use Shopware\Models\Shop\Currency;
-use Shopware\Models\Shop\Locale;
 use Shopware\Models\Shop\Shop;
 
 class ShopConfigLoader implements LoaderInterface
