@@ -16,28 +16,17 @@ use Prophecy\Argument;
 use sdShopEnvironment\Factory\ReflectionClassFactoryInterface;
 use sdShopEnvironment\Loader\LoaderInterface;
 use sdShopEnvironment\Loader\ShopConfigLoader;
-use Shopware\Models\Category\Category;
+use sdShopEnvironment\Services\Shop\ShopEntityRelationHelperInterface;
 use Shopware\Models\Customer\Group;
-use Shopware\Models\Shop\Currency;
-use Shopware\Models\Shop\Locale;
 use Shopware\Models\Shop\Shop;
 
 class ShopConfigLoaderSpec extends ObjectBehavior
 {
-    const RELATION_LIST = [
-        'CustomerGroup',
-        'Category',
-        'Locale',
-        'Main',
-        'Currency',
-        'Fallback',
-    ];
-
     public function let(
         EntityManagerInterface $entityManager,
         ReflectionClassFactoryInterface $reflectionClassFactory,
         \ReflectionClass $shopReflectionClass,
-        \ReflectionClass $shopConfigLoaderReflectionClass,
+        ShopEntityRelationHelperInterface $entityRelationHelper,
         ObjectRepository $shopRepository
     ) {
         $entityManager
@@ -47,10 +36,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         $reflectionClassFactory->create(Shop::class)
             ->willReturn($shopReflectionClass);
 
-        $reflectionClassFactory->create(ShopConfigLoader::class)
-            ->willReturn($shopConfigLoaderReflectionClass);
-
-        $this->beConstructedWith($entityManager, $reflectionClassFactory);
+        $this->beConstructedWith($entityManager, $reflectionClassFactory, $entityRelationHelper);
     }
 
     public function it_is_initializable()
@@ -66,8 +52,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
     public function it_should_throw_an_exception_if_shop_not_exist(
         EntityManagerInterface $entityManager,
         ObjectRepository $shopRepository,
-        \ReflectionClass $shopReflectionClass,
-        \ReflectionClass $shopConfigLoaderReflectionClass
+        \ReflectionClass $shopReflectionClass
     ) {
         $config = [1 => ['superVillain' => 'Joker']];
 
@@ -75,9 +60,6 @@ class ShopConfigLoaderSpec extends ObjectBehavior
             ->willReturn(null);
 
         $shopReflectionClass->hasMethod(Argument::any())
-            ->shouldNotBeCalled();
-
-        $shopConfigLoaderReflectionClass->hasMethod(Argument::any())
             ->shouldNotBeCalled();
 
         $entityManager->persist(Argument::any())
@@ -93,9 +75,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
     public function it_should_throw_an_exception_if_setter_not_exist(
         EntityManagerInterface $entityManager,
         ObjectRepository $shopRepository,
-        ReflectionClassFactoryInterface $reflectionClassFactory,
         \ReflectionClass $shopReflectionClass,
-        \ReflectionClass $shopConfigLoaderReflectionClass,
         Shop $shop
     ) {
         $config = [1 => ['superVillain' => 'Joker']];
@@ -106,39 +86,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         $shopReflectionClass->hasMethod('setSuperVillain')
             ->willReturn(false);
 
-        $shopConfigLoaderReflectionClass->hasMethod(Argument::any())
-            ->shouldNotBeCalled();
-
         $entityManager->persist(Argument::any())
-            ->shouldNotBeCalled();
-
-        $entityManager->flush()
-            ->shouldNotBeCalled();
-
-        $this->shouldThrow(\RuntimeException::class)
-            ->during('load', [$config]);
-    }
-
-    public function it_should_throw_an_exception_if_getter_not_exist(
-        EntityManagerInterface $entityManager,
-        ObjectRepository $shopRepository,
-        ReflectionClassFactoryInterface $reflectionClassFactory,
-        \ReflectionClass $shopReflectionClass,
-        \ReflectionClass $shopConfigLoaderReflectionClass,
-        Shop $shop
-    ) {
-        $config = [1 => ['CustomerGroup' => 'EK']];
-
-        $shopRepository->find(1)
-            ->willReturn($shop);
-
-        $shopReflectionClass->hasMethod('setCustomerGroup')
-            ->willReturn(true);
-
-        $shopConfigLoaderReflectionClass->hasMethod('getCustomerGroup')
-            ->willReturn(false);
-
-        $entityManager->persist($shop)
             ->shouldNotBeCalled();
 
         $entityManager->flush()
@@ -151,16 +99,12 @@ class ShopConfigLoaderSpec extends ObjectBehavior
     public function it_can_load_empty(
         EntityManagerInterface $entityManager,
         ObjectRepository $shopRepository,
-        \ReflectionClass $shopReflectionClass,
-        \ReflectionClass $shopConfigLoaderReflectionClass
+        \ReflectionClass $shopReflectionClass
     ) {
         $shopRepository->find(Argument::any())
             ->shouldNotBeCalled();
 
         $shopReflectionClass->hasMethod(Argument::any())
-            ->shouldNotBeCalled();
-
-        $shopConfigLoaderReflectionClass->hasMethod(Argument::any())
             ->shouldNotBeCalled();
 
         $entityManager->persist(Argument::any())
@@ -176,7 +120,6 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ObjectRepository $shopRepository,
         \ReflectionClass $shopReflectionClass,
-        \ReflectionClass $shopConfigLoaderReflectionClass,
         Shop $shop
     ) {
         $config = [1 => []];
@@ -185,9 +128,6 @@ class ShopConfigLoaderSpec extends ObjectBehavior
             ->willReturn($shop);
 
         $shopReflectionClass->hasMethod(Argument::any())
-            ->shouldNotBeCalled();
-
-        $shopConfigLoaderReflectionClass->hasMethod(Argument::any())
             ->shouldNotBeCalled();
 
         $entityManager->persist($shop)
@@ -202,9 +142,8 @@ class ShopConfigLoaderSpec extends ObjectBehavior
     public function it_can_update_existing_shop(
         EntityManagerInterface $entityManager,
         ObjectRepository $shopRepository,
-        ReflectionClassFactoryInterface $reflectionClassFactory,
         \ReflectionClass $shopReflectionClass,
-        \ReflectionClass $shopConfigLoaderReflectionClass,
+        ShopEntityRelationHelperInterface $entityRelationHelper,
         Shop $shop
     ) {
         $config = [1 => ['Name' => 'Gotham']];
@@ -218,8 +157,8 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         $shop->setName('Gotham')
             ->shouldBeCalled();
 
-        $shopConfigLoaderReflectionClass->hasMethod(Argument::any())
-            ->shouldNotBeCalled();
+        $entityRelationHelper->isRelationField('Name')
+            ->willReturn(false);
 
         $entityManager->persist($shop)
             ->shouldBeCalled();
@@ -230,83 +169,33 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         $this->load($config);
     }
 
-    public function it_can_update_existing_shop_with_properties_from_the_relation_list(
+    public function it_can_update_existing_shop_with_properties_with_a_relation(
         EntityManagerInterface $entityManager,
         ObjectRepository $shopRepository,
-        ObjectRepository $groupRepository,
-        ObjectRepository $categoryRepository,
-        ObjectRepository $localeRepository,
-        ObjectRepository $currencyRepository,
+        ShopEntityRelationHelperInterface $entityRelationHelper,
         Shop $shop,
         Group $group,
-        Category $category,
-        Locale $locale,
-        Currency $currency,
-        Shop $mainShop,
-        \ReflectionClass $shopReflectionClass,
-        \ReflectionClass $shopConfigLoaderReflectionClass
+        \ReflectionClass $shopReflectionClass
     ) {
         $config = [
             1 => [
                 'CustomerGroup' => 'Villains',
-                'Category' => 'Human',
-                'Locale' => 'bd_Bad',
-                'Currency'  => 'EUR',
-                'Main' => 2,
-                'Fallback' => 1,
             ],
         ];
 
         $shopRepository->find(1)
             ->willReturn($shop);
 
-        $this->reflectionClassHelper($shopReflectionClass, 'set', true);
+        $shopReflectionClass->hasMethod('setCustomerGroup')
+            ->willReturn(true);
 
-        $this->reflectionClassHelper($shopConfigLoaderReflectionClass, 'get', true);
+        $entityRelationHelper->isRelationField('CustomerGroup')
+            ->willReturn(true);
 
-        $entityManager->getRepository(Group::class)
-            ->willReturn($groupRepository);
-
-        $groupRepository->findOneBy(['key' => 'Villains'])
+        $entityRelationHelper->getEntity('CustomerGroup', 'Villains')
             ->willReturn($group);
 
-        $entityManager->getRepository(Category::class)
-            ->willReturn($categoryRepository);
-
-        $categoryRepository->findOneBy(['name' => 'Human'])
-            ->willReturn($category);
-
-        $entityManager->getRepository(Locale::class)
-            ->willReturn($localeRepository);
-
-        $localeRepository->findOneBy(['locale' => 'bd_Bad'])
-            ->willReturn($locale);
-
-        $entityManager->getRepository(Currency::class)
-            ->willReturn($currencyRepository);
-
-        $currencyRepository->findOneBy(['currency' => 'EUR'])
-            ->willReturn($currency);
-
-        $shopRepository->find(2)
-            ->willReturn($mainShop);
-
         $shop->setCustomerGroup($group)
-            ->shouldBeCalled();
-
-        $shop->setCategory($category)
-            ->shouldBeCalled();
-
-        $shop->setLocale($locale)
-            ->shouldBeCalled();
-
-        $shop->setCurrency($currency)
-            ->shouldBeCalled();
-
-        $shop->setMain($mainShop)
-            ->shouldBeCalled();
-
-        $shop->setFallback($shop)
             ->shouldBeCalled();
 
         $entityManager->persist($shop)
@@ -316,13 +205,5 @@ class ShopConfigLoaderSpec extends ObjectBehavior
             ->shouldBeCalled();
 
         $this->load($config);
-    }
-
-    private function reflectionClassHelper($reflectionClass, $method, $returnValue)
-    {
-        foreach (self::RELATION_LIST as $relationMethod) {
-            $reflectionClass->hasMethod($method . $relationMethod)
-                ->willReturn($returnValue);
-        }
     }
 }
