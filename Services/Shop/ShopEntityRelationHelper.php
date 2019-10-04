@@ -29,12 +29,12 @@ class ShopEntityRelationHelper implements ShopEntityRelationHelperInterface
     }
 
     const RELATION_ENTITY_LIST = [
-        'CUSTOMER_GROUP' => 'CustomerGroup',
-        'CATEGORY' => 'Category',
-        'LOCALE' => 'Locale',
-        'CURRENCY' => 'Currency',
-        'MAIN' => 'Main',
-        'FALLBACK' => 'Fallback',
+        'CUSTOMER_GROUP' => 'customergroup',
+        'CATEGORY' => 'category',
+        'LOCALE' => 'locale',
+        'CURRENCY' => 'currency',
+        'MAIN' => 'main',
+        'FALLBACK' => 'fallback',
     ];
 
     public function isRelationField($entityName)
@@ -44,7 +44,7 @@ class ShopEntityRelationHelper implements ShopEntityRelationHelperInterface
 
     public function getEntity($entityName, $value): ModelEntity
     {
-        switch ($entityName) {
+        switch (\strtolower($entityName)) {
             case self::RELATION_ENTITY_LIST['CUSTOMER_GROUP']:
                 $class = Group::class;
                 $key = 'key';

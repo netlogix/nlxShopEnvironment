@@ -23,6 +23,15 @@ use Shopware\Models\Shop\Shop;
 
 class ShopEntityRelationHelperSpec extends ObjectBehavior
 {
+    const RELATION_ENTITY_LIST = [
+        'CUSTOMER_GROUP' => 'customergroup',
+        'CATEGORY' => 'category',
+        'LOCALE' => 'locale',
+        'CURRENCY' => 'currency',
+        'MAIN' => 'main',
+        'FALLBACK' => 'fallback',
+    ];
+
     public function let(
         EntityManagerInterface $entityManager
     ) {
@@ -49,9 +58,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
 
     public function it_returns_true_if_it_is_a_relation_field()
     {
-        $entityName = 'CustomerGroup';
-
-        $this->isRelationField($entityName)
+        $this->isRelationField(self::RELATION_ENTITY_LIST['CUSTOMER_GROUP'])
             ->shouldReturn(true);
     }
 
@@ -67,8 +74,6 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ObjectRepository $customerGroup
     ) {
-        $entityName = 'CustomerGroup';
-
         $entityManager->getRepository(Group::class)
             ->willReturn($customerGroup);
 
@@ -76,7 +81,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
             ->willReturn(null);
 
         $this->shouldThrow(\RuntimeException::class)
-            ->during('getEntity', [$entityName, 'test']);
+            ->during('getEntity', [self::RELATION_ENTITY_LIST['CUSTOMER_GROUP'], 'test']);
     }
 
     public function it_returns_a_customer_group_entity(
@@ -84,15 +89,13 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
         ObjectRepository $customerGroupRepository,
         Customer $customerGroup
     ) {
-        $entityName = 'CustomerGroup';
-
         $entityManager->getRepository(Group::class)
             ->willReturn($customerGroupRepository);
 
         $customerGroupRepository->findOneBy(['key' => 'test'])
             ->willReturn($customerGroup);
 
-        $this->getEntity($entityName, 'test')
+        $this->getEntity(self::RELATION_ENTITY_LIST['CUSTOMER_GROUP'], 'test')
             ->shouldReturn($customerGroup);
     }
 
@@ -100,8 +103,6 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ObjectRepository $categoryRepository
     ) {
-        $entityName = 'Category';
-
         $entityManager->getRepository(Category::class)
             ->willReturn($categoryRepository);
 
@@ -109,7 +110,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
             ->willReturn(null);
 
         $this->shouldThrow(\RuntimeException::class)
-            ->during('getEntity', [$entityName, 'test']);
+            ->during('getEntity', [self::RELATION_ENTITY_LIST['CATEGORY'], 'test']);
     }
 
     public function it_returns_a_category_entity(
@@ -117,15 +118,13 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
         ObjectRepository $categoryRepository,
         Category $category
     ) {
-        $entityName = 'Category';
-
         $entityManager->getRepository(Category::class)
             ->willReturn($categoryRepository);
 
         $categoryRepository->findOneBy(['name' => 'test'])
             ->willReturn($category);
 
-        $this->getEntity($entityName, 'test')
+        $this->getEntity(self::RELATION_ENTITY_LIST['CATEGORY'], 'test')
             ->shouldReturn($category);
     }
 
@@ -133,8 +132,6 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ObjectRepository $localeRepository
     ) {
-        $entityName = 'Locale';
-
         $entityManager->getRepository(Locale::class)
             ->willReturn($localeRepository);
 
@@ -142,7 +139,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
             ->willReturn(null);
 
         $this->shouldThrow(\RuntimeException::class)
-            ->during('getEntity', [$entityName, 'test']);
+            ->during('getEntity', [self::RELATION_ENTITY_LIST['LOCALE'], 'test']);
     }
 
     public function it_returns_a_locale_entity(
@@ -150,15 +147,13 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
         ObjectRepository $localeRepository,
         Locale $locale
     ) {
-        $entityName = 'Locale';
-
         $entityManager->getRepository(Locale::class)
             ->willReturn($localeRepository);
 
         $localeRepository->findOneBy(['locale' => 'test'])
             ->willReturn($locale);
 
-        $this->getEntity($entityName, 'test')
+        $this->getEntity(self::RELATION_ENTITY_LIST['LOCALE'], 'test')
             ->shouldReturn($locale);
     }
 
@@ -166,8 +161,6 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ObjectRepository $currencyRepository
     ) {
-        $entityName = 'Currency';
-
         $entityManager->getRepository(Currency::class)
             ->willReturn($currencyRepository);
 
@@ -175,7 +168,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
             ->willReturn(null);
 
         $this->shouldThrow(\RuntimeException::class)
-            ->during('getEntity', [$entityName, 'test']);
+            ->during('getEntity', [self::RELATION_ENTITY_LIST['CURRENCY'], 'test']);
     }
 
     public function it_returns_a_currency_entity(
@@ -183,15 +176,13 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
         ObjectRepository $currencyRepository,
         Currency $currency
     ) {
-        $entityName = 'Currency';
-
         $entityManager->getRepository(Currency::class)
             ->willReturn($currencyRepository);
 
         $currencyRepository->findOneBy(['currency' => 'test'])
             ->willReturn($currency);
 
-        $this->getEntity($entityName, 'test')
+        $this->getEntity(self::RELATION_ENTITY_LIST['CURRENCY'], 'test')
             ->shouldReturn($currency);
     }
 
@@ -199,8 +190,6 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ObjectRepository $mainShopRepository
     ) {
-        $entityName = 'Main';
-
         $entityManager->getRepository(Shop::class)
             ->willReturn($mainShopRepository);
 
@@ -208,7 +197,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
             ->willReturn(null);
 
         $this->shouldThrow(\RuntimeException::class)
-            ->during('getEntity', [$entityName, 'test']);
+            ->during('getEntity', [self::RELATION_ENTITY_LIST['MAIN'], 'test']);
     }
 
     public function it_returns_a_main_shop_entity(
@@ -216,15 +205,13 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
         ObjectRepository $mainShopRepository,
         Shop $main
     ) {
-        $entityName = 'Main';
-
         $entityManager->getRepository(Shop::class)
             ->willReturn($mainShopRepository);
 
         $mainShopRepository->findOneBy(['id' => 'test'])
             ->willReturn($main);
 
-        $this->getEntity($entityName, 'test')
+        $this->getEntity(self::RELATION_ENTITY_LIST['MAIN'], 'test')
             ->shouldReturn($main);
     }
 
@@ -232,8 +219,6 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ObjectRepository $fallbackRepository
     ) {
-        $entityName = 'Fallback';
-
         $entityManager->getRepository(Shop::class)
             ->willReturn($fallbackRepository);
 
@@ -241,7 +226,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
             ->willReturn(null);
 
         $this->shouldThrow(\RuntimeException::class)
-            ->during('getEntity', [$entityName, 'test']);
+            ->during('getEntity', [self::RELATION_ENTITY_LIST['FALLBACK'], 'test']);
     }
 
     public function it_returns_a_fallback_shop_entity(
@@ -249,15 +234,13 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
         ObjectRepository $fallbackRepository,
         Shop $fallback
     ) {
-        $entityName = 'Fallback';
-
         $entityManager->getRepository(Shop::class)
             ->willReturn($fallbackRepository);
 
         $fallbackRepository->findOneBy(['id' => 'test'])
             ->willReturn($fallback);
 
-        $this->getEntity($entityName, 'test')
+        $this->getEntity(self::RELATION_ENTITY_LIST['FALLBACK'], 'test')
             ->shouldReturn($fallback);
     }
 }
