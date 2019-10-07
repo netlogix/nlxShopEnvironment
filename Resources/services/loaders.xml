@@ -10,6 +10,7 @@
         >
             <argument type="service" id="models" />
             <argument type="service" id="sd_shop_environment.factory.reflrection_class_factory"/>
+            <argument type="service" id="sd_shop_environment.services.shop.shop_entity_relation_helper"/>
         </service>
         <service
                 id="sd_shop_environment.loader.core_config_loader"

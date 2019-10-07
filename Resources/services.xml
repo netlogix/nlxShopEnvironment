@@ -35,6 +35,12 @@
                  class="sdShopEnvironment\Services\ConfigurationLoader">
             <argument type="service" key="$dataTypeCollector" id="sd_shop_environment.data_types.data_type_collector" />
         </service>
+        <service
+                id="sd_shop_environment.services.shop.shop_entity_relation_helper"
+                class="sdShopEnvironment\Services\Shop\ShopEntityRelationHelper"
+        >
+            <argument type="service" id="models"/>
+        </service>
 
         <!-- Commands -->
         <service
