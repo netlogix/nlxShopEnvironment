@@ -39,7 +39,7 @@ class ShopEntityRelationHelper implements ShopEntityRelationHelperInterface
 
     public function isRelationField($entityName)
     {
-        return \in_array($entityName, self::RELATION_ENTITY_LIST, true);
+        return \in_array(\strtolower($entityName), self::RELATION_ENTITY_LIST, true);
     }
 
     public function getEntity($entityName, $value): ModelEntity
