@@ -97,6 +97,6 @@
     </changelog>
     <changelog version="1.11.3">
         <changes lang="de">Fix: Entitynamen in Kleinbuchstaben umwandeln</changes>
-        <changes lang="en">Fix: Entity names converted to lowercase</changes>
+        <changes lang="en">Fix: Entity names are converted to lowercase</changes>
     </changelog>
 </plugin>
