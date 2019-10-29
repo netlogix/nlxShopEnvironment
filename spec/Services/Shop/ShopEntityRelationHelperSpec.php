@@ -48,7 +48,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
         $this->shouldImplement(ShopEntityRelationHelperInterface::class);
     }
 
-    public function it_returns_false_if_it_is_a_relation_field()
+    public function it_returns_false_if_it_is_not_a_relation_field()
     {
         $entityName = 'CustomeWhat';
 
@@ -59,6 +59,12 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
     public function it_returns_true_if_it_is_a_relation_field()
     {
         $this->isRelationField(self::RELATION_ENTITY_LIST['CUSTOMER_GROUP'])
+            ->shouldReturn(true);
+    }
+
+    public function it_returns_true_if_it_is_a_relation_field_with_capitalization()
+    {
+        $this->isRelationField(\strtoupper(self::RELATION_ENTITY_LIST['CUSTOMER_GROUP']))
             ->shouldReturn(true);
     }
 
