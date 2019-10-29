@@ -96,7 +96,7 @@
         <changes lang="en">Fix: Adds missing dependency 'symfony/expression-language'</changes>
     </changelog>
     <changelog version="1.11.3">
-        <changes lang="de">Fix: Entity Namen in kleinbuchstaben umwandeln</changes>
+        <changes lang="de">Fix: Entitynamen in Kleinbuchstaben umwandeln</changes>
         <changes lang="en">Fix: Entity names converted to lowercase</changes>
     </changelog>
 </plugin>
