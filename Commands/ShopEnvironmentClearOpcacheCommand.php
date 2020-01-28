@@ -8,12 +8,8 @@
 
 namespace sdShopEnvironment\Commands;
 
-use sdShopEnvironment\Services\ConfigurationDumperInterface;
 use Shopware\Commands\ShopwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\ConsoleOutputInterface;
-use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ShopEnvironmentClearOpcacheCommand extends ShopwareCommand
@@ -49,22 +45,5 @@ class ShopEnvironmentClearOpcacheCommand extends ShopwareCommand
         }
 
         exit(0);
-    }
-
-    /**
-     * @param OutputInterface $output
-     * @param string          $filename
-     *
-     * @return OutputInterface
-     */
-    private function getErrorOutput(OutputInterface $output, $filename = '')
-    {
-        if ($output instanceof ConsoleOutputInterface) {
-            return $output->getErrorOutput();
-        } elseif ('php://stdout' !== $filename) {
-            return $output;
-        }
-
-        return new NullOutput();
     }
 }
