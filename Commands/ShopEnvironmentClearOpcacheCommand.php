@@ -8,12 +8,24 @@
 
 namespace sdShopEnvironment\Commands;
 
+use GuzzleHttp\Client;
 use Shopware\Commands\ShopwareCommand;
+use Shopware\Components\HttpClient\HttpClientInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ShopEnvironmentClearOpcacheCommand extends ShopwareCommand
 {
+
+    /** @var HttpClientInterface */
+    private $httpClient;
+
+    public function __construct(HttpClientInterface $httpClient)
+    {
+        $this->httpClient = $httpClient;
+        parent::__construct();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -32,16 +44,18 @@ class ShopEnvironmentClearOpcacheCommand extends ShopwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (\function_exists('opcache_reset') && extension_loaded('Zend OPcache')) {
-            $result = \opcache_reset();
+        $shopUrl = \getenv('SHOP_URL');
+        $shopHost = \parse_url($shopUrl, \PHP_URL_HOST);
 
-            if ($result) {
-                $output->writeln('<fg=green>Opcache successfully cleared.</>');
-            } else {
-                $output->writeln('<fg=yellow>Opcache is not enabled by the php configuration so nothing was done.</>');
-            }
+        $response = $this->httpClient->get('https://127.0.0.1/ClearOpcache', [
+            'host' => $shopHost
+        ]);
+        $statusCode = $response->getStatusCode();
+        if ($statusCode === '200') {
+            $output->writeln('<fg=green>Opcache successfully cleared.</>');
         } else {
-            $output->writeln('<fg=yellow>Opcache extension is not installed so nothing was done.</>');
+            $output->writeln('<fg=red>A server error occurred while cleaning the opcache.</>');
+            exit(255);
         }
 
         exit(0);
