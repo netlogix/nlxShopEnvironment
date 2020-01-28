@@ -27,7 +27,7 @@ class ShopEnvironmentClearOpcacheCommand extends ShopwareCommand
             ->setName('sd:environment:opcache:clear')
             ->setDescription('Clears the Opcache.')
             ->setHelp(
-                'The <info>%command.name%</info> will reset the Opcache.'
+                'The <info>%command.name%</info> command will reset the Opcache.'
             );
     }
 
