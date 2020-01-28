@@ -2,9 +2,9 @@
 declare(strict_types=1);
 
 /*
- * Created by solutionDrive GmbH
+ * Created by netlogix GmbH & Co. KG
  *
- * @copyright solutionDrive GmbH
+ * @copyright netlogix GmbH & Co. KG
  */
 
 class Shopware_Controllers_Frontend_ClearOpcache extends \Enlight_Controller_Action
@@ -14,7 +14,7 @@ class Shopware_Controllers_Frontend_ClearOpcache extends \Enlight_Controller_Act
         $this->Front()->Plugins()->ViewRenderer()->setNoRender();
         $request = $this->request;
         $clientIp = $request->getClientIp();
-        if ($clientIp === '127.0.0.1' || $clientIp === 'localhost') {
+        if ('127.0.0.1' === $clientIp || 'localhost' === $clientIp) {
             if (\function_exists('opcache_reset') && \extension_loaded('Zend OPcache')) {
                 \opcache_reset();
             }

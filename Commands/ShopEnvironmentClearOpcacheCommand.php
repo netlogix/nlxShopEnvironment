@@ -1,14 +1,13 @@
 <?php
 
 /*
- * Created by solutionDrive GmbH
+ * Created by netlogix GmbH & Co. KG
  *
- * @copyright solutionDrive GmbH
+ * @copyright netlogix GmbH & Co. KG
  */
 
 namespace sdShopEnvironment\Commands;
 
-use GuzzleHttp\Client;
 use Shopware\Commands\ShopwareCommand;
 use Shopware\Components\HttpClient\HttpClientInterface;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,7 +15,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ShopEnvironmentClearOpcacheCommand extends ShopwareCommand
 {
-
     /** @var HttpClientInterface */
     private $httpClient;
 
@@ -48,10 +46,10 @@ class ShopEnvironmentClearOpcacheCommand extends ShopwareCommand
         $shopHost = \parse_url($shopUrl, \PHP_URL_HOST);
 
         $response = $this->httpClient->get('https://127.0.0.1/ClearOpcache', [
-            'host' => $shopHost
+            'host' => $shopHost,
         ]);
         $statusCode = $response->getStatusCode();
-        if ($statusCode === '200') {
+        if ('200' === $statusCode) {
             $output->writeln('<fg=green>Opcache successfully cleared.</>');
         } else {
             $output->writeln('<fg=red>A server error occurred while cleaning the opcache.</>');
