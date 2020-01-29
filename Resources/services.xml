@@ -8,6 +8,7 @@
         <import resource="services/dumpers.xml" />
         <import resource="services/loaders.xml" />
         <import resource="services/serializer.xml" />
+        <import resource="services/cache_cleaners.xml" />
     </imports>
 
     <services>
@@ -56,6 +57,24 @@
         >
             <argument type="service" id="sd_shop_environment.services.configuration_loader"/>
             <tag name="console.command"/>
+        </service>
+        <service
+                id="sd_shop_environment.commands.shop_environment_clear_opcache_command"
+                class="sdShopEnvironment\Commands\ShopEnvironmentClearOpcacheCommand"
+        >
+            <argument type="service" id="sd_shop_environment.commands.shop_environment_insecure_guzzle_client" />
+            <argument type="service" id="sd_shop_environment.cache_cleaners.opcache_cleaner" />
+            <tag name="console.command"/>
+        </service>
+
+        <service id="sd_shop_environment.commands.shop_environment_insecure_guzzle_client"
+                 class="Shopware\Components\HttpClient\GuzzleHttpClient">
+            <argument type="service" id="guzzle_http_client_factory"/>
+            <argument type="collection">
+                <argument type="collection" key="defaults">
+                    <argument key="verify">false</argument>
+                </argument>
+            </argument>
         </service>
 
         <!-- Factories -->

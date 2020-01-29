@@ -5,3 +5,5 @@ parameters:
   skip:
     SlevomatCodingStandard\Sniffs\Exceptions\ReferenceThrowableOnlySniff.ReferencedGeneralException:
       - 'Loader/ShippingMethodsLoader.php'
+    PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\ValidClassNameSniff.NotCamelCaps:
+      - 'Controllers/Frontend/*'
