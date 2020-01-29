@@ -101,6 +101,6 @@
     </changelog>
     <changelog version="1.12.0">
         <changes lang="de">Funktionalität hinzugefügt welche es ermöglicht über das Plugin den Opcache zu löschen</changes>
-        <changes lang="en">Added the possibility to clear the opcache with this plugin</changes>
+        <changes lang="en">Added the functionality to clear the opcache with this plugin</changes>
     </changelog>
 </plugin>
