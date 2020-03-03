@@ -28,6 +28,13 @@
             <argument type="service" id="sd_shop_environment.logger" />
         </service>
         <service
+                id="sd_shop_environment.loader.theme_settings_loader"
+                class="sdShopEnvironment\Loader\ThemeSettingsLoader"
+        >
+            <argument type="service" id="models" />
+            <argument type="service" id="sd.shop_environment.serializer.normalizer.object_normalizer" />
+        </service>
+        <service
                 id="sd_shop_environment.loader.productivity_mode_config_loader"
                 class="sdShopEnvironment\Loader\ProductivityModeConfigLoader"
         >
