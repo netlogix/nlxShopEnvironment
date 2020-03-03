@@ -40,8 +40,8 @@ class ThemeSettingsLoader implements LoaderInterface
             try {
                 $this->importThemeSettings($id, $themeSettingsData);
             } catch (\Throwable $throwable) {
-                echo 'Error during import of theme setting ' . $id . PHP_EOL;
-                echo $throwable->getMessage();
+                $this->outputException($id, $throwable);
+                continue;
             }
         }
 
@@ -60,5 +60,17 @@ class ThemeSettingsLoader implements LoaderInterface
         }
 
         $this->denormalizer->denormalize($themeSettingData, Settings::class, null, ['object_to_populate' => $themeSetting]);
+    }
+
+    /**
+     * @param int        $id
+     * @param \Exception $exception
+     */
+    private function outputException($id, \Throwable $exception)
+    {
+        if (!\defined('PHPSPEC')) {
+            echo 'Error during import of theme setting ' . $id . PHP_EOL;
+            echo $exception->getMessage();
+        }
     }
 }
