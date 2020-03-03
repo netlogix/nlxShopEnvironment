@@ -35,6 +35,14 @@
             <argument type="service" id="sd_shop_environment.loader.theme_config_loader" />
         </service>
         <service
+                id="sd_shop_environment.data_types.theme_settings_type"
+                class="sdShopEnvironment\DataTypes\GenericDataType"
+        >
+            <tag name="sd.data_type" root_name="theme_settings" />
+            <argument type="service" id="sd_shop_environment.dumper.theme_settings_dumper" />
+            <argument type="service" id="sd_shop_environment.loader.theme_settings_loader" />
+        </service>
+        <service
                 id="sd_shop_environment.data_types.productivity_mode_config_type"
                 class="sdShopEnvironment\DataTypes\GenericDataType"
         >

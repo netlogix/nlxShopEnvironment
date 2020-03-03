@@ -24,6 +24,13 @@
             <argument type="service" id="models" />
         </service>
         <service
+                id="sd_shop_environment.dumper.theme_settings_dumper"
+                class="sdShopEnvironment\Dumper\ThemeSettingsDumper"
+        >
+            <argument type="service" id="models" />
+            <argument type="service" id="sd.shop_environment.serializer.normalizer.object_normalizer"/>
+        </service>
+        <service
                 id="sd_shop_environment.dumper.productivity_mode_config_dumper"
                 class="sdShopEnvironment\Dumper\ProductivityModeConfigDumper"
         >
