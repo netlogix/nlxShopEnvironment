@@ -47,7 +47,6 @@ class ShopEnvironmentClearOpcacheCommand extends ShopwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         if ($this->cleanCliOpcache()) {
             $output->writeln('<fg=green>Cli Opcache successfully cleared.</>');
         } else {

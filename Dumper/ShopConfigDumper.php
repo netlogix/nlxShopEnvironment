@@ -50,11 +50,11 @@ class ShopConfigDumper implements DumperInterface
                 'Locale'        => $shop->getLocale()->getLocale(),
                 'Currency'      => $shop->getCurrency()->getCurrency(),
             ];
-            
-            if ($shop->getMain() !== null) {
+
+            if (null !== $shop->getMain()) {
                 $shopConfigs[$shop->getId()]['Main'] = $shop->getMain()->getId();
             }
-            if ($shop->getFallback() !== null) {
+            if (null !== $shop->getFallback()) {
                 $shopConfigs[$shop->getId()]['Fallback'] = $shop->getFallback()->getId();
             }
         }
