@@ -83,7 +83,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         $shopRepository->find(1)
             ->willReturn($shop);
 
-        $shopReflectionClass->hasMethod('setSuperVillain')
+        $shopReflectionClass->hasMethod('setsuperVillain')
             ->willReturn(false);
 
         $entityManager->persist(Argument::any())

@@ -141,7 +141,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
         $entityManager->getRepository(Locale::class)
             ->willReturn($localeRepository);
 
-        $localeRepository->findOneBy(['name' => 'test'])
+        $localeRepository->findOneBy(['locale' => 'test'])
             ->willReturn(null);
 
         $this->shouldThrow(\RuntimeException::class)
