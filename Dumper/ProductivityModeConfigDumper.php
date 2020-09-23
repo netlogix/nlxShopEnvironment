@@ -6,10 +6,10 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace sdShopEnvironment\Dumper;
+namespace nlxShopEnvironment\Dumper;
 
 use Doctrine\ORM\EntityManagerInterface;
-use sdShopEnvironment\Loader\ProductivityModeConfigLoader;
+use nlxShopEnvironment\Loader\ProductivityModeConfigLoader;
 use Shopware\Models\Plugin\Plugin;
 
 class ProductivityModeConfigDumper implements DumperInterface

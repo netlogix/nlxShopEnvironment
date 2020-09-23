@@ -6,13 +6,13 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Dumper;
+namespace spec\nlxShopEnvironment\Dumper;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
-use sdShopEnvironment\Dumper\DocumentsDumper;
-use sdShopEnvironment\Dumper\DumperInterface;
+use nlxShopEnvironment\Dumper\DocumentsDumper;
+use nlxShopEnvironment\Dumper\DumperInterface;
 use Shopware\Models\Document\Document;
 
 class DocumentsDumperSpec extends ObjectBehavior

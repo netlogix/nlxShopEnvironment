@@ -6,7 +6,7 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace sdShopEnvironment\Serializer\Normalizer;
+namespace nlxShopEnvironment\Serializer\Normalizer;
 
 use Shopware\Models\Country\Country;
 use Shopware\Models\Payment\Payment;

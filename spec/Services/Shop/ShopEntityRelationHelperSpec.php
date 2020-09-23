@@ -7,13 +7,13 @@ declare(strict_types=1);
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Services\Shop;
+namespace spec\nlxShopEnvironment\Services\Shop;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
-use sdShopEnvironment\Services\Shop\ShopEntityRelationHelper;
-use sdShopEnvironment\Services\Shop\ShopEntityRelationHelperInterface;
+use nlxShopEnvironment\Services\Shop\ShopEntityRelationHelper;
+use nlxShopEnvironment\Services\Shop\ShopEntityRelationHelperInterface;
 use Shopware\Models\Category\Category;
 use Shopware\Models\Customer\Customer;
 use Shopware\Models\Customer\Group;

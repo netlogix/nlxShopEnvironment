@@ -6,12 +6,12 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Serializer\Normalizer;
+namespace spec\nlxShopEnvironment\Serializer\Normalizer;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
-use sdShopEnvironment\Serializer\Normalizer\ShopNormalizer;
+use nlxShopEnvironment\Serializer\Normalizer\ShopNormalizer;
 use Shopware\Models\Shop\Shop;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 

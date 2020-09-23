@@ -1,4 +1,4 @@
-sdShopEnvironment
+nlxShopEnvironment
 =================
 
 By using this Shopware plugin you can load or dump some shop configuration to or from database.
@@ -37,7 +37,7 @@ To add a new root node you have to do the following:
 * Provide a new `Loader` that implements the `LoaderInterface` that is registered in `Resources/services/loaders.xml`.
 * Provide a new `Dumper` that implements the `DumperInterface` that is registered in `Resources/services/dumpers.xml`.
 * Provide a new `DataType` that implements the `DataTypeInterface` 
-  that is registered in `Resources/services/data_types.xml` and tagged with `sd.data_type`.
+  that is registered in `Resources/services/data_types.xml` and tagged with `nlx.data_type`.
   In the tag you can define the concrete root node key you want to use.
   If you are lazy you can omit creating an own class implementing `DataTypeInterface` by using `GenericDataType`.
 

@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace sdShopEnvironment\Factory;
+namespace nlxShopEnvironment\Factory;
 
 interface ReflectionClassFactoryInterface
 {

@@ -6,9 +6,9 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace sdShopEnvironment\Components\CompilerPass;
+namespace nlxShopEnvironment\Components\CompilerPass;
 
-use sdShopEnvironment\DataTypes\DataTypeInterface;
+use nlxShopEnvironment\DataTypes\DataTypeInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -17,12 +17,12 @@ class DataTypeCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if (!$container->has('sd_shop_environment.data_types.data_type_collector')) {
+        if (!$container->has('nlx_shop_environment.data_types.data_type_collector')) {
             return;
         }
 
-        $definition = $container->findDefinition('sd_shop_environment.data_types.data_type_collector');
-        $taggedServices = $container->findTaggedServiceIds('sd.data_type');
+        $definition = $container->findDefinition('nlx_shop_environment.data_types.data_type_collector');
+        $taggedServices = $container->findTaggedServiceIds('nlx.data_type');
 
         foreach ($taggedServices as $id => $tags) {
             $def = $container->getDefinition($id);

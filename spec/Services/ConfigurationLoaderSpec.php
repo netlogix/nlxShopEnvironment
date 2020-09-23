@@ -6,12 +6,12 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Services;
+namespace spec\nlxShopEnvironment\Services;
 
 use PhpSpec\ObjectBehavior;
-use sdShopEnvironment\DataTypes\DataTypeCollectorInterface;
-use sdShopEnvironment\Services\ConfigurationLoader;
-use sdShopEnvironment\Services\ConfigurationLoaderInterface;
+use nlxShopEnvironment\DataTypes\DataTypeCollectorInterface;
+use nlxShopEnvironment\Services\ConfigurationLoader;
+use nlxShopEnvironment\Services\ConfigurationLoaderInterface;
 
 class ConfigurationLoaderSpec extends ObjectBehavior
 {

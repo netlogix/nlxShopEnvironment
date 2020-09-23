@@ -5,88 +5,88 @@
 
     <services>
         <service
-                id="sd_shop_environment.dumper.shop_config_dumper"
-                class="sdShopEnvironment\Dumper\ShopConfigDumper"
+                id="nlx_shop_environment.dumper.shop_config_dumper"
+                class="nlxShopEnvironment\Dumper\ShopConfigDumper"
         >
             <argument type="service" id="models" />
         </service>
         <service
-                id="sd_shop_environment.dumper.core_config_dumper"
-                class="sdShopEnvironment\Dumper\CoreConfigDumper"
+                id="nlx_shop_environment.dumper.core_config_dumper"
+                class="nlxShopEnvironment\Dumper\CoreConfigDumper"
         >
             <argument type="service" id="models" />
             <argument type="service" id="config_writer" />
         </service>
         <service
-                id="sd_shop_environment.dumper.theme_config_dumper"
-                class="sdShopEnvironment\Dumper\ThemeConfigDumper"
+                id="nlx_shop_environment.dumper.theme_config_dumper"
+                class="nlxShopEnvironment\Dumper\ThemeConfigDumper"
         >
             <argument type="service" id="models" />
         </service>
         <service
-                id="sd_shop_environment.dumper.theme_settings_dumper"
-                class="sdShopEnvironment\Dumper\ThemeSettingsDumper"
+                id="nlx_shop_environment.dumper.theme_settings_dumper"
+                class="nlxShopEnvironment\Dumper\ThemeSettingsDumper"
         >
             <argument type="service" id="models" />
-            <argument type="service" id="sd.shop_environment.serializer.normalizer.object_normalizer"/>
+            <argument type="service" id="nlx.shop_environment.serializer.normalizer.object_normalizer"/>
         </service>
         <service
-                id="sd_shop_environment.dumper.productivity_mode_config_dumper"
-                class="sdShopEnvironment\Dumper\ProductivityModeConfigDumper"
+                id="nlx_shop_environment.dumper.productivity_mode_config_dumper"
+                class="nlxShopEnvironment\Dumper\ProductivityModeConfigDumper"
         >
             <argument type="service" id="models" />
         </service>
         <service
-                id="sd.shop_environment.dumper.payment_methods_dumper"
-                class="sdShopEnvironment\Dumper\PaymentMethodsDumper"
+                id="nlx.shop_environment.dumper.payment_methods_dumper"
+                class="nlxShopEnvironment\Dumper\PaymentMethodsDumper"
         >
             <argument id="models" type="service"/>
-            <argument type="service" id="sd.shop_environment.serializer.serializer.payment_serializer"/>
+            <argument type="service" id="nlx.shop_environment.serializer.serializer.payment_serializer"/>
         </service>
         <service
-                id="sd.shop_environment.dumper.shipping_methods_dumper"
-                class="sdShopEnvironment\Dumper\ShippingMethodsDumper"
+                id="nlx.shop_environment.dumper.shipping_methods_dumper"
+                class="nlxShopEnvironment\Dumper\ShippingMethodsDumper"
         >
             <argument type="service" id="models"/>
-            <argument type="service" id="sd.shop_environment.serializer.serializer.dispatch_serializer"/>
+            <argument type="service" id="nlx.shop_environment.serializer.serializer.dispatch_serializer"/>
         </service>
         <service
-                id="sd.shop_environment.dumper.documents_dumper"
-                class="sdShopEnvironment\Dumper\DocumentsDumper"
-        >
-            <argument type="service" id="models"/>
-        </service>
-        <service
-                id="sd.shop_environment.dumper.media_manager_dumper"
-                class="sdShopEnvironment\Dumper\MediaManagerDumper"
+                id="nlx.shop_environment.dumper.documents_dumper"
+                class="nlxShopEnvironment\Dumper\DocumentsDumper"
         >
             <argument type="service" id="models"/>
         </service>
         <service
-                id="sd.shop_environment.dumper.category_dumper"
-                class="sdShopEnvironment\Dumper\CategoryDumper"
+                id="nlx.shop_environment.dumper.media_manager_dumper"
+                class="nlxShopEnvironment\Dumper\MediaManagerDumper"
         >
             <argument type="service" id="models"/>
         </service>
         <service
-                id="sd.shop_environment.dumper.facet_dumper"
-                class="sdShopEnvironment\Dumper\FacetDumper"
-        >
-            <argument type="service" id="models"/>
-            <argument type="service" id="sd.shop_environment.serializer.serializer.custom_facet_serializer"/>
-        </service>
-        <service
-                id="sd.shop_environment.dumper.search_fields_dumper"
-                class="sdShopEnvironment\Dumper\SearchFieldsDumper"
+                id="nlx.shop_environment.dumper.category_dumper"
+                class="nlxShopEnvironment\Dumper\CategoryDumper"
         >
             <argument type="service" id="models"/>
         </service>
         <service
-                id="sd.shop_environment.dumper.payment_rules_dumper"
-                class="sdShopEnvironment\Dumper\PaymentRulesDumper"
+                id="nlx.shop_environment.dumper.facet_dumper"
+                class="nlxShopEnvironment\Dumper\FacetDumper"
+        >
+            <argument type="service" id="models"/>
+            <argument type="service" id="nlx.shop_environment.serializer.serializer.custom_facet_serializer"/>
+        </service>
+        <service
+                id="nlx.shop_environment.dumper.search_fields_dumper"
+                class="nlxShopEnvironment\Dumper\SearchFieldsDumper"
+        >
+            <argument type="service" id="models"/>
+        </service>
+        <service
+                id="nlx.shop_environment.dumper.payment_rules_dumper"
+                class="nlxShopEnvironment\Dumper\PaymentRulesDumper"
         >
             <argument type="expression">service('models').getRepository('Shopware\\Models\\Payment\\RuleSet')</argument>
-            <argument type="service" id="sd.shop_environment.serializer.serializer.payment_rules"/>
+            <argument type="service" id="nlx.shop_environment.serializer.serializer.payment_rules"/>
         </service>
     </services>
 </container>

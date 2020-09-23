@@ -6,10 +6,10 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Serializer\Normalizer;
+namespace spec\nlxShopEnvironment\Serializer\Normalizer;
 
 use PhpSpec\ObjectBehavior;
-use sdShopEnvironment\Serializer\Normalizer\DispatchNormalizer;
+use nlxShopEnvironment\Serializer\Normalizer\DispatchNormalizer;
 use Shopware\Models\Country\Country;
 use Shopware\Models\Dispatch\Dispatch;
 use Shopware\Models\Dispatch\ShippingCost;

@@ -1,20 +1,20 @@
 <?php
 
-namespace sdShopEnvironment\Tests;
+namespace nlxShopEnvironment\Tests;
 
-use sdShopEnvironment\sdShopEnvironment as Plugin;
+use nlxShopEnvironment\nlxShopEnvironment as Plugin;
 use Shopware\Components\Test\Plugin\TestCase;
 
 class PluginTest extends TestCase
 {
     protected static $ensureLoadedPlugins = [
-        'sdShopEnvironment' => []
+        'nlxShopEnvironment' => []
     ];
 
     public function testCanCreateInstance()
     {
         /** @var Plugin $plugin */
-        $plugin = Shopware()->Container()->get('kernel')->getPlugins()['sdShopEnvironment'];
+        $plugin = Shopware()->Container()->get('kernel')->getPlugins()['nlxShopEnvironment'];
 
         $this->assertInstanceOf(Plugin::class, $plugin);
     }

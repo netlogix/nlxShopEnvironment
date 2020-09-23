@@ -6,7 +6,7 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace sdShopEnvironment\Dumper;
+namespace nlxShopEnvironment\Dumper;
 
 use Doctrine\ORM\EntityManagerInterface;
 

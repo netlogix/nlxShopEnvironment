@@ -6,7 +6,7 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace sdShopEnvironment\Services;
+namespace nlxShopEnvironment\Services;
 
 trait LoggingTrait
 {

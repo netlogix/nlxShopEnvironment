@@ -6,10 +6,10 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Serializer\Normalizer;
+namespace spec\nlxShopEnvironment\Serializer\Normalizer;
 
 use PhpSpec\ObjectBehavior;
-use sdShopEnvironment\Serializer\Normalizer\PaymentNormalizer;
+use nlxShopEnvironment\Serializer\Normalizer\PaymentNormalizer;
 use Shopware\Models\Country\Country;
 use Shopware\Models\Payment\Payment;
 use Shopware\Models\Shop\Shop;

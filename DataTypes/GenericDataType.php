@@ -6,10 +6,10 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace sdShopEnvironment\DataTypes;
+namespace nlxShopEnvironment\DataTypes;
 
-use sdShopEnvironment\Dumper\DumperInterface;
-use sdShopEnvironment\Loader\LoaderInterface;
+use nlxShopEnvironment\Dumper\DumperInterface;
+use nlxShopEnvironment\Loader\LoaderInterface;
 
 class GenericDataType implements DataTypeInterface
 {

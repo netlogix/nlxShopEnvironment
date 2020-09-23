@@ -6,13 +6,13 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Dumper;
+namespace spec\nlxShopEnvironment\Dumper;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
-use sdShopEnvironment\Dumper\DumperInterface;
-use sdShopEnvironment\Dumper\MediaManagerDumper;
+use nlxShopEnvironment\Dumper\DumperInterface;
+use nlxShopEnvironment\Dumper\MediaManagerDumper;
 use Shopware\Models\Media\Album;
 use Shopware\Models\Media\Settings;
 

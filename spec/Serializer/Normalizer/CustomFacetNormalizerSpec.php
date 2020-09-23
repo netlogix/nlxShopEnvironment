@@ -6,10 +6,10 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Serializer\Normalizer;
+namespace spec\nlxShopEnvironment\Serializer\Normalizer;
 
 use PhpSpec\ObjectBehavior;
-use sdShopEnvironment\Serializer\Normalizer\CustomFacetNormalizer;
+use nlxShopEnvironment\Serializer\Normalizer\CustomFacetNormalizer;
 use Shopware\Models\Search\CustomFacet;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;

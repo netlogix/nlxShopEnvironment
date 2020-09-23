@@ -14,13 +14,13 @@
     <services>
         <!-- Own logger to log into console -->
         <service
-                id="sd_shop_environment.logger"
+                id="nlx_shop_environment.logger"
                 class="Monolog\Logger"
         >
-            <argument type="string">sd_shop_environment_logger</argument>
+            <argument type="string">nlx_shop_environment_logger</argument>
         </service>
         <service
-                id="sd_shop_environment.logger.handler.console"
+                id="nlx_shop_environment.logger.handler.console"
                 class="Monolog\Handler\PHPConsole"
         >
             <argument type="string">console_handler</argument>
@@ -28,46 +28,46 @@
 
 
         <!-- Helper-Services -->
-        <service id="sd_shop_environment.services.configuration_dumper"
-                 class="sdShopEnvironment\Services\ConfigurationDumper">
-            <argument type="service" key="$dataTypeCollector" id="sd_shop_environment.data_types.data_type_collector" />
+        <service id="nlx_shop_environment.services.configuration_dumper"
+                 class="nlxShopEnvironment\Services\ConfigurationDumper">
+            <argument type="service" key="$dataTypeCollector" id="nlx_shop_environment.data_types.data_type_collector" />
         </service>
-        <service id="sd_shop_environment.services.configuration_loader"
-                 class="sdShopEnvironment\Services\ConfigurationLoader">
-            <argument type="service" key="$dataTypeCollector" id="sd_shop_environment.data_types.data_type_collector" />
+        <service id="nlx_shop_environment.services.configuration_loader"
+                 class="nlxShopEnvironment\Services\ConfigurationLoader">
+            <argument type="service" key="$dataTypeCollector" id="nlx_shop_environment.data_types.data_type_collector" />
         </service>
         <service
-                id="sd_shop_environment.services.shop.shop_entity_relation_helper"
-                class="sdShopEnvironment\Services\Shop\ShopEntityRelationHelper"
+                id="nlx_shop_environment.services.shop.shop_entity_relation_helper"
+                class="nlxShopEnvironment\Services\Shop\ShopEntityRelationHelper"
         >
             <argument type="service" id="models"/>
         </service>
 
         <!-- Commands -->
         <service
-                id="sd_shop_environment.commands.shop_environment_dump_config_command"
-                class="sdShopEnvironment\Commands\ShopEnvironmentDumpConfigCommand"
+                id="nlx_shop_environment.commands.shop_environment_dump_config_command"
+                class="nlxShopEnvironment\Commands\ShopEnvironmentDumpConfigCommand"
         >
-            <argument type="service" id="sd_shop_environment.services.configuration_dumper"/>
+            <argument type="service" id="nlx_shop_environment.services.configuration_dumper"/>
             <tag name="console.command"/>
         </service>
         <service
-                id="sd_shop_environment.commands.shop_environment_load_config_command"
-                class="sdShopEnvironment\Commands\ShopEnvironmentLoadConfigCommand"
+                id="nlx_shop_environment.commands.shop_environment_load_config_command"
+                class="nlxShopEnvironment\Commands\ShopEnvironmentLoadConfigCommand"
         >
-            <argument type="service" id="sd_shop_environment.services.configuration_loader"/>
+            <argument type="service" id="nlx_shop_environment.services.configuration_loader"/>
             <tag name="console.command"/>
         </service>
         <service
-                id="sd_shop_environment.commands.shop_environment_clear_opcache_command"
-                class="sdShopEnvironment\Commands\ShopEnvironmentClearOpcacheCommand"
+                id="nlx_shop_environment.commands.shop_environment_clear_opcache_command"
+                class="nlxShopEnvironment\Commands\ShopEnvironmentClearOpcacheCommand"
         >
-            <argument type="service" id="sd_shop_environment.commands.shop_environment_insecure_guzzle_client" />
-            <argument type="service" id="sd_shop_environment.cache_cleaners.opcache_cleaner" />
+            <argument type="service" id="nlx_shop_environment.commands.shop_environment_insecure_guzzle_client" />
+            <argument type="service" id="nlx_shop_environment.cache_cleaners.opcache_cleaner" />
             <tag name="console.command"/>
         </service>
 
-        <service id="sd_shop_environment.commands.shop_environment_insecure_guzzle_client"
+        <service id="nlx_shop_environment.commands.shop_environment_insecure_guzzle_client"
                  class="Shopware\Components\HttpClient\GuzzleHttpClient">
             <argument type="service" id="guzzle_http_client_factory"/>
             <argument type="collection">
@@ -79,8 +79,8 @@
 
         <!-- Factories -->
         <service
-                id="sd_shop_environment.factory.reflrection_class_factory"
-                class="sdShopEnvironment\Factory\ReflectionClassFactory"
+                id="nlx_shop_environment.factory.reflrection_class_factory"
+                class="nlxShopEnvironment\Factory\ReflectionClassFactory"
         >
         </service>
     </services>

@@ -6,14 +6,14 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Loader;
+namespace spec\nlxShopEnvironment\Loader;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use sdShopEnvironment\Loader\LoaderInterface;
-use sdShopEnvironment\Loader\SearchFieldsLoader;
+use nlxShopEnvironment\Loader\LoaderInterface;
+use nlxShopEnvironment\Loader\SearchFieldsLoader;
 
 class SearchFieldsLoaderSpec extends ObjectBehavior
 {

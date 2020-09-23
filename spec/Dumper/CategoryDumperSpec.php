@@ -6,13 +6,13 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Dumper;
+namespace spec\nlxShopEnvironment\Dumper;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
-use sdShopEnvironment\Dumper\CategoryDumper;
-use sdShopEnvironment\Dumper\DumperInterface;
+use nlxShopEnvironment\Dumper\CategoryDumper;
+use nlxShopEnvironment\Dumper\DumperInterface;
 use Shopware\Models\Category\Category;
 use Shopware\Models\Search\CustomSorting;
 

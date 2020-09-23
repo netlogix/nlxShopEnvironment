@@ -6,7 +6,7 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace sdShopEnvironment\Serializer\Normalizer;
+namespace nlxShopEnvironment\Serializer\Normalizer;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;

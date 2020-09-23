@@ -6,14 +6,14 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Loader;
+namespace spec\nlxShopEnvironment\Loader;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use PhpSpec\ObjectBehavior;
-use sdShopEnvironment\Loader\LoaderInterface;
-use sdShopEnvironment\Loader\PaymentRulesLoader;
+use nlxShopEnvironment\Loader\LoaderInterface;
+use nlxShopEnvironment\Loader\PaymentRulesLoader;
 use Shopware\Models\Payment\RuleSet;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 

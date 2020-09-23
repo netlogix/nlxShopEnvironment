@@ -6,9 +6,9 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace sdShopEnvironment\Commands;
+namespace nlxShopEnvironment\Commands;
 
-use sdShopEnvironment\Services\CacheCleaners\CacheCleanerInterface;
+use nlxShopEnvironment\Services\CacheCleaners\CacheCleanerInterface;
 use Shopware\Commands\ShopwareCommand;
 use Shopware\Components\HttpClient\HttpClientInterface;
 use Symfony\Component\Console\Input\InputInterface;

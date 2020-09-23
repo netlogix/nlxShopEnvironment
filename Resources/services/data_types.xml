@@ -5,114 +5,114 @@
 
     <services>
         <service
-                id="sd_shop_environment.data_types.data_type_collector"
-                class="sdShopEnvironment\DataTypes\DataTypeCollector"
+                id="nlx_shop_environment.data_types.data_type_collector"
+                class="nlxShopEnvironment\DataTypes\DataTypeCollector"
         >
         </service>
 
         <service
-                id="sd_shop_environment.data_types.shop_config_type"
-                class="sdShopEnvironment\DataTypes\GenericDataType"
+                id="nlx_shop_environment.data_types.shop_config_type"
+                class="nlxShopEnvironment\DataTypes\GenericDataType"
         >
-            <tag name="sd.data_type" root_name="shop_config" />
-            <argument type="service" id="sd_shop_environment.dumper.shop_config_dumper" />
-            <argument type="service" id="sd_shop_environment.loader.shop_config_loader" />
+            <tag name="nlx.data_type" root_name="shop_config" />
+            <argument type="service" id="nlx_shop_environment.dumper.shop_config_dumper" />
+            <argument type="service" id="nlx_shop_environment.loader.shop_config_loader" />
         </service>
         <service
-                id="sd_shop_environment.data_types.core_config_type"
-                class="sdShopEnvironment\DataTypes\GenericDataType"
+                id="nlx_shop_environment.data_types.core_config_type"
+                class="nlxShopEnvironment\DataTypes\GenericDataType"
         >
-            <tag name="sd.data_type" root_name="core_config" />
-            <argument type="service" id="sd_shop_environment.dumper.core_config_dumper" />
-            <argument type="service" id="sd_shop_environment.loader.core_config_loader" />
+            <tag name="nlx.data_type" root_name="core_config" />
+            <argument type="service" id="nlx_shop_environment.dumper.core_config_dumper" />
+            <argument type="service" id="nlx_shop_environment.loader.core_config_loader" />
         </service>
         <service
-                id="sd_shop_environment.data_types.theme_config_type"
-                class="sdShopEnvironment\DataTypes\GenericDataType"
+                id="nlx_shop_environment.data_types.theme_config_type"
+                class="nlxShopEnvironment\DataTypes\GenericDataType"
         >
-            <tag name="sd.data_type" root_name="theme_config" />
-            <argument type="service" id="sd_shop_environment.dumper.theme_config_dumper" />
-            <argument type="service" id="sd_shop_environment.loader.theme_config_loader" />
+            <tag name="nlx.data_type" root_name="theme_config" />
+            <argument type="service" id="nlx_shop_environment.dumper.theme_config_dumper" />
+            <argument type="service" id="nlx_shop_environment.loader.theme_config_loader" />
         </service>
         <service
-                id="sd_shop_environment.data_types.theme_settings_type"
-                class="sdShopEnvironment\DataTypes\GenericDataType"
+                id="nlx_shop_environment.data_types.theme_settings_type"
+                class="nlxShopEnvironment\DataTypes\GenericDataType"
         >
-            <tag name="sd.data_type" root_name="theme_settings" />
-            <argument type="service" id="sd_shop_environment.dumper.theme_settings_dumper" />
-            <argument type="service" id="sd_shop_environment.loader.theme_settings_loader" />
+            <tag name="nlx.data_type" root_name="theme_settings" />
+            <argument type="service" id="nlx_shop_environment.dumper.theme_settings_dumper" />
+            <argument type="service" id="nlx_shop_environment.loader.theme_settings_loader" />
         </service>
         <service
-                id="sd_shop_environment.data_types.productivity_mode_config_type"
-                class="sdShopEnvironment\DataTypes\GenericDataType"
+                id="nlx_shop_environment.data_types.productivity_mode_config_type"
+                class="nlxShopEnvironment\DataTypes\GenericDataType"
         >
-            <tag name="sd.data_type" root_name="productivity_mode_config" />
-            <argument type="service" id="sd_shop_environment.dumper.productivity_mode_config_dumper" />
-            <argument type="service" id="sd_shop_environment.loader.productivity_mode_config_loader" />
+            <tag name="nlx.data_type" root_name="productivity_mode_config" />
+            <argument type="service" id="nlx_shop_environment.dumper.productivity_mode_config_dumper" />
+            <argument type="service" id="nlx_shop_environment.loader.productivity_mode_config_loader" />
         </service>
         <service
-                id="sd_shop_environment.data_types.payment_methods"
-                class="sdShopEnvironment\DataTypes\GenericDataType"
+                id="nlx_shop_environment.data_types.payment_methods"
+                class="nlxShopEnvironment\DataTypes\GenericDataType"
         >
-            <tag name="sd.data_type" root_name="payment_methods" />
-            <argument type="service" id="sd.shop_environment.dumper.payment_methods_dumper" />
-            <argument type="service" id="sd.shop_environment.loader.payment_methods_loader" />
+            <tag name="nlx.data_type" root_name="payment_methods" />
+            <argument type="service" id="nlx.shop_environment.dumper.payment_methods_dumper" />
+            <argument type="service" id="nlx.shop_environment.loader.payment_methods_loader" />
         </service>
         <service
-                id="sd_shop_environment.data_types.shipping_methods"
-                class="sdShopEnvironment\DataTypes\GenericDataType"
+                id="nlx_shop_environment.data_types.shipping_methods"
+                class="nlxShopEnvironment\DataTypes\GenericDataType"
         >
-            <tag name="sd.data_type" root_name="shipping_methods" />
-            <argument type="service" id="sd.shop_environment.dumper.shipping_methods_dumper" />
-            <argument type="service" id="sd.shop_environment.loader.shipping_methods_loader" />
+            <tag name="nlx.data_type" root_name="shipping_methods" />
+            <argument type="service" id="nlx.shop_environment.dumper.shipping_methods_dumper" />
+            <argument type="service" id="nlx.shop_environment.loader.shipping_methods_loader" />
         </service>
         <service
-                id="sd_shop_environment.data_types.documents"
-                class="sdShopEnvironment\DataTypes\GenericDataType"
+                id="nlx_shop_environment.data_types.documents"
+                class="nlxShopEnvironment\DataTypes\GenericDataType"
         >
-            <tag name="sd.data_type" root_name="documents" />
-            <argument type="service" id="sd.shop_environment.dumper.documents_dumper" />
-            <argument type="service" id="sd.shop_environment.loader.documents_loader" />
+            <tag name="nlx.data_type" root_name="documents" />
+            <argument type="service" id="nlx.shop_environment.dumper.documents_dumper" />
+            <argument type="service" id="nlx.shop_environment.loader.documents_loader" />
         </service>
         <service
-                id="sd_shop_environment.data_types.media_manager"
-                class="sdShopEnvironment\DataTypes\GenericDataType"
+                id="nlx_shop_environment.data_types.media_manager"
+                class="nlxShopEnvironment\DataTypes\GenericDataType"
         >
-            <tag name="sd.data_type" root_name="media_manager" />
-            <argument type="service" id="sd.shop_environment.dumper.media_manager_dumper" />
-            <argument type="service" id="sd.shop_environment.loader.media_manager_loader" />
+            <tag name="nlx.data_type" root_name="media_manager" />
+            <argument type="service" id="nlx.shop_environment.dumper.media_manager_dumper" />
+            <argument type="service" id="nlx.shop_environment.loader.media_manager_loader" />
         </service>
         <service
-                id="sd.shop_environment.data_types.category"
-                class="sdShopEnvironment\DataTypes\GenericDataType"
+                id="nlx.shop_environment.data_types.category"
+                class="nlxShopEnvironment\DataTypes\GenericDataType"
         >
-            <tag name="sd.data_type" root_name="category"/>
-            <argument type="service" id="sd.shop_environment.dumper.category_dumper"/>
-            <argument type="service" id="sd.shop_environment.loader.category_loader"/>
+            <tag name="nlx.data_type" root_name="category"/>
+            <argument type="service" id="nlx.shop_environment.dumper.category_dumper"/>
+            <argument type="service" id="nlx.shop_environment.loader.category_loader"/>
         </service>
         <service
-                id="sd.shop_environment.data_types.facet"
-                class="sdShopEnvironment\DataTypes\GenericDataType"
+                id="nlx.shop_environment.data_types.facet"
+                class="nlxShopEnvironment\DataTypes\GenericDataType"
         >
-            <tag name="sd.data_type" root_name="facets"/>
-            <argument type="service" id="sd.shop_environment.dumper.facet_dumper"/>
-            <argument type="service" id="sd.shop_environment.loader.facet_loader"/>
+            <tag name="nlx.data_type" root_name="facets"/>
+            <argument type="service" id="nlx.shop_environment.dumper.facet_dumper"/>
+            <argument type="service" id="nlx.shop_environment.loader.facet_loader"/>
         </service>
         <service
-                id="sd_shop_environment.data_types.search_fields"
-                class="sdShopEnvironment\DataTypes\GenericDataType"
+                id="nlx_shop_environment.data_types.search_fields"
+                class="nlxShopEnvironment\DataTypes\GenericDataType"
         >
-            <tag name="sd.data_type" root_name="search_fields" />
-            <argument type="service" id="sd.shop_environment.dumper.search_fields_dumper" />
-            <argument type="service" id="sd.shop_environment.loader.search_fields_loader" />
+            <tag name="nlx.data_type" root_name="search_fields" />
+            <argument type="service" id="nlx.shop_environment.dumper.search_fields_dumper" />
+            <argument type="service" id="nlx.shop_environment.loader.search_fields_loader" />
         </service>
         <service
-                id="sd_shop_environment.data_types.payment_rules"
-                class="sdShopEnvironment\DataTypes\GenericDataType"
+                id="nlx_shop_environment.data_types.payment_rules"
+                class="nlxShopEnvironment\DataTypes\GenericDataType"
         >
-            <tag name="sd.data_type" root_name="payment_rules" />
-            <argument type="service" id="sd.shop_environment.dumper.payment_rules_dumper" />
-            <argument type="service" id="sd.shop_environment.loader.payment_rules_loader" />
+            <tag name="nlx.data_type" root_name="payment_rules" />
+            <argument type="service" id="nlx.shop_environment.dumper.payment_rules_dumper" />
+            <argument type="service" id="nlx.shop_environment.loader.payment_rules_loader" />
         </service>
     </services>
 </container>

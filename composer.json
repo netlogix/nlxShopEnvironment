@@ -1,20 +1,20 @@
 {
-    "name": "solutiondrive/sdshopenvironment",
+    "name": "netlogix/nlxshopenvironment",
     "description": "Plugin to dump/load configurations in a shopware shop to/from a file from/to the database",
     "type": "shopware-plugin",
     "license": "proprietary",
     "authors": [
         {
-            "name": "solutionDrive GmbH",
-            "email": "info@solutiondrive.de"
+            "name": "netlogix GmbH & Co. KG",
+            "email": "websolutions@netlogix.de"
         }
     ],
     "extra": {
-        "installer-name": "sdShopEnvironment"
+        "installer-name": "nlxShopEnvironment"
     },
     "autoload": {
         "psr-4": {
-            "sdShopEnvironment\\": "."
+            "nlxShopEnvironment\\": "."
         }
     },
     "require": {

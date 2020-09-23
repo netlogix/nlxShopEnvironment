@@ -6,14 +6,14 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Loader;
+namespace spec\nlxShopEnvironment\Loader;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use sdShopEnvironment\Loader\LoaderInterface;
-use sdShopEnvironment\Loader\ProductivityModeConfigLoader;
+use nlxShopEnvironment\Loader\LoaderInterface;
+use nlxShopEnvironment\Loader\ProductivityModeConfigLoader;
 use Shopware\Bundle\PluginInstallerBundle\Service\InstallerService;
 use Shopware\Models\Plugin\Plugin;
 

@@ -6,14 +6,14 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Dumper;
+namespace spec\nlxShopEnvironment\Dumper;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use sdShopEnvironment\Dumper\DumperInterface;
-use sdShopEnvironment\Dumper\ShippingMethodsDumper;
+use nlxShopEnvironment\Dumper\DumperInterface;
+use nlxShopEnvironment\Dumper\ShippingMethodsDumper;
 use Shopware\Models\Dispatch\Dispatch;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 

@@ -6,14 +6,14 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Loader;
+namespace spec\nlxShopEnvironment\Loader;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use sdShopEnvironment\Loader\LoaderInterface;
-use sdShopEnvironment\Loader\ShippingMethodsLoader;
+use nlxShopEnvironment\Loader\LoaderInterface;
+use nlxShopEnvironment\Loader\ShippingMethodsLoader;
 use Shopware\Models\Dispatch\Dispatch;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
