@@ -6,14 +6,14 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Dumper;
+namespace spec\nlxShopEnvironment\Dumper;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use sdShopEnvironment\Dumper\DumperInterface;
-use sdShopEnvironment\Dumper\ProductivityModeConfigDumper;
+use nlxShopEnvironment\Dumper\DumperInterface;
+use nlxShopEnvironment\Dumper\ProductivityModeConfigDumper;
 use Shopware\Models\Plugin\Plugin;
 
 class ProductivityModeConfigDumperSpec extends ObjectBehavior

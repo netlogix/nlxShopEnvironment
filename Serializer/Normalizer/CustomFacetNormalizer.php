@@ -6,7 +6,7 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace sdShopEnvironment\Serializer\Normalizer;
+namespace nlxShopEnvironment\Serializer\Normalizer;
 
 use Shopware\Models\Search\CustomFacet;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;

@@ -1,7 +1,7 @@
 bootstrap: phpspec-bootstrap.php
 suites:
   default:
-    namespace: sdShopEnvironment
-    psr4_prefix: sdShopEnvironment
+    namespace: nlxShopEnvironment
+    psr4_prefix: nlxShopEnvironment
     spec_path: ./
     src_path: ./

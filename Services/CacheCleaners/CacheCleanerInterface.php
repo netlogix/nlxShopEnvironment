@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace sdShopEnvironment\Services\CacheCleaners;
+namespace nlxShopEnvironment\Services\CacheCleaners;
 
 interface CacheCleanerInterface
 {

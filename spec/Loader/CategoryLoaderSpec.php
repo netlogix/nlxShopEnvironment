@@ -6,15 +6,15 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Loader;
+namespace spec\nlxShopEnvironment\Loader;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use sdShopEnvironment\Loader\CategoryLoader;
-use sdShopEnvironment\Loader\LoaderInterface;
+use nlxShopEnvironment\Loader\CategoryLoader;
+use nlxShopEnvironment\Loader\LoaderInterface;
 use Shopware\Models\Category\Category;
 use Shopware\Models\Search\CustomSorting;
 

@@ -6,27 +6,27 @@
     <services>
         <!-- Normalizer -->
         <service
-                id="sd.shop_environment.serializer.normalizer.object_normalizer"
+                id="nlx.shop_environment.serializer.normalizer.object_normalizer"
                 class="Symfony\Component\Serializer\Normalizer\ObjectNormalizer"
         >
         </service>
 
         <service
-                id="sd.shop_environment.serializer.normalizer.country_normalizer"
-                class="sdShopEnvironment\Serializer\Normalizer\CountryNormalizer"
+                id="nlx.shop_environment.serializer.normalizer.country_normalizer"
+                class="nlxShopEnvironment\Serializer\Normalizer\CountryNormalizer"
         >
             <argument type="service" id="models"/>
         </service>
         <service
-                id="sd.shop_environment.serializer.normalizer.shop_normalizer"
-                class="sdShopEnvironment\Serializer\Normalizer\ShopNormalizer"
+                id="nlx.shop_environment.serializer.normalizer.shop_normalizer"
+                class="nlxShopEnvironment\Serializer\Normalizer\ShopNormalizer"
         >
             <argument type="service" id="models"/>
         </service>
 
         <service
-                class="sdShopEnvironment\Serializer\Normalizer\PaymentNormalizer"
-                id="sd.shop_environment.serializer.normalizer.payment_normalizer"
+                class="nlxShopEnvironment\Serializer\Normalizer\PaymentNormalizer"
+                id="nlx.shop_environment.serializer.normalizer.payment_normalizer"
         >
             <call method="setIgnoredAttributes">
                 <argument type="collection">
@@ -42,8 +42,8 @@
         </service>
 
         <service
-                class="sdShopEnvironment\Serializer\Normalizer\DispatchNormalizer"
-                id="sd.shop_environment.serializer.normalizer.dispatch_normalizer"
+                class="nlxShopEnvironment\Serializer\Normalizer\DispatchNormalizer"
+                id="nlx.shop_environment.serializer.normalizer.dispatch_normalizer"
         >
             <call method="setIgnoredAttributes">
                 <argument type="collection">
@@ -56,29 +56,29 @@
         </service>
 
         <service
-                class="sdShopEnvironment\Serializer\Normalizer\ShippingCostNormalizer"
-                id="sd.shop_environment.serializer.normalizer.shipping_cost_normalizer"
+                class="nlxShopEnvironment\Serializer\Normalizer\ShippingCostNormalizer"
+                id="nlx.shop_environment.serializer.normalizer.shipping_cost_normalizer"
         >
-            <argument type="service" id="sd.shop_environment.serializer.normalizer.object_normalizer"/>
+            <argument type="service" id="nlx.shop_environment.serializer.normalizer.object_normalizer"/>
             <argument type="service" id="models"/>
         </service>
 
         <service
-                id="sd.shop_environment.serializer.normalizer.dispatch_payment_normalizer"
-                class="sdShopEnvironment\Serializer\Normalizer\DispatchPaymentNormalizer"
+                id="nlx.shop_environment.serializer.normalizer.dispatch_payment_normalizer"
+                class="nlxShopEnvironment\Serializer\Normalizer\DispatchPaymentNormalizer"
         >
             <argument id="models" type="service"/>
         </service>
 
         <service
-                id="sd.shop_environment.serializer.normalizer.custom_facet_normalizer"
-                class="sdShopEnvironment\Serializer\Normalizer\CustomFacetNormalizer"
+                id="nlx.shop_environment.serializer.normalizer.custom_facet_normalizer"
+                class="nlxShopEnvironment\Serializer\Normalizer\CustomFacetNormalizer"
         >
         </service>
 
         <service
-                id="sd.shop_environment.serializer.normalizer.payment_rules"
-                class="sdShopEnvironment\Serializer\Normalizer\PaymentRuleNormalizer"
+                id="nlx.shop_environment.serializer.normalizer.payment_rules"
+                class="nlxShopEnvironment\Serializer\Normalizer\PaymentRuleNormalizer"
         >
             <call method="setIgnoredAttributes">
                 <argument type="collection">
@@ -89,53 +89,53 @@
 
         <!-- Denormalizer -->
         <service
-                id="sd.shop_environment.serializer.denormalizer.array_denormalizer"
+                id="nlx.shop_environment.serializer.denormalizer.array_denormalizer"
                 class="Symfony\Component\Serializer\Normalizer\ArrayDenormalizer"
                 shared="false"
         />
         <!-- Serializer -->
         <service
-                id="sd.shop_environment.serializer.serializer.payment_serializer"
+                id="nlx.shop_environment.serializer.serializer.payment_serializer"
                 class="Symfony\Component\Serializer\Serializer"
         >
             <argument type="collection">
-                <argument type="service" id="sd.shop_environment.serializer.normalizer.shop_normalizer" />
-                <argument type="service" id="sd.shop_environment.serializer.normalizer.country_normalizer" />
-                <argument type="service" id="sd.shop_environment.serializer.normalizer.payment_normalizer" />
-                <argument type="service" id="sd.shop_environment.serializer.denormalizer.array_denormalizer" />
+                <argument type="service" id="nlx.shop_environment.serializer.normalizer.shop_normalizer" />
+                <argument type="service" id="nlx.shop_environment.serializer.normalizer.country_normalizer" />
+                <argument type="service" id="nlx.shop_environment.serializer.normalizer.payment_normalizer" />
+                <argument type="service" id="nlx.shop_environment.serializer.denormalizer.array_denormalizer" />
             </argument>
         </service>
 
         <service
-                id="sd.shop_environment.serializer.serializer.dispatch_serializer"
+                id="nlx.shop_environment.serializer.serializer.dispatch_serializer"
                 class="Symfony\Component\Serializer\Serializer"
         >
             <argument type="collection">
-                <argument type="service" id="sd.shop_environment.serializer.normalizer.country_normalizer" />
-                <argument type="service" id="sd.shop_environment.serializer.normalizer.shipping_cost_normalizer" />
-                <argument type="service" id="sd.shop_environment.serializer.normalizer.dispatch_payment_normalizer" />
-                <argument type="service" id="sd.shop_environment.serializer.normalizer.dispatch_normalizer" />
-                <argument type="service" id="sd.shop_environment.serializer.denormalizer.array_denormalizer" />
+                <argument type="service" id="nlx.shop_environment.serializer.normalizer.country_normalizer" />
+                <argument type="service" id="nlx.shop_environment.serializer.normalizer.shipping_cost_normalizer" />
+                <argument type="service" id="nlx.shop_environment.serializer.normalizer.dispatch_payment_normalizer" />
+                <argument type="service" id="nlx.shop_environment.serializer.normalizer.dispatch_normalizer" />
+                <argument type="service" id="nlx.shop_environment.serializer.denormalizer.array_denormalizer" />
             </argument>
         </service>
 
         <service
-                id="sd.shop_environment.serializer.serializer.custom_facet_serializer"
+                id="nlx.shop_environment.serializer.serializer.custom_facet_serializer"
                 class="Symfony\Component\Serializer\Serializer"
         >
             <argument type="collection">
-                <argument type="service" id="sd.shop_environment.serializer.normalizer.custom_facet_normalizer" />
-                <argument type="service" id="sd.shop_environment.serializer.denormalizer.array_denormalizer" />
+                <argument type="service" id="nlx.shop_environment.serializer.normalizer.custom_facet_normalizer" />
+                <argument type="service" id="nlx.shop_environment.serializer.denormalizer.array_denormalizer" />
             </argument>
         </service>
         <service
-                id="sd.shop_environment.serializer.serializer.payment_rules"
+                id="nlx.shop_environment.serializer.serializer.payment_rules"
                 class="Symfony\Component\Serializer\Serializer"
         >
             <argument type="collection">
-                <argument type="service" id="sd.shop_environment.serializer.normalizer.dispatch_payment_normalizer" />
-                <argument type="service" id="sd.shop_environment.serializer.normalizer.payment_rules" />
-                <argument type="service" id="sd.shop_environment.serializer.denormalizer.array_denormalizer" />
+                <argument type="service" id="nlx.shop_environment.serializer.normalizer.dispatch_payment_normalizer" />
+                <argument type="service" id="nlx.shop_environment.serializer.normalizer.payment_rules" />
+                <argument type="service" id="nlx.shop_environment.serializer.denormalizer.array_denormalizer" />
             </argument>
         </service>
     </services>

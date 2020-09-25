@@ -6,14 +6,14 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Loader;
+namespace spec\nlxShopEnvironment\Loader;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use sdShopEnvironment\Loader\DocumentsLoader;
-use sdShopEnvironment\Loader\LoaderInterface;
+use nlxShopEnvironment\Loader\DocumentsLoader;
+use nlxShopEnvironment\Loader\LoaderInterface;
 use Shopware\Models\Document\Document;
 use Webmozart\Assert\Assert;
 

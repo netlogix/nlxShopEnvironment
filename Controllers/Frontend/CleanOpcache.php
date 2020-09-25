@@ -15,7 +15,7 @@ class Shopware_Controllers_Frontend_CleanOpcache extends \Enlight_Controller_Act
         $request = $this->request;
         $clientIp = $request->getClientIp();
         if ('127.0.0.1' === $clientIp || 'localhost' === $clientIp) {
-            $this->get('sd_shop_environment.cache_cleaners.opcache_cleaner')->clean();
+            $this->get('nlx_shop_environment.cache_cleaners.opcache_cleaner')->clean();
         }
     }
 }

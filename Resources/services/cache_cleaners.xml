@@ -5,8 +5,8 @@
 
     <services>
         <service
-                id="sd_shop_environment.cache_cleaners.opcache_cleaner"
-                class="sdShopEnvironment\Services\CacheCleaners\OpcacheCleaner"
+                id="nlx_shop_environment.cache_cleaners.opcache_cleaner"
+                class="nlxShopEnvironment\Services\CacheCleaners\OpcacheCleaner"
         >
         </service>
     </services>

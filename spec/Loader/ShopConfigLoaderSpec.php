@@ -7,16 +7,16 @@ declare(strict_types=1);
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Loader;
+namespace spec\nlxShopEnvironment\Loader;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use sdShopEnvironment\Factory\ReflectionClassFactoryInterface;
-use sdShopEnvironment\Loader\LoaderInterface;
-use sdShopEnvironment\Loader\ShopConfigLoader;
-use sdShopEnvironment\Services\Shop\ShopEntityRelationHelperInterface;
+use nlxShopEnvironment\Factory\ReflectionClassFactoryInterface;
+use nlxShopEnvironment\Loader\LoaderInterface;
+use nlxShopEnvironment\Loader\ShopConfigLoader;
+use nlxShopEnvironment\Services\Shop\ShopEntityRelationHelperInterface;
 use Shopware\Models\Customer\Group;
 use Shopware\Models\Shop\Shop;
 
@@ -83,7 +83,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         $shopRepository->find(1)
             ->willReturn($shop);
 
-        $shopReflectionClass->hasMethod('setSuperVillain')
+        $shopReflectionClass->hasMethod('setsuperVillain')
             ->willReturn(false);
 
         $entityManager->persist(Argument::any())

@@ -6,7 +6,7 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace sdShopEnvironment\DataTypes;
+namespace nlxShopEnvironment\DataTypes;
 
 interface DataTypeCollectorInterface
 {

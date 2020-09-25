@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace sdShopEnvironment\Services\Shop;
+namespace nlxShopEnvironment\Services\Shop;
 
 use Shopware\Components\Model\ModelEntity;
 

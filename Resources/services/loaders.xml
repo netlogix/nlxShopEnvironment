@@ -5,93 +5,93 @@
 
     <services>
         <service
-                id="sd_shop_environment.loader.shop_config_loader"
-                class="sdShopEnvironment\Loader\ShopConfigLoader"
+                id="nlx_shop_environment.loader.shop_config_loader"
+                class="nlxShopEnvironment\Loader\ShopConfigLoader"
         >
             <argument type="service" id="models" />
-            <argument type="service" id="sd_shop_environment.factory.reflrection_class_factory"/>
-            <argument type="service" id="sd_shop_environment.services.shop.shop_entity_relation_helper"/>
+            <argument type="service" id="nlx_shop_environment.factory.reflrection_class_factory"/>
+            <argument type="service" id="nlx_shop_environment.services.shop.shop_entity_relation_helper"/>
         </service>
         <service
-                id="sd_shop_environment.loader.core_config_loader"
-                class="sdShopEnvironment\Loader\CoreConfigLoader"
+                id="nlx_shop_environment.loader.core_config_loader"
+                class="nlxShopEnvironment\Loader\CoreConfigLoader"
         >
             <argument type="service" id="dbal_connection" />
             <argument type="service" id="models" />
             <argument type="service" id="config_writer" />
         </service>
         <service
-                id="sd_shop_environment.loader.theme_config_loader"
-                class="sdShopEnvironment\Loader\ThemeConfigLoader"
+                id="nlx_shop_environment.loader.theme_config_loader"
+                class="nlxShopEnvironment\Loader\ThemeConfigLoader"
         >
             <argument type="service" id="models" />
-            <argument type="service" id="sd_shop_environment.logger" />
+            <argument type="service" id="nlx_shop_environment.logger" />
         </service>
         <service
-                id="sd_shop_environment.loader.theme_settings_loader"
-                class="sdShopEnvironment\Loader\ThemeSettingsLoader"
+                id="nlx_shop_environment.loader.theme_settings_loader"
+                class="nlxShopEnvironment\Loader\ThemeSettingsLoader"
         >
             <argument type="service" id="models" />
-            <argument type="service" id="sd.shop_environment.serializer.normalizer.object_normalizer" />
+            <argument type="service" id="nlx.shop_environment.serializer.normalizer.object_normalizer" />
         </service>
         <service
-                id="sd_shop_environment.loader.productivity_mode_config_loader"
-                class="sdShopEnvironment\Loader\ProductivityModeConfigLoader"
+                id="nlx_shop_environment.loader.productivity_mode_config_loader"
+                class="nlxShopEnvironment\Loader\ProductivityModeConfigLoader"
         >
             <argument type="service" id="models" />
             <argument type="service" id="shopware.plugin_manager" />
         </service>
         <service
-                id="sd.shop_environment.loader.payment_methods_loader"
-                class="sdShopEnvironment\Loader\PaymentMethodsLoader"
+                id="nlx.shop_environment.loader.payment_methods_loader"
+                class="nlxShopEnvironment\Loader\PaymentMethodsLoader"
         >
             <argument type="service" id="models"/>
-            <argument type="service" id="sd.shop_environment.serializer.serializer.payment_serializer"/>
+            <argument type="service" id="nlx.shop_environment.serializer.serializer.payment_serializer"/>
         </service>
         <service
-                id="sd.shop_environment.loader.shipping_methods_loader"
-                class="sdShopEnvironment\Loader\ShippingMethodsLoader"
+                id="nlx.shop_environment.loader.shipping_methods_loader"
+                class="nlxShopEnvironment\Loader\ShippingMethodsLoader"
         >
             <argument type="service" id="models"/>
-            <argument type="service" id="sd.shop_environment.serializer.serializer.dispatch_serializer"/>
+            <argument type="service" id="nlx.shop_environment.serializer.serializer.dispatch_serializer"/>
         </service>
         <service
-                id="sd.shop_environment.loader.documents_loader"
-                class="sdShopEnvironment\Loader\DocumentsLoader"
-        >
-            <argument type="service" id="models"/>
-        </service>
-        <service
-                id="sd.shop_environment.loader.media_manager_loader"
-                class="sdShopEnvironment\Loader\MediaManagerLoader"
+                id="nlx.shop_environment.loader.documents_loader"
+                class="nlxShopEnvironment\Loader\DocumentsLoader"
         >
             <argument type="service" id="models"/>
         </service>
         <service
-                id="sd.shop_environment.loader.category_loader"
-                class="sdShopEnvironment\Loader\CategoryLoader"
+                id="nlx.shop_environment.loader.media_manager_loader"
+                class="nlxShopEnvironment\Loader\MediaManagerLoader"
         >
             <argument type="service" id="models"/>
         </service>
         <service
-                id="sd.shop_environment.loader.facet_loader"
-                class="sdShopEnvironment\Loader\FacetLoader"
-        >
-            <argument type="service" id="models"/>
-            <argument type="service" id="sd.shop_environment.serializer.serializer.custom_facet_serializer"/>
-        </service>
-        <service
-                id="sd.shop_environment.loader.search_fields_loader"
-                class="sdShopEnvironment\Loader\SearchFieldsLoader"
+                id="nlx.shop_environment.loader.category_loader"
+                class="nlxShopEnvironment\Loader\CategoryLoader"
         >
             <argument type="service" id="models"/>
         </service>
         <service
-                class="sdShopEnvironment\Loader\PaymentRulesLoader"
-                id="sd.shop_environment.loader.payment_rules_loader"
+                id="nlx.shop_environment.loader.facet_loader"
+                class="nlxShopEnvironment\Loader\FacetLoader"
         >
             <argument type="service" id="models"/>
-            <argument type="service" id="sd.shop_environment.serializer.serializer.payment_rules"/>
+            <argument type="service" id="nlx.shop_environment.serializer.serializer.custom_facet_serializer"/>
+        </service>
+        <service
+                id="nlx.shop_environment.loader.search_fields_loader"
+                class="nlxShopEnvironment\Loader\SearchFieldsLoader"
+        >
+            <argument type="service" id="models"/>
+        </service>
+        <service
+                class="nlxShopEnvironment\Loader\PaymentRulesLoader"
+                id="nlx.shop_environment.loader.payment_rules_loader"
+        >
+            <argument type="service" id="models"/>
+            <argument type="service" id="nlx.shop_environment.serializer.serializer.payment_rules"/>
             <argument type="expression">service('models').getRepository('Shopware\\Models\\Payment\\RuleSet')</argument>
         </service>
     </services>

@@ -6,9 +6,9 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace sdShopEnvironment\Commands;
+namespace nlxShopEnvironment\Commands;
 
-use sdShopEnvironment\Services\ConfigurationDumperInterface;
+use nlxShopEnvironment\Services\ConfigurationDumperInterface;
 use Shopware\Commands\ShopwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

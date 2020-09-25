@@ -6,7 +6,7 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace sdShopEnvironment\Loader;
+namespace nlxShopEnvironment\Loader;
 
 interface LoaderInterface
 {

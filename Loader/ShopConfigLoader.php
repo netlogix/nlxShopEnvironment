@@ -6,12 +6,12 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace sdShopEnvironment\Loader;
+namespace nlxShopEnvironment\Loader;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use sdShopEnvironment\Factory\ReflectionClassFactoryInterface;
-use sdShopEnvironment\Services\Shop\ShopEntityRelationHelperInterface;
+use nlxShopEnvironment\Factory\ReflectionClassFactoryInterface;
+use nlxShopEnvironment\Services\Shop\ShopEntityRelationHelperInterface;
 use Shopware\Models\Shop\Shop;
 
 class ShopConfigLoader implements LoaderInterface

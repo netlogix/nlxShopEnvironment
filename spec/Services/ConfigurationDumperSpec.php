@@ -6,12 +6,12 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Services;
+namespace spec\nlxShopEnvironment\Services;
 
 use PhpSpec\ObjectBehavior;
-use sdShopEnvironment\DataTypes\DataTypeCollectorInterface;
-use sdShopEnvironment\Services\ConfigurationDumper;
-use sdShopEnvironment\Services\ConfigurationDumperInterface;
+use nlxShopEnvironment\DataTypes\DataTypeCollectorInterface;
+use nlxShopEnvironment\Services\ConfigurationDumper;
+use nlxShopEnvironment\Services\ConfigurationDumperInterface;
 
 class ConfigurationDumperSpec extends ObjectBehavior
 {

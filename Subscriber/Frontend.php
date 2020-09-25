@@ -6,7 +6,7 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace sdShopEnvironment\Subscriber;
+namespace nlxShopEnvironment\Subscriber;
 
 use Enlight\Event\SubscriberInterface;
 

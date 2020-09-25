@@ -6,12 +6,12 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Dumper;
+namespace spec\nlxShopEnvironment\Dumper;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use PhpSpec\ObjectBehavior;
-use sdShopEnvironment\Dumper\DumperInterface;
-use sdShopEnvironment\Dumper\PaymentRulesDumper;
+use nlxShopEnvironment\Dumper\DumperInterface;
+use nlxShopEnvironment\Dumper\PaymentRulesDumper;
 use Shopware\Models\Payment\RuleSet;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 

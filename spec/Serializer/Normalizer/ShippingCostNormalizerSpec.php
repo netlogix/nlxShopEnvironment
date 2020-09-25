@@ -6,13 +6,13 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Serializer\Normalizer;
+namespace spec\nlxShopEnvironment\Serializer\Normalizer;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use sdShopEnvironment\Serializer\Normalizer\ShippingCostNormalizer;
+use nlxShopEnvironment\Serializer\Normalizer\ShippingCostNormalizer;
 use Shopware\Models\Dispatch\Dispatch;
 use Shopware\Models\Dispatch\ShippingCost;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;

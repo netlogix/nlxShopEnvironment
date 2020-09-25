@@ -6,12 +6,12 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace spec\sdShopEnvironment\Serializer\Normalizer;
+namespace spec\nlxShopEnvironment\Serializer\Normalizer;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
-use sdShopEnvironment\Serializer\Normalizer\DispatchPaymentNormalizer;
+use nlxShopEnvironment\Serializer\Normalizer\DispatchPaymentNormalizer;
 use Shopware\Models\Payment\Payment;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 

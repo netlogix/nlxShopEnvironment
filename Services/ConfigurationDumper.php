@@ -6,9 +6,9 @@
  * @copyright netlogix GmbH & Co. KG
  */
 
-namespace sdShopEnvironment\Services;
+namespace nlxShopEnvironment\Services;
 
-use sdShopEnvironment\DataTypes\DataTypeCollectorInterface;
+use nlxShopEnvironment\DataTypes\DataTypeCollectorInterface;
 use Symfony\Component\Yaml\Yaml;
 
 class ConfigurationDumper implements ConfigurationDumperInterface
