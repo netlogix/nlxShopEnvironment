@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace spec\nlxShopEnvironment\Loader;
 
 use Doctrine\ORM\EntityManagerInterface;
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use nlxShopEnvironment\Factory\ReflectionClassFactoryInterface;
 use nlxShopEnvironment\Loader\LoaderInterface;
 use nlxShopEnvironment\Loader\ShopConfigLoader;
 use nlxShopEnvironment\Services\Shop\ShopEntityRelationHelperInterface;
+use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Customer\Group;
 use Shopware\Models\Shop\Shop;

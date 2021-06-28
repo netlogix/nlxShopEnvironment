@@ -9,11 +9,11 @@
 namespace spec\nlxShopEnvironment\Dumper;
 
 use Doctrine\ORM\EntityManagerInterface;
+use nlxShopEnvironment\Loader\FacetLoader;
+use nlxShopEnvironment\Loader\LoaderInterface;
 use PhpSpec\Exception\Example\SkippingException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use nlxShopEnvironment\Loader\FacetLoader;
-use nlxShopEnvironment\Loader\LoaderInterface;
 use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Search\CustomFacet;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;

@@ -10,9 +10,9 @@ namespace spec\nlxShopEnvironment\Loader;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use PhpSpec\ObjectBehavior;
 use nlxShopEnvironment\Loader\LoaderInterface;
 use nlxShopEnvironment\Loader\PaymentRulesLoader;
+use PhpSpec\ObjectBehavior;
 use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Payment\RuleSet;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;

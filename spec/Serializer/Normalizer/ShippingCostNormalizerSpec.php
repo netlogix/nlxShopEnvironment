@@ -9,9 +9,9 @@
 namespace spec\nlxShopEnvironment\Serializer\Normalizer;
 
 use Doctrine\ORM\EntityManagerInterface;
+use nlxShopEnvironment\Serializer\Normalizer\ShippingCostNormalizer;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use nlxShopEnvironment\Serializer\Normalizer\ShippingCostNormalizer;
 use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Dispatch\Dispatch;
 use Shopware\Models\Dispatch\ShippingCost;

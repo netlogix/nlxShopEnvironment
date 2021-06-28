@@ -8,8 +8,8 @@
 
 namespace spec\nlxShopEnvironment\Serializer\Normalizer;
 
-use PhpSpec\ObjectBehavior;
 use nlxShopEnvironment\Serializer\Normalizer\CustomFacetNormalizer;
+use PhpSpec\ObjectBehavior;
 use Shopware\Models\Search\CustomFacet;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;

@@ -125,8 +125,8 @@ class CoreConfigLoader implements LoaderInterface
 
     /**
      * @param ModelRepository $configFormRepository
-     * @param string           $formName
-     * @param array            $elementInformation
+     * @param string          $formName
+     * @param array           $elementInformation
      *
      * @return Form|null
      */
@@ -165,9 +165,9 @@ class CoreConfigLoader implements LoaderInterface
 
     /**
      * @param ModelRepository $configElementRepository
-     * @param null|Form        $form
-     * @param string           $elementName
-     * @param array            $elementInformation
+     * @param null|Form       $form
+     * @param string          $elementName
+     * @param array           $elementInformation
      *
      * @return object|Element
      */

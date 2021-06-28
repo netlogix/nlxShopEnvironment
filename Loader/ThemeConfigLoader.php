@@ -76,8 +76,8 @@ class ThemeConfigLoader implements LoaderInterface
 
     /**
      * @param ModelRepository $configElementRepository
-     * @param Template         $template
-     * @param array            $configValues
+     * @param Template        $template
+     * @param array           $configValues
      *
      * @return ThemeElement|null|object
      */
@@ -105,9 +105,9 @@ class ThemeConfigLoader implements LoaderInterface
 
     /**
      * @param ModelRepository $configValueRepository
-     * @param ThemeElement     $element
-     * @param Shop             $shop
-     * @param mixed            $configValue
+     * @param ThemeElement    $element
+     * @param Shop            $shop
+     * @param mixed           $configValue
      *
      * @return Value
      */

@@ -9,10 +9,10 @@
 namespace spec\nlxShopEnvironment\Loader;
 
 use Doctrine\ORM\EntityManagerInterface;
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use nlxShopEnvironment\Loader\LoaderInterface;
 use nlxShopEnvironment\Loader\ThemeSettingsLoader;
+use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Theme\Settings;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;

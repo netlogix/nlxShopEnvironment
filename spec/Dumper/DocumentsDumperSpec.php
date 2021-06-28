@@ -9,9 +9,9 @@
 namespace spec\nlxShopEnvironment\Dumper;
 
 use Doctrine\ORM\EntityManagerInterface;
-use PhpSpec\ObjectBehavior;
 use nlxShopEnvironment\Dumper\DocumentsDumper;
 use nlxShopEnvironment\Dumper\DumperInterface;
+use PhpSpec\ObjectBehavior;
 use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Document\Document;
 

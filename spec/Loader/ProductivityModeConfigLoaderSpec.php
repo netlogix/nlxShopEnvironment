@@ -9,10 +9,10 @@
 namespace spec\nlxShopEnvironment\Loader;
 
 use Doctrine\ORM\EntityManagerInterface;
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use nlxShopEnvironment\Loader\LoaderInterface;
 use nlxShopEnvironment\Loader\ProductivityModeConfigLoader;
+use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use Shopware\Bundle\PluginInstallerBundle\Service\InstallerService;
 use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Plugin\Plugin;

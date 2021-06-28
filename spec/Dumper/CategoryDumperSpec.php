@@ -9,9 +9,9 @@
 namespace spec\nlxShopEnvironment\Dumper;
 
 use Doctrine\ORM\EntityManagerInterface;
-use PhpSpec\ObjectBehavior;
 use nlxShopEnvironment\Dumper\CategoryDumper;
 use nlxShopEnvironment\Dumper\DumperInterface;
+use PhpSpec\ObjectBehavior;
 use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Category\Category;
 use Shopware\Models\Search\CustomSorting;

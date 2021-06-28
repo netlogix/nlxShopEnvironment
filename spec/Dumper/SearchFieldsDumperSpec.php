@@ -11,10 +11,10 @@ namespace spec\nlxShopEnvironment\Dumper;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use nlxShopEnvironment\Dumper\DumperInterface;
 use nlxShopEnvironment\Dumper\SearchFieldsDumper;
+use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 class SearchFieldsDumperSpec extends ObjectBehavior
 {

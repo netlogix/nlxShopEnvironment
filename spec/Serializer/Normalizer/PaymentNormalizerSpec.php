@@ -8,8 +8,8 @@
 
 namespace spec\nlxShopEnvironment\Serializer\Normalizer;
 
-use PhpSpec\ObjectBehavior;
 use nlxShopEnvironment\Serializer\Normalizer\PaymentNormalizer;
+use PhpSpec\ObjectBehavior;
 use Shopware\Models\Country\Country;
 use Shopware\Models\Payment\Payment;
 use Shopware\Models\Shop\Shop;

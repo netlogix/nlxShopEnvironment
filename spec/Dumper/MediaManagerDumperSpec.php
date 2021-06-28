@@ -9,9 +9,9 @@
 namespace spec\nlxShopEnvironment\Dumper;
 
 use Doctrine\ORM\EntityManagerInterface;
-use PhpSpec\ObjectBehavior;
 use nlxShopEnvironment\Dumper\DumperInterface;
 use nlxShopEnvironment\Dumper\MediaManagerDumper;
+use PhpSpec\ObjectBehavior;
 use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Media\Album;
 use Shopware\Models\Media\Settings;

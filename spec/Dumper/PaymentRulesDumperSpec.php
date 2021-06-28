@@ -8,9 +8,9 @@
 
 namespace spec\nlxShopEnvironment\Dumper;
 
-use PhpSpec\ObjectBehavior;
 use nlxShopEnvironment\Dumper\DumperInterface;
 use nlxShopEnvironment\Dumper\PaymentRulesDumper;
+use PhpSpec\ObjectBehavior;
 use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Payment\RuleSet;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;

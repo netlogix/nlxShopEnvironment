@@ -9,8 +9,8 @@
 namespace spec\nlxShopEnvironment\Serializer\Normalizer;
 
 use Doctrine\ORM\EntityManagerInterface;
-use PhpSpec\ObjectBehavior;
 use nlxShopEnvironment\Serializer\Normalizer\ShopNormalizer;
+use PhpSpec\ObjectBehavior;
 use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Shop\Shop;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;

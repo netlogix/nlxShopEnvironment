@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace spec\nlxShopEnvironment\Services\Shop;
 
 use Doctrine\ORM\EntityManagerInterface;
-use PhpSpec\ObjectBehavior;
 use nlxShopEnvironment\Services\Shop\ShopEntityRelationHelper;
 use nlxShopEnvironment\Services\Shop\ShopEntityRelationHelperInterface;
+use PhpSpec\ObjectBehavior;
 use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Category\Category;
 use Shopware\Models\Customer\Customer;
