@@ -8,14 +8,14 @@
 
 namespace nlxShopEnvironment\Dumper;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Dispatch\Dispatch;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class ShippingMethodsDumper implements DumperInterface
 {
-    /** @var ObjectRepository */
+    /** @var ModelRepository */
     private $shippingMethodsRepository;
 
     /** @var NormalizerInterface */

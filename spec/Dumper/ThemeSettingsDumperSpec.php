@@ -8,12 +8,12 @@
 
 namespace spec\nlxShopEnvironment\Dumper;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use nlxShopEnvironment\Dumper\DumperInterface;
 use nlxShopEnvironment\Dumper\ThemeSettingsDumper;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Theme\Settings;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -21,7 +21,7 @@ class ThemeSettingsDumperSpec extends ObjectBehavior
 {
     public function let(
         EntityManagerInterface $entityManager,
-        ObjectRepository $themeSettingsRepository,
+        ModelRepository $themeSettingsRepository,
         NormalizerInterface $normalizer
     ) {
         $entityManager
@@ -41,7 +41,7 @@ class ThemeSettingsDumperSpec extends ObjectBehavior
         $this->shouldImplement(DumperInterface::class);
     }
 
-    public function it_can_dump_empty_theme_settings(ObjectRepository $themeSettingsRepository)
+    public function it_can_dump_empty_theme_settings(ModelRepository $themeSettingsRepository)
     {
         $themeSettingsRepository
             ->findAll()
@@ -54,7 +54,7 @@ class ThemeSettingsDumperSpec extends ObjectBehavior
     }
 
     public function it_can_dump_theme_settings(
-        ObjectRepository $themeSettingsRepository,
+        ModelRepository $themeSettingsRepository,
         Settings $themeSettingsOne,
         Settings $themeSettingsTwo,
         NormalizerInterface $normalizer

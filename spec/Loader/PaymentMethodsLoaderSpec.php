@@ -8,12 +8,12 @@
 
 namespace spec\nlxShopEnvironment\Loader;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use nlxShopEnvironment\Loader\LoaderInterface;
 use nlxShopEnvironment\Loader\PaymentMethodsLoader;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Payment\Payment;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
@@ -21,7 +21,7 @@ class PaymentMethodsLoaderSpec extends ObjectBehavior
 {
     public function let(
         EntityManagerInterface $entityManager,
-        ObjectRepository $paymentMethodsRepository,
+        ModelRepository $paymentMethodsRepository,
         DenormalizerInterface $denormalizer
     ) {
         $entityManager
@@ -43,7 +43,7 @@ class PaymentMethodsLoaderSpec extends ObjectBehavior
 
     public function it_can_load_new_payment_methods(
         EntityManagerInterface $entityManager,
-        ObjectRepository $paymentMethodsRepository,
+        ModelRepository $paymentMethodsRepository,
         DenormalizerInterface $denormalizer
     ) {
         $paymentMethodsRepository
@@ -69,7 +69,7 @@ class PaymentMethodsLoaderSpec extends ObjectBehavior
 
     public function it_can_load_existing_payment_methods(
         EntityManagerInterface $entityManager,
-        ObjectRepository $paymentMethodsRepository,
+        ModelRepository $paymentMethodsRepository,
         Payment $paymentMethod,
         DenormalizerInterface $denormalizer
     ) {

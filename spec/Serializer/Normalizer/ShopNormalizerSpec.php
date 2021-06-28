@@ -8,16 +8,16 @@
 
 namespace spec\nlxShopEnvironment\Serializer\Normalizer;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use nlxShopEnvironment\Serializer\Normalizer\ShopNormalizer;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Shop\Shop;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class ShopNormalizerSpec extends ObjectBehavior
 {
-    public function let(EntityManagerInterface $entityManager, ObjectRepository $shopRepository)
+    public function let(EntityManagerInterface $entityManager, ModelRepository $shopRepository)
     {
         $entityManager
             ->getRepository(Shop::class)
@@ -70,7 +70,7 @@ class ShopNormalizerSpec extends ObjectBehavior
 
     public function it_returns_shop_on_denormalization(
         Shop $shop,
-        ObjectRepository $shopRepository
+        ModelRepository $shopRepository
     ) {
         $data = 12;
 

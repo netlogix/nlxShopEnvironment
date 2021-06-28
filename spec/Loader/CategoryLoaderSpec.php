@@ -8,13 +8,13 @@
 
 namespace spec\nlxShopEnvironment\Loader;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use nlxShopEnvironment\Loader\CategoryLoader;
 use nlxShopEnvironment\Loader\LoaderInterface;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Category\Category;
 use Shopware\Models\Search\CustomSorting;
 
@@ -22,7 +22,7 @@ class CategoryLoaderSpec extends ObjectBehavior
 {
     public function let(
         EntityManagerInterface $entityManager,
-        ObjectRepository $categoryRepository
+        ModelRepository $categoryRepository
     ) {
         $entityManager
             ->getRepository(Category::class)
@@ -43,7 +43,7 @@ class CategoryLoaderSpec extends ObjectBehavior
 
     public function it_can_load_empty(
         EntityManagerInterface $entityManager,
-        ObjectRepository $categoryRepository
+        ModelRepository $categoryRepository
     ) {
         $categoryRepository->findOneBy(Argument::any())
             ->shouldNotBeCalled();
@@ -59,7 +59,7 @@ class CategoryLoaderSpec extends ObjectBehavior
 
     public function it_cannot_update_existing_category_if_category_was_not_found(
         EntityManagerInterface $entityManager,
-        ObjectRepository $categoryRepository
+        ModelRepository $categoryRepository
     ) {
         $config = [
             'ALL' => [
@@ -82,7 +82,7 @@ class CategoryLoaderSpec extends ObjectBehavior
 
     public function it_cannot_update_existing_category_if_setter_not_exist(
         EntityManagerInterface $entityManager,
-        ObjectRepository $categoryRepository,
+        ModelRepository $categoryRepository,
         Category $category
     ) {
         $config = [
@@ -106,7 +106,7 @@ class CategoryLoaderSpec extends ObjectBehavior
 
     public function it_can_update_existing_category(
         EntityManagerInterface $entityManager,
-        ObjectRepository $categoryRepository,
+        ModelRepository $categoryRepository,
         Category $category
     ) {
         if (false === \class_exists('CustomSorting')) {
@@ -139,8 +139,8 @@ class CategoryLoaderSpec extends ObjectBehavior
 
     public function it_can_update_existing_category_sorting(
         EntityManagerInterface $entityManager,
-        ObjectRepository $categoryRepository,
-        ObjectRepository $customSortingRepository,
+        ModelRepository $categoryRepository,
+        ModelRepository $customSortingRepository,
         Category $category
     ) {
         if (\class_exists('CustomSorting')) {
@@ -189,8 +189,8 @@ class CategoryLoaderSpec extends ObjectBehavior
 
     public function it_can_copy_sortings_from_parent_to_child_categories(
         EntityManagerInterface $entityManager,
-        ObjectRepository $categoryRepository,
-        ObjectRepository $customSortingRepository,
+        ModelRepository $categoryRepository,
+        ModelRepository $customSortingRepository,
         Category $category,
         Connection $connection
     ) {

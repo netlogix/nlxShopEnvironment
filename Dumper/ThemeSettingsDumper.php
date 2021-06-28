@@ -8,14 +8,14 @@
 
 namespace nlxShopEnvironment\Dumper;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Theme\Settings;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class ThemeSettingsDumper implements DumperInterface
 {
-    /** @var ObjectRepository */
+    /** @var ModelRepository */
     private $themeSettingsRepository;
 
     /** @var NormalizerInterface */

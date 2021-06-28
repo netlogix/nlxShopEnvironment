@@ -8,16 +8,16 @@
 
 namespace spec\nlxShopEnvironment\Serializer\Normalizer;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use nlxShopEnvironment\Serializer\Normalizer\DispatchPaymentNormalizer;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Payment\Payment;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class DispatchPaymentNormalizerSpec extends ObjectBehavior
 {
-    public function let(EntityManagerInterface $entityManager, ObjectRepository $paymentRepository)
+    public function let(EntityManagerInterface $entityManager, ModelRepository $paymentRepository)
     {
         $entityManager
             ->getRepository(Payment::class)
@@ -70,7 +70,7 @@ class DispatchPaymentNormalizerSpec extends ObjectBehavior
 
     public function it_returns_payment_on_denormalization(
         Payment $payment,
-        ObjectRepository $paymentRepository
+        ModelRepository $paymentRepository
     ) {
         $data = 'test';
 

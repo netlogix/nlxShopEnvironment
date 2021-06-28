@@ -8,12 +8,12 @@
 
 namespace spec\nlxShopEnvironment\Loader;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use nlxShopEnvironment\Loader\LoaderInterface;
 use nlxShopEnvironment\Loader\ThemeSettingsLoader;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Theme\Settings;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
@@ -21,7 +21,7 @@ class ThemeSettingsLoaderSpec extends ObjectBehavior
 {
     public function let(
         EntityManagerInterface $entityManager,
-        ObjectRepository $themeSettingsRepository,
+        ModelRepository $themeSettingsRepository,
         DenormalizerInterface $denormalizer
     ) {
         $entityManager
@@ -43,7 +43,7 @@ class ThemeSettingsLoaderSpec extends ObjectBehavior
 
     public function it_cannot_load_new_theme_settings(
         EntityManagerInterface $entityManager,
-        ObjectRepository $themeSettingsRepository,
+        ModelRepository $themeSettingsRepository,
         DenormalizerInterface $denormalizer
     ) {
         $themeSettingsRepository
@@ -69,7 +69,7 @@ class ThemeSettingsLoaderSpec extends ObjectBehavior
 
     public function it_can_load_existing_theme_settings(
         EntityManagerInterface $entityManager,
-        ObjectRepository $themeSettingsRepository,
+        ModelRepository $themeSettingsRepository,
         Settings $themeSetting,
         DenormalizerInterface $denormalizer
     ) {

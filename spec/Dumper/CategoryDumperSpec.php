@@ -8,11 +8,11 @@
 
 namespace spec\nlxShopEnvironment\Dumper;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use nlxShopEnvironment\Dumper\CategoryDumper;
 use nlxShopEnvironment\Dumper\DumperInterface;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Category\Category;
 use Shopware\Models\Search\CustomSorting;
 
@@ -20,7 +20,7 @@ class CategoryDumperSpec extends ObjectBehavior
 {
     public function let(
         EntityManagerInterface $entityManager,
-        ObjectRepository $categoryRepository
+        ModelRepository $categoryRepository
     ) {
         $entityManager
             ->getRepository(Category::class)
@@ -40,7 +40,7 @@ class CategoryDumperSpec extends ObjectBehavior
     }
 
     public function it_can_dump_empty_category(
-        ObjectRepository $categoryRepository
+        ModelRepository $categoryRepository
     ) {
         $categoryRepository->findAll()
             ->shouldBeCalled()
@@ -52,8 +52,8 @@ class CategoryDumperSpec extends ObjectBehavior
 
     public function it_can_dump_category(
         EntityManagerInterface $entityManager,
-        ObjectRepository $categoryRepository,
-        ObjectRepository $customSortingRepository,
+        ModelRepository $categoryRepository,
+        ModelRepository $customSortingRepository,
         Category $category
     ) {
         if (\class_exists('CustomSorting')) {
@@ -89,8 +89,8 @@ class CategoryDumperSpec extends ObjectBehavior
 
     private function prepareParametersForDump(
         EntityManagerInterface $entityManager,
-        ObjectRepository $categoryRepository,
-        ObjectRepository $customSortingRepository,
+        ModelRepository $categoryRepository,
+        ModelRepository $customSortingRepository,
         Category $category1,
         CustomSorting $customSorting1,
         CustomSorting $customSorting2

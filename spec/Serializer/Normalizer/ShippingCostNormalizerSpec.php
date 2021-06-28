@@ -8,11 +8,11 @@
 
 namespace spec\nlxShopEnvironment\Serializer\Normalizer;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use nlxShopEnvironment\Serializer\Normalizer\ShippingCostNormalizer;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Dispatch\Dispatch;
 use Shopware\Models\Dispatch\ShippingCost;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
@@ -24,7 +24,7 @@ class ShippingCostNormalizerSpec extends ObjectBehavior
     public function let(
         AbstractNormalizer $normalizer,
         EntityManagerInterface $entityManager,
-        ObjectRepository $shippingCostRepository
+        ModelRepository $shippingCostRepository
     ) {
         $entityManager
             ->getRepository(ShippingCost::class)
@@ -100,7 +100,7 @@ class ShippingCostNormalizerSpec extends ObjectBehavior
     public function it_can_denormalize_existing_shipping_cost(
         AbstractNormalizer $normalizer,
         ShippingCost $existingShippingCost,
-        ObjectRepository $shippingCostRepository
+        ModelRepository $shippingCostRepository
     ) {
         $data = [
             'from'     => '0.100',
@@ -134,7 +134,7 @@ class ShippingCostNormalizerSpec extends ObjectBehavior
 
     public function it_can_denormalize_new_shipping_cost(
         AbstractNormalizer $normalizer,
-        ObjectRepository $shippingCostRepository
+        ModelRepository $shippingCostRepository
     ) {
         $data = [
             'from'     => '0.100',

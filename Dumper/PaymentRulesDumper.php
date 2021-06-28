@@ -8,19 +8,19 @@
 
 namespace nlxShopEnvironment\Dumper;
 
-use Doctrine\Common\Persistence\ObjectRepository;
+use Shopware\Components\Model\ModelRepository;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class PaymentRulesDumper implements DumperInterface
 {
-    /** @var ObjectRepository */
+    /** @var ModelRepository */
     private $paymentRulesRepository;
 
     /** @var NormalizerInterface */
     private $serializer;
 
     public function __construct(
-        ObjectRepository $paymentRulesRepository,
+        ModelRepository $paymentRulesRepository,
         NormalizerInterface $serializer
     ) {
         $this->paymentRulesRepository = $paymentRulesRepository;

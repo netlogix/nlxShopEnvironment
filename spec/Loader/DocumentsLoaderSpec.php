@@ -8,12 +8,12 @@
 
 namespace spec\nlxShopEnvironment\Loader;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use nlxShopEnvironment\Loader\DocumentsLoader;
 use nlxShopEnvironment\Loader\LoaderInterface;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Document\Document;
 use Webmozart\Assert\Assert;
 
@@ -21,7 +21,7 @@ class DocumentsLoaderSpec extends ObjectBehavior
 {
     public function let(
         EntityManagerInterface $entityManager,
-        ObjectRepository $documentsRepository
+        ModelRepository $documentsRepository
     ) {
         $entityManager
             ->getRepository(Document::class)
@@ -42,7 +42,7 @@ class DocumentsLoaderSpec extends ObjectBehavior
 
     public function it_can_load_empty(
         EntityManagerInterface $entityManager,
-        ObjectRepository $documentsRepository
+        ModelRepository $documentsRepository
     ) {
         $documentsRepository->findOneBy(Argument::any())
             ->shouldNotBeCalled();
@@ -55,7 +55,7 @@ class DocumentsLoaderSpec extends ObjectBehavior
 
     public function it_can_update_existing_document_for_shopware_since_5_5(
         EntityManagerInterface $entityManager,
-        ObjectRepository $documentsRepository,
+        ModelRepository $documentsRepository,
         Document $document1
     ) {
         if (false === \method_exists($document1->getWrappedObject(), 'getKey')) {
@@ -103,7 +103,7 @@ class DocumentsLoaderSpec extends ObjectBehavior
 
     public function it_can_create_new_document_for_shopware_since_5_5(
         EntityManagerInterface $entityManager,
-        ObjectRepository $documentsRepository,
+        ModelRepository $documentsRepository,
         Document $document1
     ) {
         if (false === \method_exists($document1->getWrappedObject(), 'getKey')) {
@@ -154,7 +154,7 @@ class DocumentsLoaderSpec extends ObjectBehavior
 
     public function it_can_update_existing_document_for_older_shopware(
         EntityManagerInterface $entityManager,
-        ObjectRepository $documentsRepository,
+        ModelRepository $documentsRepository,
         Document $document1
     ) {
         if (true === \method_exists($document1->getWrappedObject(), 'getKey')) {
@@ -202,7 +202,7 @@ class DocumentsLoaderSpec extends ObjectBehavior
 
     public function it_can_create_new_document_for_older_shopware(
         EntityManagerInterface $entityManager,
-        ObjectRepository $documentsRepository,
+        ModelRepository $documentsRepository,
         Document $document1
     ) {
         if (true === \method_exists($document1->getWrappedObject(), 'getKey')) {

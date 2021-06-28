@@ -8,9 +8,9 @@
 
 namespace nlxShopEnvironment\Loader;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Shop\Shop;
 use Shopware\Models\Shop\Template;
 use Shopware\Models\Shop\TemplateConfig\Element as ThemeElement;
@@ -75,14 +75,14 @@ class ThemeConfigLoader implements LoaderInterface
     }
 
     /**
-     * @param ObjectRepository $configElementRepository
+     * @param ModelRepository $configElementRepository
      * @param Template         $template
      * @param array            $configValues
      *
      * @return ThemeElement|null|object
      */
     private function findOrCreateThemeConfig(
-        ObjectRepository $configElementRepository,
+        ModelRepository $configElementRepository,
         Template $template,
         $configValues
     ) {
@@ -104,7 +104,7 @@ class ThemeConfigLoader implements LoaderInterface
     }
 
     /**
-     * @param ObjectRepository $configValueRepository
+     * @param ModelRepository $configValueRepository
      * @param ThemeElement     $element
      * @param Shop             $shop
      * @param mixed            $configValue
@@ -112,7 +112,7 @@ class ThemeConfigLoader implements LoaderInterface
      * @return Value
      */
     private function findOrCreateThemeConfigValue(
-        ObjectRepository $configValueRepository,
+        ModelRepository $configValueRepository,
         ThemeElement $element,
         Shop $shop,
         $configValue

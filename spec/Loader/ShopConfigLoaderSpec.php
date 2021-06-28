@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace spec\nlxShopEnvironment\Loader;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -17,6 +16,7 @@ use nlxShopEnvironment\Factory\ReflectionClassFactoryInterface;
 use nlxShopEnvironment\Loader\LoaderInterface;
 use nlxShopEnvironment\Loader\ShopConfigLoader;
 use nlxShopEnvironment\Services\Shop\ShopEntityRelationHelperInterface;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Customer\Group;
 use Shopware\Models\Shop\Shop;
 
@@ -27,7 +27,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         ReflectionClassFactoryInterface $reflectionClassFactory,
         \ReflectionClass $shopReflectionClass,
         ShopEntityRelationHelperInterface $entityRelationHelper,
-        ObjectRepository $shopRepository
+        ModelRepository $shopRepository
     ) {
         $entityManager
             ->getRepository(Shop::class)
@@ -51,7 +51,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
 
     public function it_should_throw_an_exception_if_shop_not_exist(
         EntityManagerInterface $entityManager,
-        ObjectRepository $shopRepository,
+        ModelRepository $shopRepository,
         \ReflectionClass $shopReflectionClass
     ) {
         $config = [1 => ['superVillain' => 'Joker']];
@@ -74,7 +74,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
 
     public function it_should_throw_an_exception_if_setter_not_exist(
         EntityManagerInterface $entityManager,
-        ObjectRepository $shopRepository,
+        ModelRepository $shopRepository,
         \ReflectionClass $shopReflectionClass,
         Shop $shop
     ) {
@@ -98,7 +98,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
 
     public function it_can_load_empty(
         EntityManagerInterface $entityManager,
-        ObjectRepository $shopRepository,
+        ModelRepository $shopRepository,
         \ReflectionClass $shopReflectionClass
     ) {
         $shopRepository->find(Argument::any())
@@ -118,7 +118,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
 
     public function it_can_load_if_config_is_emtpy(
         EntityManagerInterface $entityManager,
-        ObjectRepository $shopRepository,
+        ModelRepository $shopRepository,
         \ReflectionClass $shopReflectionClass,
         Shop $shop
     ) {
@@ -141,7 +141,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
 
     public function it_can_update_existing_shop(
         EntityManagerInterface $entityManager,
-        ObjectRepository $shopRepository,
+        ModelRepository $shopRepository,
         \ReflectionClass $shopReflectionClass,
         ShopEntityRelationHelperInterface $entityRelationHelper,
         Shop $shop
@@ -171,7 +171,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
 
     public function it_can_update_existing_shop_with_properties_with_a_relation(
         EntityManagerInterface $entityManager,
-        ObjectRepository $shopRepository,
+        ModelRepository $shopRepository,
         ShopEntityRelationHelperInterface $entityRelationHelper,
         Shop $shop,
         Group $group,

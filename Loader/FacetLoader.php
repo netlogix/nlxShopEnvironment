@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace nlxShopEnvironment\Loader;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Search\CustomFacet;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
@@ -19,7 +19,7 @@ class FacetLoader implements LoaderInterface
     /** @var EntityManagerInterface */
     private $entityManager;
 
-    /** @var ObjectRepository */
+    /** @var ModelRepository */
     private $facetRepository;
 
     /** @var DenormalizerInterface */

@@ -8,18 +8,18 @@
 
 namespace spec\nlxShopEnvironment\Dumper;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use nlxShopEnvironment\Dumper\DocumentsDumper;
 use nlxShopEnvironment\Dumper\DumperInterface;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Document\Document;
 
 class DocumentsDumperSpec extends ObjectBehavior
 {
     public function let(
         EntityManagerInterface $entityManager,
-        ObjectRepository $documentsRepository
+        ModelRepository $documentsRepository
     ) {
         $entityManager
             ->getRepository(Document::class)
@@ -39,7 +39,7 @@ class DocumentsDumperSpec extends ObjectBehavior
     }
 
     public function it_can_dump_empty_documents(
-        ObjectRepository $documentsRepository
+        ModelRepository $documentsRepository
     ) {
         $documentsRepository->findAll()
             ->shouldBeCalled()
@@ -50,7 +50,7 @@ class DocumentsDumperSpec extends ObjectBehavior
     }
 
     public function it_can_dump_document_for_shopware_since_5_5(
-        ObjectRepository $documentsRepository,
+        ModelRepository $documentsRepository,
         Document $document1,
         Document $document2
     ) {
@@ -92,7 +92,7 @@ class DocumentsDumperSpec extends ObjectBehavior
     }
 
     public function it_can_dump_document_for_older_shopware(
-        ObjectRepository $documentsRepository,
+        ModelRepository $documentsRepository,
         Document $document1,
         Document $document2
     ) {
@@ -128,7 +128,7 @@ class DocumentsDumperSpec extends ObjectBehavior
     }
 
     private function prepareParametersForDump(
-        ObjectRepository $documentsRepository,
+        ModelRepository $documentsRepository,
         Document $document1,
         Document $document2
     ) {

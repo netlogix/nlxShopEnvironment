@@ -8,15 +8,15 @@
 
 namespace nlxShopEnvironment\Serializer\Normalizer;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Payment\Payment;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class DispatchPaymentNormalizer implements NormalizerInterface, DenormalizerInterface
 {
-    /** @var ObjectRepository */
+    /** @var ModelRepository */
     private $paymentMethodsRepository;
 
     public function __construct(EntityManagerInterface $entityManager)
