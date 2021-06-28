@@ -3,7 +3,7 @@
         xsi:noNamespaceSchemaLocation="../../../engine/Shopware/Components/Plugin/schema/plugin.xsd">
     <label lang="de">nlxShopEnvironment</label>
     <label lang="en">nlxShopEnvironment</label>
-    <version>2.0.0</version>
+    <version>2.1.0</version>
     <copyright>(c) by netlogix GmbH &amp; Co. KG</copyright>
     <license>Proprietary</license>
     <link>https://websolutions.netlogix.de/</link>
@@ -114,5 +114,9 @@
     <changelog version="2.0.0">
         <changes lang="de">Plugin zu Netlogix Struktur migriert</changes>
         <changes lang="en">Plugin migrated to Netlogix structure</changes>
+    </changelog>
+    <changelog version="2.1.0">
+        <changes lang="de">Shopware 5.7 Kompatibilität hinzugefügt</changes>
+        <changes lang="en">Added shopware 5.7 compatibility</changes>
     </changelog>
 </plugin>
