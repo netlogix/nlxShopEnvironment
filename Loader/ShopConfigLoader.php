@@ -8,15 +8,15 @@
 
 namespace nlxShopEnvironment\Loader;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use nlxShopEnvironment\Factory\ReflectionClassFactoryInterface;
 use nlxShopEnvironment\Services\Shop\ShopEntityRelationHelperInterface;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Shop\Shop;
 
 class ShopConfigLoader implements LoaderInterface
 {
-    /** @var ObjectRepository */
+    /** @var ModelRepository */
     private $shopRepo;
 
     /** @var EntityManagerInterface */

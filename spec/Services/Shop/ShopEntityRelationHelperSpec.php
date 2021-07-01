@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace spec\nlxShopEnvironment\Services\Shop;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpSpec\ObjectBehavior;
 use nlxShopEnvironment\Services\Shop\ShopEntityRelationHelper;
 use nlxShopEnvironment\Services\Shop\ShopEntityRelationHelperInterface;
+use PhpSpec\ObjectBehavior;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Category\Category;
 use Shopware\Models\Customer\Customer;
 use Shopware\Models\Customer\Group;
@@ -78,7 +78,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
 
     public function it_throws_an_exception_if_customer_group_not_found(
         EntityManagerInterface $entityManager,
-        ObjectRepository $customerGroup
+        ModelRepository $customerGroup
     ) {
         $entityManager->getRepository(Group::class)
             ->willReturn($customerGroup);
@@ -92,7 +92,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
 
     public function it_returns_a_customer_group_entity(
         EntityManagerInterface $entityManager,
-        ObjectRepository $customerGroupRepository,
+        ModelRepository $customerGroupRepository,
         Customer $customerGroup
     ) {
         $entityManager->getRepository(Group::class)
@@ -107,7 +107,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
 
     public function it_throws_an_exception_if_category_not_found(
         EntityManagerInterface $entityManager,
-        ObjectRepository $categoryRepository
+        ModelRepository $categoryRepository
     ) {
         $entityManager->getRepository(Category::class)
             ->willReturn($categoryRepository);
@@ -121,7 +121,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
 
     public function it_returns_a_category_entity(
         EntityManagerInterface $entityManager,
-        ObjectRepository $categoryRepository,
+        ModelRepository $categoryRepository,
         Category $category
     ) {
         $entityManager->getRepository(Category::class)
@@ -136,7 +136,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
 
     public function it_throws_an_exception_if_locale_not_found(
         EntityManagerInterface $entityManager,
-        ObjectRepository $localeRepository
+        ModelRepository $localeRepository
     ) {
         $entityManager->getRepository(Locale::class)
             ->willReturn($localeRepository);
@@ -150,7 +150,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
 
     public function it_returns_a_locale_entity(
         EntityManagerInterface $entityManager,
-        ObjectRepository $localeRepository,
+        ModelRepository $localeRepository,
         Locale $locale
     ) {
         $entityManager->getRepository(Locale::class)
@@ -165,7 +165,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
 
     public function it_throws_an_exception_if_currency_not_found(
         EntityManagerInterface $entityManager,
-        ObjectRepository $currencyRepository
+        ModelRepository $currencyRepository
     ) {
         $entityManager->getRepository(Currency::class)
             ->willReturn($currencyRepository);
@@ -179,7 +179,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
 
     public function it_returns_a_currency_entity(
         EntityManagerInterface $entityManager,
-        ObjectRepository $currencyRepository,
+        ModelRepository $currencyRepository,
         Currency $currency
     ) {
         $entityManager->getRepository(Currency::class)
@@ -194,7 +194,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
 
     public function it_throws_an_exception_if_main_shop_not_found(
         EntityManagerInterface $entityManager,
-        ObjectRepository $mainShopRepository
+        ModelRepository $mainShopRepository
     ) {
         $entityManager->getRepository(Shop::class)
             ->willReturn($mainShopRepository);
@@ -208,7 +208,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
 
     public function it_returns_a_main_shop_entity(
         EntityManagerInterface $entityManager,
-        ObjectRepository $mainShopRepository,
+        ModelRepository $mainShopRepository,
         Shop $main
     ) {
         $entityManager->getRepository(Shop::class)
@@ -223,7 +223,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
 
     public function it_throws_an_exception_if_fallback_shop_not_found(
         EntityManagerInterface $entityManager,
-        ObjectRepository $fallbackRepository
+        ModelRepository $fallbackRepository
     ) {
         $entityManager->getRepository(Shop::class)
             ->willReturn($fallbackRepository);
@@ -237,7 +237,7 @@ class ShopEntityRelationHelperSpec extends ObjectBehavior
 
     public function it_returns_a_fallback_shop_entity(
         EntityManagerInterface $entityManager,
-        ObjectRepository $fallbackRepository,
+        ModelRepository $fallbackRepository,
         Shop $fallback
     ) {
         $entityManager->getRepository(Shop::class)

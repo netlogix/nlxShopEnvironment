@@ -8,12 +8,12 @@
 
 namespace spec\nlxShopEnvironment\Dumper;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use nlxShopEnvironment\Dumper\DumperInterface;
 use nlxShopEnvironment\Dumper\ProductivityModeConfigDumper;
+use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Plugin\Plugin;
 
 class ProductivityModeConfigDumperSpec extends ObjectBehavior
@@ -36,14 +36,14 @@ class ProductivityModeConfigDumperSpec extends ObjectBehavior
 
     public function it_can_dump_positive(
         EntityManagerInterface $entityManager,
-        ObjectRepository $objectRepository,
+        ModelRepository $ModelRepository,
         Plugin $plugin
     ) {
         $entityManager
             ->getRepository(Argument::exact(Plugin::class))
-            ->willReturn($objectRepository);
+            ->willReturn($ModelRepository);
 
-        $objectRepository
+        $ModelRepository
             ->findOneBy(Argument::exact(['name' => 'HttpCache']))
             ->willReturn($plugin);
 
@@ -61,14 +61,14 @@ class ProductivityModeConfigDumperSpec extends ObjectBehavior
 
     public function it_can_dump_negative_if_uninstalled(
         EntityManagerInterface $entityManager,
-        ObjectRepository $objectRepository,
+        ModelRepository $modelRepository,
         Plugin $plugin
     ) {
         $entityManager
             ->getRepository(Argument::exact(Plugin::class))
-            ->willReturn($objectRepository);
+            ->willReturn($modelRepository);
 
-        $objectRepository
+        $modelRepository
             ->findOneBy(Argument::exact(['name' => 'HttpCache']))
             ->willReturn($plugin);
 
@@ -86,14 +86,14 @@ class ProductivityModeConfigDumperSpec extends ObjectBehavior
 
     public function it_can_dump_negative_if_inactive(
         EntityManagerInterface $entityManager,
-        ObjectRepository $objectRepository,
+        ModelRepository $modelRepository,
         Plugin $plugin
     ) {
         $entityManager
             ->getRepository(Argument::exact(Plugin::class))
-            ->willReturn($objectRepository);
+            ->willReturn($modelRepository);
 
-        $objectRepository
+        $modelRepository
             ->findOneBy(Argument::exact(['name' => 'HttpCache']))
             ->willReturn($plugin);
 
@@ -111,14 +111,14 @@ class ProductivityModeConfigDumperSpec extends ObjectBehavior
 
     public function it_can_dump_negative_if_inactive_and_uninstalled(
         EntityManagerInterface $entityManager,
-        ObjectRepository $objectRepository,
+        ModelRepository $modelRepository,
         Plugin $plugin
     ) {
         $entityManager
             ->getRepository(Argument::exact(Plugin::class))
-            ->willReturn($objectRepository);
+            ->willReturn($modelRepository);
 
-        $objectRepository
+        $modelRepository
             ->findOneBy(Argument::exact(['name' => 'HttpCache']))
             ->willReturn($plugin);
 

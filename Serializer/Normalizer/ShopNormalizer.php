@@ -8,15 +8,15 @@
 
 namespace nlxShopEnvironment\Serializer\Normalizer;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Shop\Shop;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class ShopNormalizer implements NormalizerInterface, DenormalizerInterface
 {
-    /** @var ObjectRepository */
+    /** @var ModelRepository */
     private $shopRepository;
 
     public function __construct(EntityManagerInterface $entityManager)

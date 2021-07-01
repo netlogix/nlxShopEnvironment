@@ -8,10 +8,10 @@
 
 namespace spec\nlxShopEnvironment\Services;
 
-use PhpSpec\ObjectBehavior;
 use nlxShopEnvironment\DataTypes\DataTypeCollectorInterface;
 use nlxShopEnvironment\Services\ConfigurationLoader;
 use nlxShopEnvironment\Services\ConfigurationLoaderInterface;
+use PhpSpec\ObjectBehavior;
 
 class ConfigurationLoaderSpec extends ObjectBehavior
 {

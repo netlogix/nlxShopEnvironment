@@ -8,8 +8,8 @@
 
 namespace nlxShopEnvironment\Loader;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Payment\Payment;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
@@ -18,7 +18,7 @@ class PaymentMethodsLoader implements LoaderInterface
     /** @var EntityManagerInterface */
     private $entityManager;
 
-    /** @var ObjectRepository */
+    /** @var ModelRepository */
     private $paymentMethodsRepository;
 
     /** @var DenormalizerInterface */

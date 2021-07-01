@@ -8,13 +8,13 @@
 
 namespace spec\nlxShopEnvironment\Dumper;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use nlxShopEnvironment\Loader\FacetLoader;
+use nlxShopEnvironment\Loader\LoaderInterface;
 use PhpSpec\Exception\Example\SkippingException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use nlxShopEnvironment\Loader\FacetLoader;
-use nlxShopEnvironment\Loader\LoaderInterface;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Search\CustomFacet;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
@@ -22,7 +22,7 @@ class FacetLoaderSpec extends ObjectBehavior
 {
     public function let(
         EntityManagerInterface $entityManager,
-        ObjectRepository $facetRepository,
+        ModelRepository $facetRepository,
         DenormalizerInterface $denormalizer
     ) {
         if (!\class_exists('Shopware\Models\Search\CustomFacet')) {
@@ -47,7 +47,7 @@ class FacetLoaderSpec extends ObjectBehavior
 
     public function it_aborts_if_it_is_an_unknown_id(
         EntityManagerInterface $entityManager,
-        ObjectRepository $facetRepository,
+        ModelRepository $facetRepository,
         DenormalizerInterface $denormalizer
     ) {
         $facetRepository
@@ -69,7 +69,7 @@ class FacetLoaderSpec extends ObjectBehavior
 
     public function it_can_load_existing_shipping_methods(
         EntityManagerInterface $entityManager,
-        ObjectRepository $facetRepository,
+        ModelRepository $facetRepository,
         DenormalizerInterface $denormalizer
     ) {
         $facet = new CustomFacet();

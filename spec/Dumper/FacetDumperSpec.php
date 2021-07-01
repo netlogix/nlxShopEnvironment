@@ -8,13 +8,13 @@
 
 namespace spec\nlxShopEnvironment\Dumper;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use nlxShopEnvironment\Dumper\DumperInterface;
+use nlxShopEnvironment\Dumper\FacetDumper;
 use PhpSpec\Exception\Example\SkippingException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use nlxShopEnvironment\Dumper\DumperInterface;
-use nlxShopEnvironment\Dumper\FacetDumper;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Search\CustomFacet;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -22,7 +22,7 @@ class FacetDumperSpec extends ObjectBehavior
 {
     public function let(
         EntityManagerInterface $entityManager,
-        ObjectRepository $facetRepository,
+        ModelRepository $facetRepository,
         NormalizerInterface $normalizer
     ) {
         if (!\class_exists('Shopware\Models\Search\CustomFacet')) {
@@ -46,7 +46,7 @@ class FacetDumperSpec extends ObjectBehavior
     }
 
     public function it_can_dump_empty_facets(
-        ObjectRepository $facetRepository
+        ModelRepository $facetRepository
     ) {
         $facetRepository
             ->findAll()
@@ -59,7 +59,7 @@ class FacetDumperSpec extends ObjectBehavior
     }
 
     public function it_can_dump_facets(
-        ObjectRepository $facetRepository,
+        ModelRepository $facetRepository,
         NormalizerInterface $normalizer
     ) {
         $facet1 = new CustomFacet();

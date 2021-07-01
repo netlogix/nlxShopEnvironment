@@ -8,8 +8,8 @@
 
 namespace nlxShopEnvironment\Serializer\Normalizer;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Dispatch\ShippingCost;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -20,7 +20,7 @@ class ShippingCostNormalizer implements NormalizerInterface, DenormalizerInterfa
     /** @var AbstractNormalizer */
     private $normalizer;
 
-    /** @var ObjectRepository */
+    /** @var ModelRepository */
     private $shippingCostRepository;
 
     public function __construct(AbstractNormalizer $normalizer, EntityManagerInterface $entityManager)

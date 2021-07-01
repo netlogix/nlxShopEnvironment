@@ -8,11 +8,11 @@
 
 namespace nlxShopEnvironment\Loader;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Statement;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopware\Components\ConfigWriter;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Config\Element;
 use Shopware\Models\Config\Form;
 
@@ -124,13 +124,13 @@ class CoreConfigLoader implements LoaderInterface
     }
 
     /**
-     * @param ObjectRepository $configFormRepository
-     * @param string           $formName
-     * @param array            $elementInformation
+     * @param ModelRepository $configFormRepository
+     * @param string          $formName
+     * @param array           $elementInformation
      *
      * @return Form|null
      */
-    private function findOrCreateForm(ObjectRepository $configFormRepository, $formName, $elementInformation)
+    private function findOrCreateForm(ModelRepository $configFormRepository, $formName, $elementInformation)
     {
         /**
          * @todo at the moment a deleted or not existing forms are making problems (dublicate key), which I have to investigate
@@ -164,15 +164,15 @@ class CoreConfigLoader implements LoaderInterface
     }
 
     /**
-     * @param ObjectRepository $configElementRepository
-     * @param null|Form        $form
-     * @param string           $elementName
-     * @param array            $elementInformation
+     * @param ModelRepository $configElementRepository
+     * @param null|Form       $form
+     * @param string          $elementName
+     * @param array           $elementInformation
      *
      * @return object|Element
      */
     private function findOrCreateElement(
-        ObjectRepository $configElementRepository,
+        ModelRepository $configElementRepository,
         $form,
         $elementName,
         $elementInformation

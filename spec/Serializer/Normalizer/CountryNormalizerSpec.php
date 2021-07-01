@@ -8,16 +8,16 @@
 
 namespace spec\nlxShopEnvironment\Serializer\Normalizer;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpSpec\ObjectBehavior;
 use nlxShopEnvironment\Serializer\Normalizer\CountryNormalizer;
+use PhpSpec\ObjectBehavior;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Country\Country;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class CountryNormalizerSpec extends ObjectBehavior
 {
-    public function let(EntityManagerInterface $entityManager, ObjectRepository $countryRepository)
+    public function let(EntityManagerInterface $entityManager, ModelRepository $countryRepository)
     {
         $entityManager
             ->getRepository(Country::class)
@@ -70,7 +70,7 @@ class CountryNormalizerSpec extends ObjectBehavior
 
     public function it_returns_country_on_denormalization(
         Country $country,
-        ObjectRepository $countryRepository
+        ModelRepository $countryRepository
     ) {
         $data = 12;
 

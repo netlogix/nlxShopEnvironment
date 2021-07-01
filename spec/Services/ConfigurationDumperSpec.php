@@ -8,10 +8,10 @@
 
 namespace spec\nlxShopEnvironment\Services;
 
-use PhpSpec\ObjectBehavior;
 use nlxShopEnvironment\DataTypes\DataTypeCollectorInterface;
 use nlxShopEnvironment\Services\ConfigurationDumper;
 use nlxShopEnvironment\Services\ConfigurationDumperInterface;
+use PhpSpec\ObjectBehavior;
 
 class ConfigurationDumperSpec extends ObjectBehavior
 {

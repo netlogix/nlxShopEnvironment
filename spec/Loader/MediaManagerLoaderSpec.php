@@ -8,12 +8,12 @@
 
 namespace spec\nlxShopEnvironment\Loader;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use nlxShopEnvironment\Loader\LoaderInterface;
 use nlxShopEnvironment\Loader\MediaManagerLoader;
+use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Media\Album;
 use Shopware\Models\Media\Settings;
 
@@ -21,8 +21,8 @@ class MediaManagerLoaderSpec extends ObjectBehavior
 {
     public function let(
         EntityManagerInterface $entityManager,
-        ObjectRepository $albumRepository,
-        ObjectRepository $settingsRepository
+        ModelRepository $albumRepository,
+        ModelRepository $settingsRepository
     ) {
         $entityManager->getRepository(Album::class)
             ->willReturn($albumRepository);
@@ -44,7 +44,7 @@ class MediaManagerLoaderSpec extends ObjectBehavior
 
     public function it_can_handle_empty_config(
         EntityManagerInterface $entityManager,
-        ObjectRepository $albumRepository
+        ModelRepository $albumRepository
     ) {
         if (false === \method_exists(Album::class, 'setGarbageCollectable')) {
             return;
@@ -60,7 +60,7 @@ class MediaManagerLoaderSpec extends ObjectBehavior
     }
 
     public function it_cannot_create_a_new_album(
-        ObjectRepository $albumRepository
+        ModelRepository $albumRepository
     ) {
         if (false === \method_exists(Album::class, 'setGarbageCollectable')) {
             return;
@@ -92,9 +92,9 @@ class MediaManagerLoaderSpec extends ObjectBehavior
 
     public function it_can_update_existing_album_in_shopware_54_and_above(
         EntityManagerInterface $entityManager,
-        ObjectRepository $albumRepository,
+        ModelRepository $albumRepository,
         Album $album,
-        ObjectRepository $settingsRepository,
+        ModelRepository $settingsRepository,
         Settings $settings
     ) {
         if (false === \method_exists(Album::class, 'setGarbageCollectable')) {

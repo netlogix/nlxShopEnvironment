@@ -8,11 +8,11 @@
 
 namespace spec\nlxShopEnvironment\Dumper;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpSpec\ObjectBehavior;
 use nlxShopEnvironment\Dumper\DumperInterface;
 use nlxShopEnvironment\Dumper\MediaManagerDumper;
+use PhpSpec\ObjectBehavior;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Media\Album;
 use Shopware\Models\Media\Settings;
 
@@ -20,7 +20,7 @@ class MediaManagerDumperSpec extends ObjectBehavior
 {
     public function let(
         EntityManagerInterface $entityManager,
-        ObjectRepository $albumRepository
+        ModelRepository $albumRepository
     ) {
         $entityManager->getRepository(Album::class)
             ->willReturn($albumRepository);
@@ -39,7 +39,7 @@ class MediaManagerDumperSpec extends ObjectBehavior
     }
 
     public function it_can_dump_empty_albums(
-        ObjectRepository $albumRepository
+        ModelRepository $albumRepository
     ) {
         if (false === \method_exists(Album::class, 'getGarbageCollectable')) {
             return;
@@ -54,7 +54,7 @@ class MediaManagerDumperSpec extends ObjectBehavior
     }
 
     public function it_can_dump_album_data_in_shopware_54_and_above(
-        ObjectRepository $albumRepository,
+        ModelRepository $albumRepository,
         Album $album1,
         Settings $settingsAlbum1,
         Album $album2,
@@ -125,7 +125,7 @@ class MediaManagerDumperSpec extends ObjectBehavior
     // TODO: Adds specs for shopware prior 5.4
 
     private function prepareParametersForDump(
-        ObjectRepository $albumRepository,
+        ModelRepository $albumRepository,
         Album $album1,
         Settings $settingsAlbum1,
         Album $album2,

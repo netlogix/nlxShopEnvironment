@@ -10,10 +10,10 @@ namespace spec\nlxShopEnvironment\Loader;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use nlxShopEnvironment\Loader\LoaderInterface;
 use nlxShopEnvironment\Loader\SearchFieldsLoader;
+use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 class SearchFieldsLoaderSpec extends ObjectBehavior
 {

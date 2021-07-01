@@ -8,15 +8,15 @@
 
 namespace nlxShopEnvironment\Serializer\Normalizer;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Country\Country;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class CountryNormalizer implements NormalizerInterface, DenormalizerInterface
 {
-    /** @var ObjectRepository */
+    /** @var ModelRepository */
     private $countryRepository;
 
     public function __construct(EntityManagerInterface $entityManager)

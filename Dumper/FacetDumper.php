@@ -8,14 +8,14 @@
 
 namespace nlxShopEnvironment\Dumper;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Search\CustomFacet;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class FacetDumper implements DumperInterface
 {
-    /** @var ObjectRepository */
+    /** @var ModelRepository */
     private $facetRepository;
 
     /** @var NormalizerInterface */

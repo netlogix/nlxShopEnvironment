@@ -49,14 +49,14 @@
                 class="nlxShopEnvironment\Commands\ShopEnvironmentDumpConfigCommand"
         >
             <argument type="service" id="nlx_shop_environment.services.configuration_dumper"/>
-            <tag name="console.command"/>
+            <tag name="console.command" command="sd:environment:config:dump"/>
         </service>
         <service
                 id="nlx_shop_environment.commands.shop_environment_load_config_command"
                 class="nlxShopEnvironment\Commands\ShopEnvironmentLoadConfigCommand"
         >
             <argument type="service" id="nlx_shop_environment.services.configuration_loader"/>
-            <tag name="console.command"/>
+            <tag name="console.command" command="sd:environment:config:load"/>
         </service>
         <service
                 id="nlx_shop_environment.commands.shop_environment_clear_opcache_command"
@@ -64,7 +64,7 @@
         >
             <argument type="service" id="nlx_shop_environment.commands.shop_environment_insecure_guzzle_client" />
             <argument type="service" id="nlx_shop_environment.cache_cleaners.opcache_cleaner" />
-            <tag name="console.command"/>
+            <tag name="console.command" command="sd:environment:opcache:clear"/>
         </service>
 
         <service id="nlx_shop_environment.commands.shop_environment_insecure_guzzle_client"

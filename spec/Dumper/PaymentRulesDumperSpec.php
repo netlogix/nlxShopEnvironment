@@ -8,17 +8,17 @@
 
 namespace spec\nlxShopEnvironment\Dumper;
 
-use Doctrine\Common\Persistence\ObjectRepository;
-use PhpSpec\ObjectBehavior;
 use nlxShopEnvironment\Dumper\DumperInterface;
 use nlxShopEnvironment\Dumper\PaymentRulesDumper;
+use PhpSpec\ObjectBehavior;
+use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Payment\RuleSet;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class PaymentRulesDumperSpec extends ObjectBehavior
 {
     public function let(
-        ObjectRepository $paymentRulesRepository,
+        ModelRepository $paymentRulesRepository,
         NormalizerInterface $normalizer
     ) {
         $this->beConstructedWith($paymentRulesRepository, $normalizer);
@@ -35,7 +35,7 @@ class PaymentRulesDumperSpec extends ObjectBehavior
     }
 
     public function it_can_dump_payment_rules(
-        ObjectRepository $paymentRulesRepository,
+        ModelRepository $paymentRulesRepository,
         NormalizerInterface $normalizer,
         RuleSet $ruleSet
     ) {
