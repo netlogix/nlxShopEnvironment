@@ -83,5 +83,11 @@
                 class="nlxShopEnvironment\Factory\ReflectionClassFactory"
         >
         </service>
+
+        <!-- Subscriber -->
+        <service id="nlx_shop_environment.subscriber.backendtheme" class="nlxShopEnvironment\Subscriber\BackendTheme">
+            <tag name="shopware.event_subscriber" />
+        </service>
+
     </services>
 </container>
