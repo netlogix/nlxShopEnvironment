@@ -26,7 +26,7 @@ class CategoryDumper implements DumperInterface
     /**
      * {@inheritdoc}
      */
-    public function dump()
+    public function dump(): array
     {
         $config = [];
 

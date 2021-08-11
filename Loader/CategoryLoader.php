@@ -26,7 +26,7 @@ class CategoryLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load($config)
+    public function load(?array $config): void
     {
         $categoryRepository = $this->entityManager->getRepository(Category::class);
 

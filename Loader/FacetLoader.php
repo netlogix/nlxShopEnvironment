@@ -37,7 +37,7 @@ class FacetLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load(array $config): void
+    public function load(?array $config): void
     {
         foreach ($config as $facetName => $facetData) {
             try {

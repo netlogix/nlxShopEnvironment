@@ -37,7 +37,7 @@ class PaymentRulesLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load($config)
+    public function load(?array $config): void
     {
         $paymentRules = $this->denormalizer->denormalize($config, RuleSet::class . '[]');
 

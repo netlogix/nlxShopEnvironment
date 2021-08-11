@@ -30,7 +30,7 @@ class PaymentMethodsDumper implements DumperInterface
     /**
      * {@inheritdoc}
      */
-    public function dump()
+    public function dump(): array
     {
         $paymentMethods = [];
 

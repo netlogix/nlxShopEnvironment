@@ -24,7 +24,7 @@ class SearchFieldsLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load($config)
+    public function load(?array $config): void
     {
         if (empty($config) || !\is_array($config)) {
             return;

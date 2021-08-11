@@ -30,7 +30,7 @@ class ThemeSettingsDumper implements DumperInterface
     /**
      * {@inheritdoc}
      */
-    public function dump()
+    public function dump(): array
     {
         $themeSettings = [];
 

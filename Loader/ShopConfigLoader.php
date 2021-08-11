@@ -41,7 +41,7 @@ class ShopConfigLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load(array $config): void
+    public function load(?array $config): void
     {
         $this->shopRepo = $this->entityManager->getRepository(Shop::class);
 
@@ -71,7 +71,7 @@ class ShopConfigLoader implements LoaderInterface
     private function setConfig(
         Shop $shop,
         array $shopConfig,
-        string $configId
+        int $configId
     ): void {
         foreach ($shopConfig as $parameter => $value) {
             $setter = 'set' . $parameter;

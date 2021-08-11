@@ -26,7 +26,7 @@ class ProductivityModeConfigDumper implements DumperInterface
     /**
      * {@inheritdoc}
      */
-    public function dump()
+    public function dump(): array
     {
         /** @var Plugin $httpCache */
         $httpCache = $this->entityManager->getRepository(Plugin::class)->findOneBy(['name' => 'HttpCache']);

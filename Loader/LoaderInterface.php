@@ -11,7 +11,7 @@ namespace nlxShopEnvironment\Loader;
 interface LoaderInterface
 {
     /**
-     * @param array|mixed[] $config
+     * @param mixed[]|null $config
      */
-    public function load(array $config): void;
+    public function load(?array $config): void;
 }

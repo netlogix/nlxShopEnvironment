@@ -33,7 +33,7 @@ class ProductivityModeConfigLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load($config)
+    public function load(?array $config): void
     {
         if (false === \array_key_exists(self::SETTINGS_KEY, $config)) {
             return;

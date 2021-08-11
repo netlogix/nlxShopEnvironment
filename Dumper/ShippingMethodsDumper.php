@@ -30,7 +30,7 @@ class ShippingMethodsDumper implements DumperInterface
     /**
      * {@inheritdoc}
      */
-    public function dump()
+    public function dump(): array
     {
         $shippingMethods = [];
         foreach ($this->shippingMethodsRepository->findAll() as $shippingMethod) {

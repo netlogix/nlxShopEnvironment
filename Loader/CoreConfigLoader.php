@@ -42,7 +42,7 @@ class CoreConfigLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load(array $config): void
+    public function load(?array $config): void
     {
         $configElementRepository = $this->entityManager->getRepository('Shopware\Models\Config\Element');
         $configFormRepository = $this->entityManager->getRepository('Shopware\Models\Config\Form');

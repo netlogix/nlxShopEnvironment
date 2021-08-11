@@ -34,7 +34,7 @@ class ThemeSettingsLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load($config): void
+    public function load(?array $config): void
     {
         foreach ($config as $id => $themeSettingsData) {
             try {
@@ -51,7 +51,7 @@ class ThemeSettingsLoader implements LoaderInterface
     /**
      * @param mixed[] $themeSettingData
      */
-    private function importThemeSettings(string $themeSettingId, array $themeSettingData): void
+    private function importThemeSettings(int $themeSettingId, array $themeSettingData): void
     {
         $themeSetting = $this->themeSettingsRepository->find($themeSettingId);
         if (null === $themeSetting) {

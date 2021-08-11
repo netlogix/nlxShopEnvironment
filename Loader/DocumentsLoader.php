@@ -25,7 +25,7 @@ class DocumentsLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load(array $config): void
+    public function load(?array $config): void
     {
         $number = 0;
         foreach ($config as $key => $configElement) {

@@ -23,7 +23,7 @@ class SearchFieldsDumper implements DumperInterface
     /**
      * {@inheritdoc}
      */
-    public function dump()
+    public function dump(): array
     {
         $searchFields = $this->entityManager->getConnection()->executeQuery(
             'SELECT * FROM `s_search_fields`'

@@ -26,7 +26,7 @@ class MediaManagerLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load(array $config): void
+    public function load(?array $config): void
     {
         if (false === \method_exists(Album::class, 'getGarbageCollectable')) {
             throw new \RuntimeException('The "MediaManagerLoader::load" method is not yet tested in this version of shopware. Only tested in shopware 5.4 and above!');

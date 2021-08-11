@@ -30,7 +30,7 @@ class PaymentRulesDumper implements DumperInterface
     /**
      * {@inheritdoc}
      */
-    public function dump()
+    public function dump(): array
     {
         $paymentRules = $this->paymentRulesRepository->findAll();
         return $this->serializer->normalize($paymentRules);

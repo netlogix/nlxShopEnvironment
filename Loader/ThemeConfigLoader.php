@@ -35,7 +35,7 @@ class ThemeConfigLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load(array $config): void
+    public function load(?array $config): void
     {
         $configElementRepository = $this->entityManager->getRepository(ThemeElement::class);
         $configTemplateRepository = $this->entityManager->getRepository(Template::class);

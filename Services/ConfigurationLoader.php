@@ -27,7 +27,7 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function loadConfiguration($pathToFile)
+    public function loadConfiguration(string $pathToFile): bool
     {
         if (false === \is_readable($pathToFile) && 'php://stdin' !== $pathToFile) {
             throw new \RuntimeException('file not found - ' . $pathToFile);
