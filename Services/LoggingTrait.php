@@ -27,17 +27,11 @@ trait LoggingTrait
         return $this->errors;
     }
 
-    /**
-     * @param string $message
-     */
     public function addError(string $message): void
     {
         $this->errors[] = $message;
     }
 
-    /**
-     * @return bool
-     */
     public function hasErrors(): bool
     {
         return false === empty($this->errors);
@@ -51,17 +45,11 @@ trait LoggingTrait
         return $this->warnings;
     }
 
-    /**
-     * @param string $message
-     */
     public function addWarning(string $message): void
     {
         $this->warnings[] = $message;
     }
 
-    /**
-     * @return bool
-     */
     public function hasWarnings(): bool
     {
         return false === empty($this->warnings);
@@ -75,25 +63,16 @@ trait LoggingTrait
         return $this->infos;
     }
 
-    /**
-     * @param string $message
-     */
-    public function addInfo(string $message)
+    public function addInfo(string $message): void
     {
         $this->infos[] = $message;
     }
 
-    /**
-     * @return bool
-     */
     public function hasInfos(): bool
     {
         return false === empty($this->infos);
     }
 
-    /**
-     * @return bool
-     */
     public function hasLogs(): bool
     {
         return $this->hasInfos() || $this->hasWarnings() || $this->hasErrors();

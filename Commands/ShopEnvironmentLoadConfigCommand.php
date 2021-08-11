@@ -68,7 +68,7 @@ EOF
 
         $errorOutput->writeln('<info>Imported file: ' . $filename . '</info>');
     }
-    
+
     private function getErrorOutput(OutputInterface $output): OutputInterface
     {
         if ($output instanceof ConsoleOutputInterface) {
