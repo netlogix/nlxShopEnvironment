@@ -42,7 +42,7 @@ class ShopEntityRelationHelper implements ShopEntityRelationHelperInterface
         return \in_array(\strtolower($entityName), self::RELATION_ENTITY_LIST, true);
     }
 
-    public function getEntity(string $entityName, string $value): ModelEntity
+    public function getEntity(string $entityName, $value): ModelEntity
     {
         switch (\strtolower($entityName)) {
             case self::RELATION_ENTITY_LIST['CUSTOMER_GROUP']:
@@ -80,10 +80,13 @@ class ShopEntityRelationHelper implements ShopEntityRelationHelperInterface
         }
     }
 
+    /**
+     * @param mixed $value
+     */
     private function find(
         string $class,
         string $key,
-        string $value,
+        $value,
         string $errorMessage
     ): ModelEntity {
         $repo = $this->entityManager->getRepository($class);
