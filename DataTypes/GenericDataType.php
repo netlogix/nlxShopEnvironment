@@ -28,7 +28,7 @@ class GenericDataType implements DataTypeInterface
     /**
      * {@inheritdoc}
      */
-    public function getDumper()
+    public function getDumper(): DumperInterface
     {
         return $this->dumper;
     }
@@ -36,7 +36,7 @@ class GenericDataType implements DataTypeInterface
     /**
      * {@inheritdoc}
      */
-    public function getLoader()
+    public function getLoader(): LoaderInterface
     {
         return $this->loader;
     }
