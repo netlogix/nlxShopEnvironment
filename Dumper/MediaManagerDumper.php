@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -22,7 +22,10 @@ class MediaManagerDumper implements DumperInterface
         $this->entityManager = $entityManager;
     }
 
-    public function dump()
+    /**
+     * {@inheritdoc}
+     */
+    public function dump(): array
     {
         if (false === \method_exists(Album::class, 'getGarbageCollectable')) {
             throw new \RuntimeException('The "MediaManagerDumper::dump" method is not yet tested in this version of shopware. Only tested in shopware 5.4 and above!');

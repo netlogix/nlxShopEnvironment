@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -39,7 +39,7 @@ class CoreConfigDumper implements DumperInterface
     /**
      * {@inheritdoc}
      */
-    public function dump()
+    public function dump(): array
     {
         $configElementRepository = $this->entityManager->getRepository('Shopware\Models\Config\Element');
 
@@ -72,7 +72,7 @@ class CoreConfigDumper implements DumperInterface
     /**
      * @return array|Shop[]
      */
-    private function getShops()
+    private function getShops(): array
     {
         if (null === $this->shops) {
             /** @var $repository \Shopware\Models\Shop\Repository */
@@ -83,12 +83,7 @@ class CoreConfigDumper implements DumperInterface
         return $this->shops;
     }
 
-    /**
-     * @param null|Form $backendForm
-     *
-     * @return string
-     */
-    private function getFormName($backendForm)
+    private function getFormName(?Form $backendForm): string
     {
         if (null === $backendForm) {
             return self::NO_FORM_NAME;
@@ -98,12 +93,10 @@ class CoreConfigDumper implements DumperInterface
     }
 
     /**
-     * @param Element   $element
-     * @param null|Form $backendForm
-     * @param mixed     $defaultValue
-     * @param array     $configuration
+     * @param mixed   $defaultValue
+     * @param mixed[] $configuration
      */
-    private function addElement(Element $element, $backendForm, $defaultValue, &$configuration)
+    private function addElement(Element $element, ?Form $backendForm, $defaultValue, array &$configuration): void
     {
         $formName = $this->getFormName($backendForm);
 
@@ -122,11 +115,9 @@ class CoreConfigDumper implements DumperInterface
     }
 
     /**
-     * @param Element   $element
-     * @param null|Form $backendForm
-     * @param array     $configuration
+     * @param mixed[] $configuration
      */
-    private function addElementInformation(Element $element, $backendForm, &$configuration)
+    private function addElementInformation(Element $element, ?Form $backendForm, array &$configuration): void
     {
         $formName = $this->getFormName($backendForm);
         $elementName = $element->getName();
@@ -142,11 +133,9 @@ class CoreConfigDumper implements DumperInterface
     }
 
     /**
-     * @param Element $element
-     * @param Form    $backendForm
-     * @param array   $configuration
+     * @param mixed[] $configuration
      */
-    private function addFormInformation(Element $element, Form $backendForm, &$configuration)
+    private function addFormInformation(Element $element, Form $backendForm, array &$configuration): void
     {
         $configuration[$backendForm->getName()][$element->getName()]['form'] = [
             'name'        => $backendForm->getName(),

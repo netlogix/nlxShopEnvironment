@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -17,18 +17,18 @@ class ConfigurationLoaderSpec extends ObjectBehavior
 {
     public function let(
         DataTypeCollectorInterface $dataTypeCollector
-    ) {
+    ): void {
         $this->beConstructedWith(
             $dataTypeCollector
         );
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ConfigurationLoader::class);
     }
 
-    public function it_implements_ConfigurationLoader_interface()
+    public function it_implements_ConfigurationLoader_interface(): void
     {
         $this->shouldImplement(ConfigurationLoaderInterface::class);
     }

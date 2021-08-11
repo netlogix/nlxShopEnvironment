@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -21,19 +21,19 @@ class SearchFieldsDumperSpec extends ObjectBehavior
     public function let(
         EntityManagerInterface $entityManager,
         Connection $connection
-    ) {
+    ): void {
         $entityManager->getConnection()
             ->willReturn($connection);
 
         $this->beConstructedWith($entityManager);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(SearchFieldsDumper::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interface(): void
     {
         $this->shouldImplement(DumperInterface::class);
     }
@@ -41,7 +41,7 @@ class SearchFieldsDumperSpec extends ObjectBehavior
     public function it_can_dump_search_fields(
         Connection $connection,
         Statement $statement
-    ) {
+    ): void {
         $searchFields = [
             ['id' => 123],
         ];

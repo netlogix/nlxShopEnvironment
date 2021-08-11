@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -21,9 +21,6 @@ class ShopEnvironmentDumpConfigCommand extends ShopwareCommand
     /** @var ConfigurationDumperInterface */
     private $configurationDumper;
 
-    /**
-     * @param ConfigurationDumperInterface $configurationDumper
-     */
     public function __construct(
         ConfigurationDumperInterface $configurationDumper
     ) {
@@ -72,13 +69,7 @@ class ShopEnvironmentDumpConfigCommand extends ShopwareCommand
         exit(0);
     }
 
-    /**
-     * @param OutputInterface $output
-     * @param string          $filename
-     *
-     * @return OutputInterface
-     */
-    private function getErrorOutput(OutputInterface $output, $filename = '')
+    private function getErrorOutput(OutputInterface $output, string $filename = ''): OutputInterface
     {
         if ($output instanceof ConsoleOutputInterface) {
             return $output->getErrorOutput();

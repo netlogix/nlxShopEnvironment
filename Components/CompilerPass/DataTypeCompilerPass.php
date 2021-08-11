@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class DataTypeCompilerPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->has('nlx_shop_environment.data_types.data_type_collector')) {
             return;

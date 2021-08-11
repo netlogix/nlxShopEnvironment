@@ -13,7 +13,7 @@ use Shopware\Components\Model\ModelEntity;
 
 interface ShopEntityRelationHelperInterface
 {
-    public function isRelationField($entityName);
+    public function isRelationField(string $entityName): bool;
 
-    public function getEntity($entityName, $value): ModelEntity;
+    public function getEntity(string $entityName, string $value): ModelEntity;
 }

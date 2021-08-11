@@ -37,12 +37,12 @@ class ShopEntityRelationHelper implements ShopEntityRelationHelperInterface
         'FALLBACK' => 'fallback',
     ];
 
-    public function isRelationField($entityName)
+    public function isRelationField(string $entityName): bool
     {
         return \in_array(\strtolower($entityName), self::RELATION_ENTITY_LIST, true);
     }
 
-    public function getEntity($entityName, $value): ModelEntity
+    public function getEntity(string $entityName, string $value): ModelEntity
     {
         switch (\strtolower($entityName)) {
             case self::RELATION_ENTITY_LIST['CUSTOMER_GROUP']:
@@ -81,10 +81,10 @@ class ShopEntityRelationHelper implements ShopEntityRelationHelperInterface
     }
 
     private function find(
-        $class,
-        $key,
-        $value,
-        $errorMessage
+        string $class,
+        string $key,
+        string $value,
+        string $errorMessage
     ): ModelEntity {
         $repo = $this->entityManager->getRepository($class);
         $entity = $repo->findOneBy([$key => $value]);

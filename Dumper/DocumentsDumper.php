@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -25,7 +25,7 @@ class DocumentsDumper implements DumperInterface
     /**
      * {@inheritdoc}
      */
-    public function dump()
+    public function dump(): array
     {
         $config = [];
 
@@ -49,7 +49,7 @@ class DocumentsDumper implements DumperInterface
         return $config;
     }
 
-    private function getIdentitifer(Document $document)
+    private function getIdentitifer(Document $document): ?string
     {
         if (\method_exists($document, 'getKey')) {
             return $document->getKey();

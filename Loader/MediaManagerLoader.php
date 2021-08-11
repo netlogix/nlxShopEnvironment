@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -23,7 +23,10 @@ class MediaManagerLoader implements LoaderInterface
         $this->entityManager = $entityManager;
     }
 
-    public function load($config)
+    /**
+     * {@inheritdoc}
+     */
+    public function load(array $config): void
     {
         if (false === \method_exists(Album::class, 'getGarbageCollectable')) {
             throw new \RuntimeException('The "MediaManagerLoader::load" method is not yet tested in this version of shopware. Only tested in shopware 5.4 and above!');

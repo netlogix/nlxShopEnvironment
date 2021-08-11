@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -23,7 +23,7 @@ class ThemeSettingsDumperSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $themeSettingsRepository,
         NormalizerInterface $normalizer
-    ) {
+    ): void {
         $entityManager
             ->getRepository(Settings::class)
             ->willReturn($themeSettingsRepository);
@@ -31,17 +31,17 @@ class ThemeSettingsDumperSpec extends ObjectBehavior
         $this->beConstructedWith($entityManager, $normalizer);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ThemeSettingsDumper::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interface(): void
     {
         $this->shouldImplement(DumperInterface::class);
     }
 
-    public function it_can_dump_empty_theme_settings(ModelRepository $themeSettingsRepository)
+    public function it_can_dump_empty_theme_settings(ModelRepository $themeSettingsRepository): void
     {
         $themeSettingsRepository
             ->findAll()
@@ -58,7 +58,7 @@ class ThemeSettingsDumperSpec extends ObjectBehavior
         Settings $themeSettingsOne,
         Settings $themeSettingsTwo,
         NormalizerInterface $normalizer
-    ) {
+    ): void {
         $themeSettingsOne
             ->getId()
             ->willReturn(1);

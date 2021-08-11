@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -24,7 +24,7 @@ class FacetDumperSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $facetRepository,
         NormalizerInterface $normalizer
-    ) {
+    ): void {
         if (!\class_exists('Shopware\Models\Search\CustomFacet')) {
             throw new SkippingException('Facets are not supported by this shopware version');
         }
@@ -35,19 +35,19 @@ class FacetDumperSpec extends ObjectBehavior
         $this->beConstructedWith($entityManager, $normalizer);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(FacetDumper::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interface(): void
     {
         $this->shouldImplement(DumperInterface::class);
     }
 
     public function it_can_dump_empty_facets(
         ModelRepository $facetRepository
-    ) {
+    ): void {
         $facetRepository
             ->findAll()
             ->shouldBeCalled()
@@ -61,7 +61,7 @@ class FacetDumperSpec extends ObjectBehavior
     public function it_can_dump_facets(
         ModelRepository $facetRepository,
         NormalizerInterface $normalizer
-    ) {
+    ): void {
         $facet1 = new CustomFacet();
         $facet2 = new CustomFacet();
 

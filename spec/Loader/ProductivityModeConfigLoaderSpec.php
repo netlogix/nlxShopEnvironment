@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -24,7 +24,7 @@ class ProductivityModeConfigLoaderSpec extends ObjectBehavior
         InstallerService $installerService,
         ModelRepository $objectRepository,
         Plugin $plugin
-    ) {
+    ): void {
         $this->beConstructedWith(
             $entityManager,
             $installerService
@@ -39,12 +39,12 @@ class ProductivityModeConfigLoaderSpec extends ObjectBehavior
             ->willReturn($plugin);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ProductivityModeConfigLoader::class);
     }
 
-    public function it_implements_loader_interface()
+    public function it_implements_loader_interface(): void
     {
         $this->shouldImplement(LoaderInterface::class);
     }
@@ -52,7 +52,7 @@ class ProductivityModeConfigLoaderSpec extends ObjectBehavior
     public function it_can_load_install_and_activate(
         InstallerService $installerService,
         Plugin $plugin
-    ) {
+    ): void {
         $plugin
             ->getInstalled()
             ->willReturn(false);
@@ -76,7 +76,7 @@ class ProductivityModeConfigLoaderSpec extends ObjectBehavior
     public function it_can_load_and_activate(
         InstallerService $installerService,
         Plugin $plugin
-    ) {
+    ): void {
         $plugin
             ->getInstalled()
             ->willReturn(true);
@@ -100,7 +100,7 @@ class ProductivityModeConfigLoaderSpec extends ObjectBehavior
     public function it_can_load_and_leave_activated(
         InstallerService $installerService,
         Plugin $plugin
-    ) {
+    ): void {
         $plugin
             ->getInstalled()
             ->willReturn(true);
@@ -124,7 +124,7 @@ class ProductivityModeConfigLoaderSpec extends ObjectBehavior
     public function it_can_load_and_deactivate(
         InstallerService $installerService,
         Plugin $plugin
-    ) {
+    ): void {
         $plugin
             ->getInstalled()
             ->willReturn(true);
@@ -148,7 +148,7 @@ class ProductivityModeConfigLoaderSpec extends ObjectBehavior
     public function it_can_load_and_leave_inactive(
         InstallerService $installerService,
         Plugin $plugin
-    ) {
+    ): void {
         $plugin
             ->getInstalled()
             ->willReturn(true);

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -17,7 +17,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class CountryNormalizerSpec extends ObjectBehavior
 {
-    public function let(EntityManagerInterface $entityManager, ModelRepository $countryRepository)
+    public function let(EntityManagerInterface $entityManager, ModelRepository $countryRepository): void
     {
         $entityManager
             ->getRepository(Country::class)
@@ -26,37 +26,37 @@ class CountryNormalizerSpec extends ObjectBehavior
         $this->beConstructedWith($entityManager);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(CountryNormalizer::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interface(): void
     {
         $this->shouldImplement(NormalizerInterface::class);
     }
 
-    public function it_supports_country_normalization(Country $country)
+    public function it_supports_country_normalization(Country $country): void
     {
         $this->supportsNormalization($country)->shouldBe(true);
     }
 
-    public function it_does_not_support_other_normalization(\stdClass $object)
+    public function it_does_not_support_other_normalization(\stdClass $object): void
     {
         $this->supportsNormalization($object)->shouldBe(false);
     }
 
-    public function it_supports_country_denormalization()
+    public function it_supports_country_denormalization(): void
     {
         $this->supportsDenormalization([], Country::class)->shouldBe(true);
     }
 
-    public function it_does_not_support_other_denormalization()
+    public function it_does_not_support_other_denormalization(): void
     {
         $this->supportsDenormalization([], \stdClass::class)->shouldBe(false);
     }
 
-    public function it_returns_country_id_on_normalization(Country $country)
+    public function it_returns_country_id_on_normalization(Country $country): void
     {
         $country
             ->getId()
@@ -71,7 +71,7 @@ class CountryNormalizerSpec extends ObjectBehavior
     public function it_returns_country_on_denormalization(
         Country $country,
         ModelRepository $countryRepository
-    ) {
+    ): void {
         $data = 12;
 
         $countryRepository

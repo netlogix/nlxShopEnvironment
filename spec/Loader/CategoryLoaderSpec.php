@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -23,7 +23,7 @@ class CategoryLoaderSpec extends ObjectBehavior
     public function let(
         EntityManagerInterface $entityManager,
         ModelRepository $categoryRepository
-    ) {
+    ): void {
         $entityManager
             ->getRepository(Category::class)
             ->willReturn($categoryRepository);
@@ -31,12 +31,12 @@ class CategoryLoaderSpec extends ObjectBehavior
         $this->beConstructedWith($entityManager);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(CategoryLoader::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interface(): void
     {
         $this->shouldImplement(LoaderInterface::class);
     }
@@ -44,7 +44,7 @@ class CategoryLoaderSpec extends ObjectBehavior
     public function it_can_load_empty(
         EntityManagerInterface $entityManager,
         ModelRepository $categoryRepository
-    ) {
+    ): void {
         $categoryRepository->findOneBy(Argument::any())
             ->shouldNotBeCalled();
 
@@ -60,7 +60,7 @@ class CategoryLoaderSpec extends ObjectBehavior
     public function it_cannot_update_existing_category_if_category_was_not_found(
         EntityManagerInterface $entityManager,
         ModelRepository $categoryRepository
-    ) {
+    ): void {
         $config = [
             'ALL' => [
                 'ProductBoxLayout' => 'list',
@@ -84,7 +84,7 @@ class CategoryLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $categoryRepository,
         Category $category
-    ) {
+    ): void {
         $config = [
             'ALL' => [
                 'testMethod' => 'list',
@@ -108,7 +108,7 @@ class CategoryLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $categoryRepository,
         Category $category
-    ) {
+    ): void {
         if (false === \class_exists('CustomSorting')) {
             return;
         }
@@ -142,7 +142,7 @@ class CategoryLoaderSpec extends ObjectBehavior
         ModelRepository $categoryRepository,
         ModelRepository $customSortingRepository,
         Category $category
-    ) {
+    ): void {
         if (\class_exists('CustomSorting')) {
             $customSorting1 = new CustomSorting();
             $customSorting2 = new CustomSorting();
@@ -193,7 +193,7 @@ class CategoryLoaderSpec extends ObjectBehavior
         ModelRepository $customSortingRepository,
         Category $category,
         Connection $connection
-    ) {
+    ): void {
         if (\class_exists('CustomSorting')) {
             $customSorting1 = new CustomSorting();
             $customSorting2 = new CustomSorting();

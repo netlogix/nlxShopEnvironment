@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -24,7 +24,7 @@ class FacetLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $facetRepository,
         DenormalizerInterface $denormalizer
-    ) {
+    ): void {
         if (!\class_exists('Shopware\Models\Search\CustomFacet')) {
             throw new SkippingException('Facets are not supported by this shopware version');
         }
@@ -35,12 +35,12 @@ class FacetLoaderSpec extends ObjectBehavior
         $this->beConstructedWith($entityManager, $denormalizer);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(FacetLoader::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interface(): void
     {
         $this->shouldImplement(LoaderInterface::class);
     }
@@ -49,7 +49,7 @@ class FacetLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $facetRepository,
         DenormalizerInterface $denormalizer
-    ) {
+    ): void {
         $facetRepository
             ->findOneBy(['name' => 'Preis'])
             ->willReturn(null);
@@ -71,7 +71,7 @@ class FacetLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $facetRepository,
         DenormalizerInterface $denormalizer
-    ) {
+    ): void {
         $facet = new CustomFacet();
         $facet->setName('Preis');
 

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -23,7 +23,7 @@ class ShippingMethodsLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $shippingMethodsRepository,
         DenormalizerInterface $denormalizer
-    ) {
+    ): void {
         $entityManager
             ->getRepository(Dispatch::class)
             ->willReturn($shippingMethodsRepository);
@@ -31,12 +31,12 @@ class ShippingMethodsLoaderSpec extends ObjectBehavior
         $this->beConstructedWith($entityManager, $denormalizer);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ShippingMethodsLoader::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interface(): void
     {
         $this->shouldImplement(LoaderInterface::class);
     }
@@ -45,7 +45,7 @@ class ShippingMethodsLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $shippingMethodsRepository,
         DenormalizerInterface $denormalizer
-    ) {
+    ): void {
         $shippingMethodsRepository
             ->find(13)
             ->willReturn(null);
@@ -68,7 +68,7 @@ class ShippingMethodsLoaderSpec extends ObjectBehavior
         ModelRepository $shippingMethodsRepository,
         Dispatch $shippingMethod,
         DenormalizerInterface $denormalizer
-    ) {
+    ): void {
         $shippingMethodsRepository
             ->find(12)
             ->willReturn($shippingMethod);

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -13,13 +13,7 @@ use nlxShopEnvironment\Loader\LoaderInterface;
 
 interface DataTypeInterface
 {
-    /**
-     * @return DumperInterface
-     */
-    public function getDumper();
+    public function getDumper(): DumperInterface;
 
-    /**
-     * @return LoaderInterface
-     */
-    public function getLoader();
+    public function getLoader(): LoaderInterface;
 }

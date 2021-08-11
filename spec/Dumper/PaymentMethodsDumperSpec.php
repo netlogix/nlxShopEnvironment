@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -23,7 +23,7 @@ class PaymentMethodsDumperSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $paymentMethodsRepository,
         NormalizerInterface $normalizer
-    ) {
+    ): void {
         $entityManager
             ->getRepository(Payment::class)
             ->willReturn($paymentMethodsRepository);
@@ -31,17 +31,17 @@ class PaymentMethodsDumperSpec extends ObjectBehavior
         $this->beConstructedWith($entityManager, $normalizer);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(PaymentMethodsDumper::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interface(): void
     {
         $this->shouldImplement(DumperInterface::class);
     }
 
-    public function it_can_dump_empty_payment_methods(ModelRepository $paymentMethodsRepository)
+    public function it_can_dump_empty_payment_methods(ModelRepository $paymentMethodsRepository): void
     {
         $paymentMethodsRepository
             ->findAll()
@@ -58,7 +58,7 @@ class PaymentMethodsDumperSpec extends ObjectBehavior
         Payment $paymentMethodOne,
         Payment $paymentMethodTwo,
         NormalizerInterface $normalizer
-    ) {
+    ): void {
         $paymentMethodOne
             ->getName()
             ->willReturn('ac');

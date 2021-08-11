@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -22,7 +22,7 @@ class DocumentsLoaderSpec extends ObjectBehavior
     public function let(
         EntityManagerInterface $entityManager,
         ModelRepository $documentsRepository
-    ) {
+    ): void {
         $entityManager
             ->getRepository(Document::class)
             ->willReturn($documentsRepository);
@@ -30,12 +30,12 @@ class DocumentsLoaderSpec extends ObjectBehavior
         $this->beConstructedWith($entityManager);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(DocumentsLoader::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interface(): void
     {
         $this->shouldImplement(LoaderInterface::class);
     }
@@ -43,7 +43,7 @@ class DocumentsLoaderSpec extends ObjectBehavior
     public function it_can_load_empty(
         EntityManagerInterface $entityManager,
         ModelRepository $documentsRepository
-    ) {
+    ): void {
         $documentsRepository->findOneBy(Argument::any())
             ->shouldNotBeCalled();
 
@@ -57,7 +57,7 @@ class DocumentsLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $documentsRepository,
         Document $document1
-    ) {
+    ): void {
         if (false === \method_exists($document1->getWrappedObject(), 'getKey')) {
             return;
         }
@@ -105,7 +105,7 @@ class DocumentsLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $documentsRepository,
         Document $document1
-    ) {
+    ): void {
         if (false === \method_exists($document1->getWrappedObject(), 'getKey')) {
             return;
         }
@@ -156,7 +156,7 @@ class DocumentsLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $documentsRepository,
         Document $document1
-    ) {
+    ): void {
         if (true === \method_exists($document1->getWrappedObject(), 'getKey')) {
             return;
         }
@@ -204,7 +204,7 @@ class DocumentsLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $documentsRepository,
         Document $document1
-    ) {
+    ): void {
         if (true === \method_exists($document1->getWrappedObject(), 'getKey')) {
             return;
         }

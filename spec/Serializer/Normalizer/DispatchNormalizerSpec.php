@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -20,28 +20,28 @@ use Symfony\Component\Serializer\Serializer;
 
 class DispatchNormalizerSpec extends ObjectBehavior
 {
-    public function let(Serializer $serializer)
+    public function let(Serializer $serializer): void
     {
         $this->setSerializer($serializer);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(DispatchNormalizer::class);
     }
 
-    public function it_implements_correct_interfaces()
+    public function it_implements_correct_interfaces(): void
     {
         $this->shouldImplement(NormalizerInterface::class);
         $this->shouldImplement(DenormalizerInterface::class);
     }
 
-    public function it_supports_dispatch_denormalization()
+    public function it_supports_dispatch_denormalization(): void
     {
         $this->supportsDenormalization([], Dispatch::class)->shouldBe(true);
     }
 
-    public function it_does_not_support_other_denormalization()
+    public function it_does_not_support_other_denormalization(): void
     {
         $this->supportsDenormalization([], \stdClass::class)->shouldBe(false);
     }
@@ -49,7 +49,7 @@ class DispatchNormalizerSpec extends ObjectBehavior
     public function it_will_call_serializer_on_countries_attribute(
         \stdClass $object,
         Serializer $serializer
-    ) {
+    ): void {
         $serializer
             ->denormalize([1], Country::class . '[]', null)
             ->shouldBeCalled()
@@ -61,7 +61,7 @@ class DispatchNormalizerSpec extends ObjectBehavior
     public function it_will_call_serializer_on_shops_attribute(
         \stdClass $object,
         Serializer $serializer
-    ) {
+    ): void {
         $serializer
             ->denormalize([1], ShippingCost::class . '[]', null)
             ->shouldBeCalled()
@@ -73,7 +73,7 @@ class DispatchNormalizerSpec extends ObjectBehavior
     public function it_will_call_serializer_on_payments_attribute(
         \stdClass $object,
         Serializer $serializer
-    ) {
+    ): void {
         $serializer
             ->denormalize([1], Payment::class . '[]', null)
             ->shouldBeCalled()

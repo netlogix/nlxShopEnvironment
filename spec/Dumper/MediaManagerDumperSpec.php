@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -21,26 +21,26 @@ class MediaManagerDumperSpec extends ObjectBehavior
     public function let(
         EntityManagerInterface $entityManager,
         ModelRepository $albumRepository
-    ) {
+    ): void {
         $entityManager->getRepository(Album::class)
             ->willReturn($albumRepository);
 
         $this->beConstructedWith($entityManager);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(MediaManagerDumper::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interface(): void
     {
         $this->shouldImplement(DumperInterface::class);
     }
 
     public function it_can_dump_empty_albums(
         ModelRepository $albumRepository
-    ) {
+    ): void {
         if (false === \method_exists(Album::class, 'getGarbageCollectable')) {
             return;
         }
@@ -59,7 +59,7 @@ class MediaManagerDumperSpec extends ObjectBehavior
         Settings $settingsAlbum1,
         Album $album2,
         Settings $settingsAlbum2
-    ) {
+    ): void {
         if (false === \method_exists(Album::class, 'getGarbageCollectable')) {
             return;
         }
@@ -130,7 +130,7 @@ class MediaManagerDumperSpec extends ObjectBehavior
         Settings $settingsAlbum1,
         Album $album2,
         Settings $settingsAlbum2
-    ) {
+    ): void {
         $settingsAlbum1->getCreateThumbnails()
             ->willReturn(1);
         $settingsAlbum1->getThumbnailSize()

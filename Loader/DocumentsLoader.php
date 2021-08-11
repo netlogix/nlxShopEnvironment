@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -25,7 +25,7 @@ class DocumentsLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load($config)
+    public function load(array $config): void
     {
         $number = 0;
         foreach ($config as $key => $configElement) {
@@ -44,7 +44,7 @@ class DocumentsLoader implements LoaderInterface
         $this->entityManager->flush();
     }
 
-    private function findOrCreateDocument($key)
+    private function findOrCreateDocument(string $key): Document
     {
         $keyPropertyAndSetter = $this->getKeyPropertyAndSetter();
         $keyProperty = $keyPropertyAndSetter['property'];
@@ -62,7 +62,10 @@ class DocumentsLoader implements LoaderInterface
         return $document;
     }
 
-    private function getKeyPropertyAndSetter()
+    /**
+     * @return string[]
+     */
+    private function getKeyPropertyAndSetter(): array
     {
         $exampleDocument = new Document();
 

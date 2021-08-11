@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -41,7 +41,7 @@ class ShopConfigLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load($config)
+    public function load(array $config): void
     {
         $this->shopRepo = $this->entityManager->getRepository(Shop::class);
 
@@ -65,11 +65,14 @@ class ShopConfigLoader implements LoaderInterface
         $this->entityManager->flush();
     }
 
+    /**
+     * @param mixed[] $shopConfig
+     */
     private function setConfig(
         Shop $shop,
-        $shopConfig,
-        $configId
-    ) {
+        array $shopConfig,
+        string $configId
+    ): void {
         foreach ($shopConfig as $parameter => $value) {
             $setter = 'set' . $parameter;
 

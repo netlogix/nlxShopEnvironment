@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -17,7 +17,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class ShopNormalizerSpec extends ObjectBehavior
 {
-    public function let(EntityManagerInterface $entityManager, ModelRepository $shopRepository)
+    public function let(EntityManagerInterface $entityManager, ModelRepository $shopRepository): void
     {
         $entityManager
             ->getRepository(Shop::class)
@@ -26,27 +26,27 @@ class ShopNormalizerSpec extends ObjectBehavior
         $this->beConstructedWith($entityManager);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ShopNormalizer::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interface(): void
     {
         $this->shouldImplement(NormalizerInterface::class);
     }
 
-    public function it_supports_shop_normalization(Shop $shop)
+    public function it_supports_shop_normalization(Shop $shop): void
     {
         $this->supportsNormalization($shop)->shouldBe(true);
     }
 
-    public function it_does_not_support_other_normalization(\stdClass $object)
+    public function it_does_not_support_other_normalization(\stdClass $object): void
     {
         $this->supportsNormalization($object)->shouldBe(false);
     }
 
-    public function it_returns_shop_id_on_normalization(Shop $shop)
+    public function it_returns_shop_id_on_normalization(Shop $shop): void
     {
         $shop
             ->getId()
@@ -58,12 +58,12 @@ class ShopNormalizerSpec extends ObjectBehavior
             ->shouldBe(1);
     }
 
-    public function it_supports_shop_denormalization()
+    public function it_supports_shop_denormalization(): void
     {
         $this->supportsDenormalization([], Shop::class)->shouldBe(true);
     }
 
-    public function it_does_not_support_other_denormalization()
+    public function it_does_not_support_other_denormalization(): void
     {
         $this->supportsDenormalization([], \stdClass::class)->shouldBe(false);
     }
@@ -71,7 +71,7 @@ class ShopNormalizerSpec extends ObjectBehavior
     public function it_returns_shop_on_denormalization(
         Shop $shop,
         ModelRepository $shopRepository
-    ) {
+    ): void {
         $data = 12;
 
         $shopRepository

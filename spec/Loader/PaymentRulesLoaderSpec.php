@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -24,7 +24,7 @@ class PaymentRulesLoaderSpec extends ObjectBehavior
         DenormalizerInterface $denormalizer,
         ModelRepository $paymentRulesRepository,
         ClassMetadata $classMetadata
-    ) {
+    ): void {
         $entityManager->getClassMetadata(RuleSet::class)
             ->willReturn($classMetadata);
 
@@ -35,12 +35,12 @@ class PaymentRulesLoaderSpec extends ObjectBehavior
         );
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(PaymentRulesLoader::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interface(): void
     {
         $this->shouldImplement(LoaderInterface::class);
     }
@@ -49,7 +49,7 @@ class PaymentRulesLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         DenormalizerInterface $denormalizer,
         RuleSet $paymentRule
-    ) {
+    ): void {
         $rawPaymentRules = [['id' => 2]];
 
         $denormalizer->denormalize($rawPaymentRules, RuleSet::class . '[]')
@@ -69,7 +69,7 @@ class PaymentRulesLoaderSpec extends ObjectBehavior
         DenormalizerInterface $denormalizer,
         ModelRepository $paymentRulesRepository,
         RuleSet $paymentRule
-    ) {
+    ): void {
         $rawPaymentRules = [['id' => 2]];
 
         $denormalizer->denormalize($rawPaymentRules, RuleSet::class . '[]')

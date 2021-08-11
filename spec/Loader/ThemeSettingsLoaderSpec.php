@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -23,7 +23,7 @@ class ThemeSettingsLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $themeSettingsRepository,
         DenormalizerInterface $denormalizer
-    ) {
+    ): void {
         $entityManager
             ->getRepository(Settings::class)
             ->willReturn($themeSettingsRepository);
@@ -31,12 +31,12 @@ class ThemeSettingsLoaderSpec extends ObjectBehavior
         $this->beConstructedWith($entityManager, $denormalizer);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ThemeSettingsLoader::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interface(): void
     {
         $this->shouldImplement(LoaderInterface::class);
     }
@@ -45,7 +45,7 @@ class ThemeSettingsLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $themeSettingsRepository,
         DenormalizerInterface $denormalizer
-    ) {
+    ): void {
         $themeSettingsRepository
             ->find(99)
             ->willReturn(null);
@@ -72,7 +72,7 @@ class ThemeSettingsLoaderSpec extends ObjectBehavior
         ModelRepository $themeSettingsRepository,
         Settings $themeSetting,
         DenormalizerInterface $denormalizer
-    ) {
+    ): void {
         $themeSettingsRepository
             ->find(1)
             ->willReturn($themeSetting);

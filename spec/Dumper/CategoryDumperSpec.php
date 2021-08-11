@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -21,7 +21,7 @@ class CategoryDumperSpec extends ObjectBehavior
     public function let(
         EntityManagerInterface $entityManager,
         ModelRepository $categoryRepository
-    ) {
+    ): void {
         $entityManager
             ->getRepository(Category::class)
             ->willReturn($categoryRepository);
@@ -29,19 +29,19 @@ class CategoryDumperSpec extends ObjectBehavior
         $this->beConstructedWith($entityManager);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(CategoryDumper::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interface(): void
     {
         $this->shouldImplement(DumperInterface::class);
     }
 
     public function it_can_dump_empty_category(
         ModelRepository $categoryRepository
-    ) {
+    ): void {
         $categoryRepository->findAll()
             ->shouldBeCalled()
             ->willReturn([]);
@@ -55,7 +55,7 @@ class CategoryDumperSpec extends ObjectBehavior
         ModelRepository $categoryRepository,
         ModelRepository $customSortingRepository,
         Category $category
-    ) {
+    ): void {
         if (\class_exists('CustomSorting')) {
             $customSorting1 = new CustomSorting();
             $customSorting2 = new CustomSorting();
@@ -94,7 +94,7 @@ class CategoryDumperSpec extends ObjectBehavior
         Category $category1,
         CustomSorting $customSorting1,
         CustomSorting $customSorting2
-    ) {
+    ): void {
         $customSorting2->getLabel()
             ->willReturn('Test2');
 

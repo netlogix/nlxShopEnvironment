@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -42,7 +42,7 @@ class CoreConfigLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load($config)
+    public function load(array $config): void
     {
         $configElementRepository = $this->entityManager->getRepository('Shopware\Models\Config\Element');
         $configFormRepository = $this->entityManager->getRepository('Shopware\Models\Config\Form');
@@ -112,7 +112,7 @@ class CoreConfigLoader implements LoaderInterface
                         $this->configWriter->save(
                             $element->getName(),
                             $value,
-                            (null !== $form) ? $form->getName() : null,
+                            null !== $form ? $form->getName() : null,
                             $shopId
                         );
                     }
@@ -124,13 +124,9 @@ class CoreConfigLoader implements LoaderInterface
     }
 
     /**
-     * @param ModelRepository $configFormRepository
-     * @param string          $formName
-     * @param array           $elementInformation
-     *
-     * @return Form|null
+     * @param mixed[] $elementInformation
      */
-    private function findOrCreateForm(ModelRepository $configFormRepository, $formName, $elementInformation)
+    private function findOrCreateForm(ModelRepository $configFormRepository, string $formName, array $elementInformation): ?Form
     {
         /**
          * @todo at the moment a deleted or not existing forms are making problems (dublicate key), which I have to investigate
@@ -152,10 +148,9 @@ class CoreConfigLoader implements LoaderInterface
     }
 
     /**
-     * @param Form       $form
      * @param string[][] $elementInformation
      */
-    private function updateFormData(Form $form, array $elementInformation)
+    private function updateFormData(Form $form, array $elementInformation): void
     {
         $form->setName($elementInformation['form']['name']);
         $form->setLabel($elementInformation['form']['label']);
@@ -164,25 +159,22 @@ class CoreConfigLoader implements LoaderInterface
     }
 
     /**
-     * @param ModelRepository $configElementRepository
-     * @param null|Form       $form
-     * @param string          $elementName
-     * @param array           $elementInformation
+     * @param mixed[] $elementInformation
      *
      * @return object|Element
      */
     private function findOrCreateElement(
         ModelRepository $configElementRepository,
-        $form,
-        $elementName,
-        $elementInformation
+        ?Form $form,
+        string $elementName,
+        array $elementInformation
     ) {
         $elementId = $this->getConfigElementIdByNameAndForm($elementName, $form);
         if (null !== $elementId) {
             $element = $configElementRepository->find($elementId);
         } else {
             $elementType = $elementInformation['type'];
-            $elementOptions = (null !== $elementInformation['options']) ? $elementInformation['options'] : [];
+            $elementOptions = null !== $elementInformation['options'] ? $elementInformation['options'] : [];
 
             $element = new Element($elementType, $elementName, $elementOptions);
             $element->setForm($form);
@@ -192,15 +184,9 @@ class CoreConfigLoader implements LoaderInterface
         return $element;
     }
 
-    /**
-     * @param string    $name
-     * @param null|Form $form
-     *
-     * @return int
-     */
-    private function getConfigElementIdByNameAndForm($name, $form)
+    private function getConfigElementIdByNameAndForm(string $name, ?Form $form): ?int
     {
-        $formId = (null !== $form) ? $form->getId() : '0';
+        $formId = null !== $form ? $form->getId() : '0';
         $sql = ' 
             SELECT `id`
                 FROM `s_core_config_elements`
