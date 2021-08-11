@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -12,7 +12,10 @@ use Enlight\Event\SubscriberInterface;
 
 class BackendTheme implements SubscriberInterface
 {
-    public static function getSubscribedEvents()
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedEvents(): array
     {
         return [
             // After \Shopware\Components\Theme\EventListener\BackendTheme with priority 2
@@ -20,17 +23,16 @@ class BackendTheme implements SubscriberInterface
         ];
     }
 
-    public function registerBackendTheme(\Enlight_Controller_EventArgs $args)
+    public function registerBackendTheme(\Enlight_Controller_EventArgs $args): void
     {
-        if ($args->getRequest()->getModuleName() !== 'backend') {
+        if ('backend' !== $args->getRequest()->getModuleName()) {
             return;
         }
 
         $template = Shopware()->Container()->get('template');
-        assert($template instanceof \Enlight_Template_Manager);
+        \assert($template instanceof \Enlight_Template_Manager);
         // By default shopware loads the engine files from the /vendor directory
         // Try to resolve engine/Library files from root directory first
         $template->addTemplateDir(Shopware()->DocPath() . 'engine/Library', 'engine_library', \Enlight_Template_Manager::POSITION_PREPEND);
     }
-
 }
