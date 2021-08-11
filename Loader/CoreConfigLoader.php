@@ -184,7 +184,7 @@ class CoreConfigLoader implements LoaderInterface
         return $element;
     }
 
-    private function getConfigElementIdByNameAndForm(string $name, ?Form $form): ?int
+    private function getConfigElementIdByNameAndForm(string $name, ?Form $form): ?string
     {
         $formId = null !== $form ? $form->getId() : '0';
         $sql = ' 
