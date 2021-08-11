@@ -42,6 +42,9 @@ class ShopEntityRelationHelper implements ShopEntityRelationHelperInterface
         return \in_array(\strtolower($entityName), self::RELATION_ENTITY_LIST, true);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getEntity(string $entityName, $value): ModelEntity
     {
         switch (\strtolower($entityName)) {
