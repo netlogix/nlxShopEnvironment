@@ -13,5 +13,5 @@ interface DumperInterface
     /**
      * @return array|mixed[]
      */
-    public function dump();
+    public function dump(): array;
 }

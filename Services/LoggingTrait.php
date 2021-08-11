@@ -22,7 +22,7 @@ trait LoggingTrait
     /**
      * @return array|string[]
      */
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->errors;
     }
@@ -30,7 +30,7 @@ trait LoggingTrait
     /**
      * @param string $message
      */
-    public function addError($message)
+    public function addError(string $message): void
     {
         $this->errors[] = $message;
     }
@@ -38,7 +38,7 @@ trait LoggingTrait
     /**
      * @return bool
      */
-    public function hasErrors()
+    public function hasErrors(): bool
     {
         return false === empty($this->errors);
     }
@@ -46,7 +46,7 @@ trait LoggingTrait
     /**
      * @return array|string[]
      */
-    public function getWarnings()
+    public function getWarnings(): array
     {
         return $this->warnings;
     }
@@ -54,7 +54,7 @@ trait LoggingTrait
     /**
      * @param string $message
      */
-    public function addWarning($message)
+    public function addWarning(string $message): void
     {
         $this->warnings[] = $message;
     }
@@ -62,7 +62,7 @@ trait LoggingTrait
     /**
      * @return bool
      */
-    public function hasWarnings()
+    public function hasWarnings(): bool
     {
         return false === empty($this->warnings);
     }
@@ -70,7 +70,7 @@ trait LoggingTrait
     /**
      * @return array|string[]
      */
-    public function getInfos()
+    public function getInfos(): array
     {
         return $this->infos;
     }
@@ -78,7 +78,7 @@ trait LoggingTrait
     /**
      * @param string $message
      */
-    public function addInfo($message)
+    public function addInfo(string $message)
     {
         $this->infos[] = $message;
     }
@@ -86,7 +86,7 @@ trait LoggingTrait
     /**
      * @return bool
      */
-    public function hasInfos()
+    public function hasInfos(): bool
     {
         return false === empty($this->infos);
     }
@@ -94,7 +94,7 @@ trait LoggingTrait
     /**
      * @return bool
      */
-    public function hasLogs()
+    public function hasLogs(): bool
     {
         return $this->hasInfos() || $this->hasWarnings() || $this->hasErrors();
     }

@@ -47,7 +47,7 @@ class CategoryDumper implements DumperInterface
     /**
      * @return string[]
      */
-    private function getSortings(Category $category)
+    private function getSortings(Category $category): array
     {
         $sortingIdsText = $category->getSortingIds();
 

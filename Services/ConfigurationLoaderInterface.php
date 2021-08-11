@@ -10,10 +10,5 @@ namespace nlxShopEnvironment\Services;
 
 interface ConfigurationLoaderInterface
 {
-    /**
-     * @param string $pathToFile
-     *
-     * @return bool
-     */
-    public function loadConfiguration($pathToFile);
+    public function loadConfiguration(string $pathToFile): bool;
 }
