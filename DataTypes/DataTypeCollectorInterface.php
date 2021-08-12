@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -10,21 +10,12 @@ namespace nlxShopEnvironment\DataTypes;
 
 interface DataTypeCollectorInterface
 {
-    /**
-     * @param DataTypeInterface $dataType
-     * @param string            $rootName
-     */
-    public function add(DataTypeInterface $dataType, $rootName);
+    public function add(DataTypeInterface $dataType, string $rootName): void;
 
-    /**
-     * @param string $rootName
-     *
-     * @return null|DataTypeInterface
-     */
-    public function get($rootName);
+    public function get(string $rootName): ?DataTypeInterface;
 
     /**
      * @return array|DataTypeInterface[]
      */
-    public function getAll();
+    public function getAll(): array;
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -20,9 +20,6 @@ class ShopEnvironmentLoadConfigCommand extends ShopwareCommand
     /** @var ConfigurationLoaderInterface */
     private $configurationLoader;
 
-    /**
-     * @param ConfigurationLoaderInterface $configurationLoader
-     */
     public function __construct(
         ConfigurationLoaderInterface $configurationLoader
     ) {
@@ -72,12 +69,7 @@ EOF
         $errorOutput->writeln('<info>Imported file: ' . $filename . '</info>');
     }
 
-    /**
-     * @param OutputInterface $output
-     *
-     * @return OutputInterface
-     */
-    private function getErrorOutput(OutputInterface $output)
+    private function getErrorOutput(OutputInterface $output): OutputInterface
     {
         if ($output instanceof ConsoleOutputInterface) {
             return $output->getErrorOutput();

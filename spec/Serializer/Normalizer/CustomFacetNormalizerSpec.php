@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -17,28 +17,28 @@ use Symfony\Component\Serializer\Serializer;
 
 class CustomFacetNormalizerSpec extends ObjectBehavior
 {
-    public function let(Serializer $serializer)
+    public function let(Serializer $serializer): void
     {
         $this->setSerializer($serializer);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(CustomFacetNormalizer::class);
     }
 
-    public function it_implements_correct_interfaces()
+    public function it_implements_correct_interfaces(): void
     {
         $this->shouldImplement(NormalizerInterface::class);
         $this->shouldImplement(DenormalizerInterface::class);
     }
 
-    public function it_supports_dispatch_denormalization()
+    public function it_supports_dispatch_denormalization(): void
     {
         $this->supportsDenormalization([], CustomFacet::class)->shouldBe(true);
     }
 
-    public function it_does_not_support_other_denormalization()
+    public function it_does_not_support_other_denormalization(): void
     {
         $this->supportsDenormalization([], \stdClass::class)->shouldBe(false);
     }

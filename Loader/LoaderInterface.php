@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -11,7 +11,7 @@ namespace nlxShopEnvironment\Loader;
 interface LoaderInterface
 {
     /**
-     * @param array|mixed[] $config
+     * @param mixed[]|null $config
      */
-    public function load($config);
+    public function load(?array $config): void;
 }

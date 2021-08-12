@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -23,7 +23,7 @@ class ShippingMethodsDumperSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $shippingMethodsRepository,
         NormalizerInterface $normalizer
-    ) {
+    ): void {
         $entityManager
             ->getRepository(Dispatch::class)
             ->willReturn($shippingMethodsRepository);
@@ -31,17 +31,17 @@ class ShippingMethodsDumperSpec extends ObjectBehavior
         $this->beConstructedWith($entityManager, $normalizer);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ShippingMethodsDumper::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interface(): void
     {
         $this->shouldImplement(DumperInterface::class);
     }
 
-    public function it_can_dump_empty_shipping_methods(ModelRepository $shippingMethodsRepository)
+    public function it_can_dump_empty_shipping_methods(ModelRepository $shippingMethodsRepository): void
     {
         $shippingMethodsRepository
             ->findAll()
@@ -58,7 +58,7 @@ class ShippingMethodsDumperSpec extends ObjectBehavior
         Dispatch $shippingMethodOne,
         Dispatch $shippingMethodTwo,
         NormalizerInterface $normalizer
-    ) {
+    ): void {
         $shippingMethodOne
             ->getId()
             ->willReturn(13);

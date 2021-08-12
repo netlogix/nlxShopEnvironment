@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -22,23 +22,17 @@ trait LoggingTrait
     /**
      * @return array|string[]
      */
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->errors;
     }
 
-    /**
-     * @param string $message
-     */
-    public function addError($message)
+    public function addError(string $message): void
     {
         $this->errors[] = $message;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasErrors()
+    public function hasErrors(): bool
     {
         return false === empty($this->errors);
     }
@@ -46,23 +40,17 @@ trait LoggingTrait
     /**
      * @return array|string[]
      */
-    public function getWarnings()
+    public function getWarnings(): array
     {
         return $this->warnings;
     }
 
-    /**
-     * @param string $message
-     */
-    public function addWarning($message)
+    public function addWarning(string $message): void
     {
         $this->warnings[] = $message;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasWarnings()
+    public function hasWarnings(): bool
     {
         return false === empty($this->warnings);
     }
@@ -70,31 +58,22 @@ trait LoggingTrait
     /**
      * @return array|string[]
      */
-    public function getInfos()
+    public function getInfos(): array
     {
         return $this->infos;
     }
 
-    /**
-     * @param string $message
-     */
-    public function addInfo($message)
+    public function addInfo(string $message): void
     {
         $this->infos[] = $message;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasInfos()
+    public function hasInfos(): bool
     {
         return false === empty($this->infos);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasLogs()
+    public function hasLogs(): bool
     {
         return $this->hasInfos() || $this->hasWarnings() || $this->hasErrors();
     }

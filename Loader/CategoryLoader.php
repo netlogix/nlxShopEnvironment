@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -26,7 +26,7 @@ class CategoryLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load($config)
+    public function load(?array $config): void
     {
         $categoryRepository = $this->entityManager->getRepository(Category::class);
 
@@ -46,7 +46,7 @@ class CategoryLoader implements LoaderInterface
     /**
      * @param mixed[] $categoryConfig
      */
-    private function setCategoryConfig(Category $category, array $categoryConfig)
+    private function setCategoryConfig(Category $category, array $categoryConfig): void
     {
         foreach ($categoryConfig as $parameter => $value) {
             $setter = 'set' . $parameter;
@@ -73,18 +73,18 @@ class CategoryLoader implements LoaderInterface
     /**
      * @param string[] $sortingNames
      */
-    private function generateSortingIds(array $sortingNames)
+    private function generateSortingIds(array $sortingNames): string
     {
         $sortings = $this->getSortings($sortingNames);
         $sortingIdsText = '';
 
         foreach ($sortings as $sorting) {
-            $sortingIdsText = $sortingIdsText . '|' . $sorting->getId();
+            $sortingIdsText .= '|' . $sorting->getId();
         }
         return $sortingIdsText;
     }
 
-    private function copyCategorySettings(Category $category)
+    private function copyCategorySettings(Category $category): void
     {
         $this->entityManager->getConnection()->executeUpdate(
             'UPDATE s_categories SET `sorting_ids` = :sortingIds WHERE path LIKE :path',
@@ -100,7 +100,7 @@ class CategoryLoader implements LoaderInterface
      *
      * @return CustomSorting[]
      */
-    private function getSortings(array $sortingNames)
+    private function getSortings(array $sortingNames): array
     {
         $sortingRepository = $this->entityManager->getRepository(CustomSorting::class);
         $sortings = [];

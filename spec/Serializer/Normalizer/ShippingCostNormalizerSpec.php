@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -25,7 +25,7 @@ class ShippingCostNormalizerSpec extends ObjectBehavior
         AbstractNormalizer $normalizer,
         EntityManagerInterface $entityManager,
         ModelRepository $shippingCostRepository
-    ) {
+    ): void {
         $entityManager
             ->getRepository(ShippingCost::class)
             ->willReturn($shippingCostRepository);
@@ -37,33 +37,33 @@ class ShippingCostNormalizerSpec extends ObjectBehavior
         $this->beConstructedWith($normalizer, $entityManager);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ShippingCostNormalizer::class);
     }
 
-    public function it_implements_correct_interfaces()
+    public function it_implements_correct_interfaces(): void
     {
         $this->shouldImplement(NormalizerInterface::class);
         $this->shouldImplement(DenormalizerInterface::class);
     }
 
-    public function it_supports_shipping_cost_denormalization()
+    public function it_supports_shipping_cost_denormalization(): void
     {
         $this->supportsDenormalization([], ShippingCost::class)->shouldBe(true);
     }
 
-    public function it_does_not_support_other_denormalization()
+    public function it_does_not_support_other_denormalization(): void
     {
         $this->supportsDenormalization([], \stdClass::class)->shouldBe(false);
     }
 
-    public function it_supports_shipping_cost_normalization(ShippingCost $shippingCost)
+    public function it_supports_shipping_cost_normalization(ShippingCost $shippingCost): void
     {
         $this->supportsNormalization($shippingCost)->shouldBe(true);
     }
 
-    public function it_does_not_support_other_normalization(\stdClass $object)
+    public function it_does_not_support_other_normalization(\stdClass $object): void
     {
         $this->supportsNormalization($object)->shouldBe(false);
     }
@@ -72,7 +72,7 @@ class ShippingCostNormalizerSpec extends ObjectBehavior
         AbstractNormalizer $normalizer,
         ShippingCost $shippingCost,
         Dispatch $dispatch
-    ) {
+    ): void {
         $shippingCost->getFrom()
             ->willReturn('0.100');
         $shippingCost->getValue()
@@ -101,7 +101,7 @@ class ShippingCostNormalizerSpec extends ObjectBehavior
         AbstractNormalizer $normalizer,
         ShippingCost $existingShippingCost,
         ModelRepository $shippingCostRepository
-    ) {
+    ): void {
         $data = [
             'from'     => '0.100',
             'dispatch' => 42,
@@ -135,7 +135,7 @@ class ShippingCostNormalizerSpec extends ObjectBehavior
     public function it_can_denormalize_new_shipping_cost(
         AbstractNormalizer $normalizer,
         ModelRepository $shippingCostRepository
-    ) {
+    ): void {
         $data = [
             'from'     => '0.100',
             'dispatch' => 42,

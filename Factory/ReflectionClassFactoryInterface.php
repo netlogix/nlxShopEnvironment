@@ -11,5 +11,8 @@ namespace nlxShopEnvironment\Factory;
 
 interface ReflectionClassFactoryInterface
 {
+    /**
+     * @param mixed $class
+     */
     public function create($class): \ReflectionClass;
 }

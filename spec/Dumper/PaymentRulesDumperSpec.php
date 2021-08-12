@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -20,16 +20,16 @@ class PaymentRulesDumperSpec extends ObjectBehavior
     public function let(
         ModelRepository $paymentRulesRepository,
         NormalizerInterface $normalizer
-    ) {
+    ): void {
         $this->beConstructedWith($paymentRulesRepository, $normalizer);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(PaymentRulesDumper::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interface(): void
     {
         $this->shouldImplement(DumperInterface::class);
     }
@@ -38,7 +38,7 @@ class PaymentRulesDumperSpec extends ObjectBehavior
         ModelRepository $paymentRulesRepository,
         NormalizerInterface $normalizer,
         RuleSet $ruleSet
-    ) {
+    ): void {
         $paymentRules = [$ruleSet];
         $paymentRulesRepository->findAll()
             ->willReturn($paymentRules);

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -30,7 +30,7 @@ class ShippingMethodsDumper implements DumperInterface
     /**
      * {@inheritdoc}
      */
-    public function dump()
+    public function dump(): array
     {
         $shippingMethods = [];
         foreach ($this->shippingMethodsRepository->findAll() as $shippingMethod) {

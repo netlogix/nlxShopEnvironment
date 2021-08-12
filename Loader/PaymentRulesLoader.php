@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -37,7 +37,7 @@ class PaymentRulesLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load($config)
+    public function load(?array $config): void
     {
         $paymentRules = $this->denormalizer->denormalize($config, RuleSet::class . '[]');
 

@@ -37,7 +37,7 @@ class FacetLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load($config)
+    public function load(?array $config): void
     {
         foreach ($config as $facetName => $facetData) {
             try {
@@ -58,10 +58,9 @@ class FacetLoader implements LoaderInterface
     }
 
     /**
-     * @param string $facetName
-     * @param array  $facetData
+     * @param mixed[] $facetData
      */
-    private function importFacet($facetName, $facetData)
+    private function importFacet(string $facetName, array $facetData): void
     {
         $facet = $this->facetRepository->findOneBy(['name' => $facetName]);
         if (null === $facet) {

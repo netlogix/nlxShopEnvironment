@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -34,7 +34,7 @@ class ThemeSettingsLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load($config)
+    public function load(?array $config): void
     {
         foreach ($config as $id => $themeSettingsData) {
             try {
@@ -49,10 +49,9 @@ class ThemeSettingsLoader implements LoaderInterface
     }
 
     /**
-     * @param string $themeSettingId
-     * @param array  $themeSettingData
+     * @param mixed[] $themeSettingData
      */
-    private function importThemeSettings($themeSettingId, $themeSettingData)
+    private function importThemeSettings(int $themeSettingId, array $themeSettingData): void
     {
         $themeSetting = $this->themeSettingsRepository->find($themeSettingId);
         if (null === $themeSetting) {
@@ -63,10 +62,9 @@ class ThemeSettingsLoader implements LoaderInterface
     }
 
     /**
-     * @param int        $id
      * @param \Exception $exception
      */
-    private function outputException($id, \Throwable $exception)
+    private function outputException(int $id, \Throwable $exception): void
     {
         if (!\defined('PHPSPEC')) {
             echo 'Error during import of theme setting ' . $id . PHP_EOL;

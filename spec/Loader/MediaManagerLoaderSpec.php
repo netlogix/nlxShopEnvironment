@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -23,7 +23,7 @@ class MediaManagerLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $albumRepository,
         ModelRepository $settingsRepository
-    ) {
+    ): void {
         $entityManager->getRepository(Album::class)
             ->willReturn($albumRepository);
         $entityManager->getRepository(Settings::class)
@@ -32,12 +32,12 @@ class MediaManagerLoaderSpec extends ObjectBehavior
         $this->beConstructedWith($entityManager);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(MediaManagerLoader::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interface(): void
     {
         $this->shouldImplement(LoaderInterface::class);
     }
@@ -45,7 +45,7 @@ class MediaManagerLoaderSpec extends ObjectBehavior
     public function it_can_handle_empty_config(
         EntityManagerInterface $entityManager,
         ModelRepository $albumRepository
-    ) {
+    ): void {
         if (false === \method_exists(Album::class, 'setGarbageCollectable')) {
             return;
         }
@@ -61,7 +61,7 @@ class MediaManagerLoaderSpec extends ObjectBehavior
 
     public function it_cannot_create_a_new_album(
         ModelRepository $albumRepository
-    ) {
+    ): void {
         if (false === \method_exists(Album::class, 'setGarbageCollectable')) {
             return;
         }
@@ -96,7 +96,7 @@ class MediaManagerLoaderSpec extends ObjectBehavior
         Album $album,
         ModelRepository $settingsRepository,
         Settings $settings
-    ) {
+    ): void {
         if (false === \method_exists(Album::class, 'setGarbageCollectable')) {
             return;
         }

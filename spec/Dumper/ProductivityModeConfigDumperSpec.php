@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -20,16 +20,16 @@ class ProductivityModeConfigDumperSpec extends ObjectBehavior
 {
     public function let(
         EntityManagerInterface $entityManager
-    ) {
+    ): void {
         $this->beConstructedWith($entityManager);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ProductivityModeConfigDumper::class);
     }
 
-    public function it_implements_dumper_interface()
+    public function it_implements_dumper_interface(): void
     {
         $this->shouldImplement(DumperInterface::class);
     }
@@ -38,7 +38,7 @@ class ProductivityModeConfigDumperSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $ModelRepository,
         Plugin $plugin
-    ) {
+    ): void {
         $entityManager
             ->getRepository(Argument::exact(Plugin::class))
             ->willReturn($ModelRepository);
@@ -63,7 +63,7 @@ class ProductivityModeConfigDumperSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $modelRepository,
         Plugin $plugin
-    ) {
+    ): void {
         $entityManager
             ->getRepository(Argument::exact(Plugin::class))
             ->willReturn($modelRepository);
@@ -88,7 +88,7 @@ class ProductivityModeConfigDumperSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $modelRepository,
         Plugin $plugin
-    ) {
+    ): void {
         $entityManager
             ->getRepository(Argument::exact(Plugin::class))
             ->willReturn($modelRepository);
@@ -113,7 +113,7 @@ class ProductivityModeConfigDumperSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $modelRepository,
         Plugin $plugin
-    ) {
+    ): void {
         $entityManager
             ->getRepository(Argument::exact(Plugin::class))
             ->willReturn($modelRepository);

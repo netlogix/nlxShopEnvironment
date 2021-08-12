@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -15,7 +15,10 @@ use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 
 class PaymentRuleNormalizer extends PropertyNormalizer
 {
-    public function setAttributeValue($object, $attribute, $value, $format = null, array $context = [])
+    /**
+     * {@inheritdoc}
+     */
+    public function setAttributeValue($object, $attribute, $value, $format = null, array $context = []): void
     {
         if ($this->serializer instanceof DenormalizerInterface) {
             if ('payment' === $attribute) {

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -20,7 +20,7 @@ class DocumentsDumperSpec extends ObjectBehavior
     public function let(
         EntityManagerInterface $entityManager,
         ModelRepository $documentsRepository
-    ) {
+    ): void {
         $entityManager
             ->getRepository(Document::class)
             ->willReturn($documentsRepository);
@@ -28,19 +28,19 @@ class DocumentsDumperSpec extends ObjectBehavior
         $this->beConstructedWith($entityManager);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(DocumentsDumper::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interface(): void
     {
         $this->shouldImplement(DumperInterface::class);
     }
 
     public function it_can_dump_empty_documents(
         ModelRepository $documentsRepository
-    ) {
+    ): void {
         $documentsRepository->findAll()
             ->shouldBeCalled()
             ->willReturn([]);
@@ -53,7 +53,7 @@ class DocumentsDumperSpec extends ObjectBehavior
         ModelRepository $documentsRepository,
         Document $document1,
         Document $document2
-    ) {
+    ): void {
         if (false === \method_exists($document1->getWrappedObject(), 'getKey')) {
             return;
         }
@@ -95,7 +95,7 @@ class DocumentsDumperSpec extends ObjectBehavior
         ModelRepository $documentsRepository,
         Document $document1,
         Document $document2
-    ) {
+    ): void {
         if (true === \method_exists($document1->getWrappedObject(), 'getKey')) {
             return;
         }
@@ -131,7 +131,7 @@ class DocumentsDumperSpec extends ObjectBehavior
         ModelRepository $documentsRepository,
         Document $document1,
         Document $document2
-    ) {
+    ): void {
         $document1->getName()
             ->willReturn('documentOne');
         $document1->getTemplate()

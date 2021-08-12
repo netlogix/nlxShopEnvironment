@@ -11,6 +11,9 @@ namespace nlxShopEnvironment\Factory;
 
 class ReflectionClassFactory implements ReflectionClassFactoryInterface
 {
+    /**
+     * {@inheritdoc}
+     */
     public function create($class): \ReflectionClass
     {
         return new \ReflectionClass($class);

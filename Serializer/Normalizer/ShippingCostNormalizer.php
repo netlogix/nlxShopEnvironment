@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -30,6 +30,9 @@ class ShippingCostNormalizer implements NormalizerInterface, DenormalizerInterfa
         $this->shippingCostRepository = $entityManager->getRepository(ShippingCost::class);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function normalize($object, $format = null, array $context = [])
     {
         $data = [

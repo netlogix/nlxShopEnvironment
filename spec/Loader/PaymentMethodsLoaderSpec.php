@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -23,7 +23,7 @@ class PaymentMethodsLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $paymentMethodsRepository,
         DenormalizerInterface $denormalizer
-    ) {
+    ): void {
         $entityManager
             ->getRepository(Payment::class)
             ->willReturn($paymentMethodsRepository);
@@ -31,12 +31,12 @@ class PaymentMethodsLoaderSpec extends ObjectBehavior
         $this->beConstructedWith($entityManager, $denormalizer);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(PaymentMethodsLoader::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interface(): void
     {
         $this->shouldImplement(LoaderInterface::class);
     }
@@ -45,7 +45,7 @@ class PaymentMethodsLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $paymentMethodsRepository,
         DenormalizerInterface $denormalizer
-    ) {
+    ): void {
         $paymentMethodsRepository
             ->findOneBy(['name' => 'new_payment_method'])
             ->willReturn(null);
@@ -72,7 +72,7 @@ class PaymentMethodsLoaderSpec extends ObjectBehavior
         ModelRepository $paymentMethodsRepository,
         Payment $paymentMethod,
         DenormalizerInterface $denormalizer
-    ) {
+    ): void {
         $paymentMethodsRepository
             ->findOneBy(['name' => 'new_payment_method'])
             ->willReturn($paymentMethod);

@@ -28,7 +28,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         \ReflectionClass $shopReflectionClass,
         ShopEntityRelationHelperInterface $entityRelationHelper,
         ModelRepository $shopRepository
-    ) {
+    ): void {
         $entityManager
             ->getRepository(Shop::class)
             ->willReturn($shopRepository);
@@ -39,12 +39,12 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         $this->beConstructedWith($entityManager, $reflectionClassFactory, $entityRelationHelper);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ShopConfigLoader::class);
     }
 
-    public function it_implements_correct_interface()
+    public function it_implements_correct_interface(): void
     {
         $this->shouldImplement(LoaderInterface::class);
     }
@@ -53,7 +53,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $shopRepository,
         \ReflectionClass $shopReflectionClass
-    ) {
+    ): void {
         $config = [1 => ['superVillain' => 'Joker']];
 
         $shopRepository->find(1)
@@ -77,7 +77,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         ModelRepository $shopRepository,
         \ReflectionClass $shopReflectionClass,
         Shop $shop
-    ) {
+    ): void {
         $config = [1 => ['superVillain' => 'Joker']];
 
         $shopRepository->find(1)
@@ -100,7 +100,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         ModelRepository $shopRepository,
         \ReflectionClass $shopReflectionClass
-    ) {
+    ): void {
         $shopRepository->find(Argument::any())
             ->shouldNotBeCalled();
 
@@ -121,7 +121,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         ModelRepository $shopRepository,
         \ReflectionClass $shopReflectionClass,
         Shop $shop
-    ) {
+    ): void {
         $config = [1 => []];
 
         $shopRepository->find(1)
@@ -145,7 +145,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         \ReflectionClass $shopReflectionClass,
         ShopEntityRelationHelperInterface $entityRelationHelper,
         Shop $shop
-    ) {
+    ): void {
         $config = [1 => ['Name' => 'Gotham']];
 
         $shopRepository->find(1)
@@ -176,7 +176,7 @@ class ShopConfigLoaderSpec extends ObjectBehavior
         Shop $shop,
         Group $group,
         \ReflectionClass $shopReflectionClass
-    ) {
+    ): void {
         $config = [
             1 => [
                 'CustomerGroup' => 'Villains',

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -27,7 +27,7 @@ class ThemeConfigDumper implements DumperInterface
     /**
      * {@inheritdoc}
      */
-    public function dump()
+    public function dump(): array
     {
         $configElementRepository = $this->entityManager->getRepository('Shopware\Models\Shop\TemplateConfig\Element');
 
@@ -48,12 +48,10 @@ class ThemeConfigDumper implements DumperInterface
     }
 
     /**
-     * @param ThemeElement $element
-     * @param Template     $template
-     * @param array        $configValues
-     * @param array        $configuration
+     * @param mixed[] $configValues
+     * @param mixed[] $configuration
      */
-    private function addThemeElementValues(ThemeElement $element, Template $template, $configValues, &$configuration)
+    private function addThemeElementValues(ThemeElement $element, Template $template, array $configValues, array &$configuration): void
     {
         foreach ($configValues as $value) {
             if ($value instanceof ThemeElementValue) {
@@ -65,11 +63,9 @@ class ThemeConfigDumper implements DumperInterface
     }
 
     /**
-     * @param ThemeElement $element
-     * @param Template     $template
-     * @param array        $configuration
+     * @param mixed[] $configuration
      */
-    private function addThemeElementInformation(ThemeElement $element, Template $template, &$configuration)
+    private function addThemeElementInformation(ThemeElement $element, Template $template, array &$configuration): void
     {
         $templateName = $template->getName();
         $elementName = $element->getName();

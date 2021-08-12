@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -35,7 +35,7 @@ class ThemeConfigLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load($config)
+    public function load(?array $config): void
     {
         $configElementRepository = $this->entityManager->getRepository(ThemeElement::class);
         $configTemplateRepository = $this->entityManager->getRepository(Template::class);
@@ -75,16 +75,14 @@ class ThemeConfigLoader implements LoaderInterface
     }
 
     /**
-     * @param ModelRepository $configElementRepository
-     * @param Template        $template
-     * @param array           $configValues
+     * @param mixed[] $configValues
      *
      * @return ThemeElement|null|object
      */
     private function findOrCreateThemeConfig(
         ModelRepository $configElementRepository,
         Template $template,
-        $configValues
+        array $configValues
     ) {
         $element = $configElementRepository->findOneBy([
             'name' => $configValues['name'],
@@ -104,19 +102,14 @@ class ThemeConfigLoader implements LoaderInterface
     }
 
     /**
-     * @param ModelRepository $configValueRepository
-     * @param ThemeElement    $element
-     * @param Shop            $shop
-     * @param mixed           $configValue
-     *
-     * @return Value
+     * @param mixed $configValue
      */
     private function findOrCreateThemeConfigValue(
         ModelRepository $configValueRepository,
         ThemeElement $element,
         Shop $shop,
         $configValue
-    ) {
+    ): Value {
         $elementValue = $configValueRepository->findOneBy(['element' => $element, 'shop' => $shop]);
         if (null === $elementValue) {
             $elementValue = new Value();

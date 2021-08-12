@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -33,7 +33,7 @@ class ProductivityModeConfigLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load($config)
+    public function load(?array $config): void
     {
         if (false === \array_key_exists(self::SETTINGS_KEY, $config)) {
             return;
@@ -53,10 +53,8 @@ class ProductivityModeConfigLoader implements LoaderInterface
 
     /**
      * Activate httpCache-Plugin
-     *
-     * @param Plugin $httpCache
      */
-    private function activeHttpCache($httpCache)
+    private function activeHttpCache(Plugin $httpCache): void
     {
         if (false === $httpCache->getInstalled()) {
             $this->pluginManager->installPlugin($httpCache);
@@ -69,10 +67,8 @@ class ProductivityModeConfigLoader implements LoaderInterface
 
     /**
      * Deactivate httpCache-Plugin
-     *
-     * @param Plugin $httpCache
      */
-    private function deactivateHttpCache($httpCache)
+    private function deactivateHttpCache(Plugin $httpCache): void
     {
         if (false === $httpCache->getActive()) {
             return;

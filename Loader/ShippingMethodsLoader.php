@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -34,7 +34,7 @@ class ShippingMethodsLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load($config)
+    public function load(?array $config): void
     {
         foreach ($config as $id => $shippingMethodData) {
             try {
@@ -52,11 +52,7 @@ class ShippingMethodsLoader implements LoaderInterface
         $this->entityManager->flush();
     }
 
-    /**
-     * @param int        $id
-     * @param \Exception $exception
-     */
-    private function outputException($id, \Exception $exception)
+    private function outputException(int $id, \Exception $exception): void
     {
         if (!\defined('PHPSPEC')) {
             echo 'Error during import of shipping method ' . $id . PHP_EOL;
@@ -65,10 +61,9 @@ class ShippingMethodsLoader implements LoaderInterface
     }
 
     /**
-     * @param int   $shippingMethodId
-     * @param array $shippingMethodData
+     * @param mixed[] $shippingMethodData
      */
-    private function importShippingMethod($shippingMethodId, $shippingMethodData)
+    private function importShippingMethod(int $shippingMethodId, array $shippingMethodData): void
     {
         $shippingMethod = $this->shippingMethodsRepository->find($shippingMethodId);
         if (null === $shippingMethod) {

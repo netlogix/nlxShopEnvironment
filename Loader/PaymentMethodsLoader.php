@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -34,7 +34,7 @@ class PaymentMethodsLoader implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function load($config)
+    public function load(?array $config): void
     {
         foreach ($config as $id => $paymentMethodData) {
             try {
@@ -49,10 +49,9 @@ class PaymentMethodsLoader implements LoaderInterface
     }
 
     /**
-     * @param string $paymentMethodName
-     * @param array  $paymentMethodData
+     * @param mixed[] $paymentMethodData
      */
-    private function importPaymentMethod($paymentMethodName, $paymentMethodData)
+    private function importPaymentMethod(string $paymentMethodName, array $paymentMethodData): void
     {
         $paymentMethod = $this->paymentMethodsRepository->findOneBy(['name' => $paymentMethodName]);
         if (null === $paymentMethod) {

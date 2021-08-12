@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Created by netlogix GmbH & Co. KG
@@ -13,5 +13,5 @@ interface DumperInterface
     /**
      * @return array|mixed[]
      */
-    public function dump();
+    public function dump(): array;
 }
