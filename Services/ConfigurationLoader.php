@@ -9,6 +9,7 @@
 namespace nlxShopEnvironment\Services;
 
 use nlxShopEnvironment\DataTypes\DataTypeCollectorInterface;
+use nlxShopEnvironment\Services\Resolver\Resolver;
 use Symfony\Component\Yaml\Yaml;
 
 class ConfigurationLoader implements ConfigurationLoaderInterface
@@ -18,10 +19,15 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
     /** @var DataTypeCollectorInterface */
     private $dataTypeCollector;
 
+    /** @var Resolver */
+    private $resolver;
+
     public function __construct(
-        DataTypeCollectorInterface $dataTypeCollector
+        DataTypeCollectorInterface $dataTypeCollector,
+        Resolver $resolver
     ) {
         $this->dataTypeCollector = $dataTypeCollector;
+        $this->resolver = $resolver;
     }
 
     /**
@@ -36,6 +42,8 @@ class ConfigurationLoader implements ConfigurationLoaderInterface
         $contentOfYamlFile = Yaml::parse(\file_get_contents($pathToFile, false));
         foreach ($contentOfYamlFile as $rootName => $content) {
             $type = $this->dataTypeCollector->get($rootName);
+            $content = $this->resolver->resolve($content);
+
             if (null === $type) {
                 $this->addError('Configuration file contains unknown root entry `' . $rootName . '`. Aborting.');
                 continue;

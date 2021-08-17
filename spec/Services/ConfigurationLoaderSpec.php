@@ -11,15 +11,18 @@ namespace spec\nlxShopEnvironment\Services;
 use nlxShopEnvironment\DataTypes\DataTypeCollectorInterface;
 use nlxShopEnvironment\Services\ConfigurationLoader;
 use nlxShopEnvironment\Services\ConfigurationLoaderInterface;
+use nlxShopEnvironment\Services\Resolver\Resolver;
 use PhpSpec\ObjectBehavior;
 
 class ConfigurationLoaderSpec extends ObjectBehavior
 {
     public function let(
-        DataTypeCollectorInterface $dataTypeCollector
+        DataTypeCollectorInterface $dataTypeCollector,
+        Resolver $resolver
     ): void {
         $this->beConstructedWith(
-            $dataTypeCollector
+            $dataTypeCollector,
+            $resolver
         );
     }
 
