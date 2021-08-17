@@ -9,6 +9,7 @@
         <import resource="services/loaders.xml" />
         <import resource="services/serializer.xml" />
         <import resource="services/cache_cleaners.xml" />
+        <import resource="services/resolver.xml" />
     </imports>
 
     <services>
@@ -35,6 +36,7 @@
         <service id="nlx_shop_environment.services.configuration_loader"
                  class="nlxShopEnvironment\Services\ConfigurationLoader">
             <argument type="service" key="$dataTypeCollector" id="nlx_shop_environment.data_types.data_type_collector" />
+            <argument type="service" key="$resolver" id="nlx.shop_environment.services.resolver.environment_resolver"/>
         </service>
         <service
                 id="nlx_shop_environment.services.shop.shop_entity_relation_helper"
