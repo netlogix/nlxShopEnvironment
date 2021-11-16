@@ -28,31 +28,12 @@
                 class="nlxShopEnvironment\Serializer\Normalizer\PaymentNormalizer"
                 id="nlx.shop_environment.serializer.normalizer.payment_normalizer"
         >
-            <call method="setIgnoredAttributes">
-                <argument type="collection">
-                    <argument type="string">id</argument>
-                    <argument type="string">name</argument> <!-- already used as array key -->
-                    <argument type="string">ruleSets</argument>
-                    <argument type="string">paymentInstances</argument>
-                    <argument type="string">paymentData</argument>
-                    <argument type="string">plugin</argument>
-                    <argument type="string">attribute</argument>
-                </argument>
-            </call>
         </service>
 
         <service
                 class="nlxShopEnvironment\Serializer\Normalizer\DispatchNormalizer"
                 id="nlx.shop_environment.serializer.normalizer.dispatch_normalizer"
         >
-            <call method="setIgnoredAttributes">
-                <argument type="collection">
-                    <argument type="string">id</argument> <!-- already used as array key -->
-                    <argument type="string">categories</argument>
-                    <argument type="string">holidays</argument>
-                    <argument type="string">attribute</argument>
-                </argument>
-            </call>
         </service>
 
         <service
@@ -80,11 +61,6 @@
                 id="nlx.shop_environment.serializer.normalizer.payment_rules"
                 class="nlxShopEnvironment\Serializer\Normalizer\PaymentRuleNormalizer"
         >
-            <call method="setIgnoredAttributes">
-                <argument type="collection">
-                    <argument type="string">paymentId</argument>
-                </argument>
-            </call>
         </service>
 
         <!-- Denormalizer -->
