@@ -30,10 +30,6 @@ class ShippingCostNormalizerSpec extends ObjectBehavior
             ->getRepository(ShippingCost::class)
             ->willReturn($shippingCostRepository);
 
-        $normalizer
-            ->setIgnoredAttributes(Argument::any())
-            ->shouldBeCalled();
-
         $this->beConstructedWith($normalizer, $entityManager);
     }
 
@@ -69,7 +65,6 @@ class ShippingCostNormalizerSpec extends ObjectBehavior
     }
 
     public function it_can_normalize(
-        AbstractNormalizer $normalizer,
         ShippingCost $shippingCost,
         Dispatch $dispatch
     ): void {
@@ -106,6 +101,10 @@ class ShippingCostNormalizerSpec extends ObjectBehavior
             'from'     => '0.100',
             'dispatch' => 42,
         ];
+        $context = [
+            AbstractNormalizer::OBJECT_TO_POPULATE => $existingShippingCost->getWrappedObject(),
+            AbstractNormalizer::IGNORED_ATTRIBUTES => ['dispatch'],
+        ];
 
         $shippingCostRepository
             ->findOneBy(
@@ -122,7 +121,7 @@ class ShippingCostNormalizerSpec extends ObjectBehavior
                 $data,
                 ShippingCost::class,
                 null,
-                Argument::withEntry('object_to_populate', $existingShippingCost->getWrappedObject())
+                $context
             )
             ->shouldBeCalled()
             ->willReturn(['test']);
@@ -156,7 +155,7 @@ class ShippingCostNormalizerSpec extends ObjectBehavior
                 $data,
                 ShippingCost::class,
                 null,
-                Argument::withKey('object_to_populate')
+                Argument::type('array')
             )
             ->shouldBeCalled()
             ->willReturn(['test']);

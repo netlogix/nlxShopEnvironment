@@ -31,7 +31,7 @@ class ConfigurationDumper implements ConfigurationDumperInterface
             $configuration[$rootName] = $type->getDumper()->dump();
         }
 
-        $configurationAsYaml = Yaml::dump($configuration, 4, 4, true, false);
+        $configurationAsYaml = Yaml::dump($configuration, 4, 4, Yaml::DUMP_OBJECT);
 
         if (false === \is_writable(\dirname($exportPath)) && 'php://stdout' !== $exportPath) {
             \mkdir(\dirname($exportPath), 0775);

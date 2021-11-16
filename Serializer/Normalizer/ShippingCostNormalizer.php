@@ -26,7 +26,6 @@ class ShippingCostNormalizer implements NormalizerInterface, DenormalizerInterfa
     public function __construct(AbstractNormalizer $normalizer, EntityManagerInterface $entityManager)
     {
         $this->normalizer = $normalizer;
-        $this->normalizer->setIgnoredAttributes(['dispatch']);
         $this->shippingCostRepository = $entityManager->getRepository(ShippingCost::class);
     }
 
@@ -70,7 +69,10 @@ class ShippingCostNormalizer implements NormalizerInterface, DenormalizerInterfa
             $shippingCost = new ShippingCost();
         }
 
-        return $this->normalizer->denormalize($data, $class, $format, ['object_to_populate' => $shippingCost]);
+        return $this->normalizer->denormalize($data, $class, $format, [
+                AbstractNormalizer::OBJECT_TO_POPULATE => $shippingCost,
+                AbstractNormalizer::IGNORED_ATTRIBUTES => ['dispatch'],
+            ]);
     }
 
     /**
