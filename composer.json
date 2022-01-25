@@ -18,14 +18,14 @@
         }
     },
     "require": {
-        "php": "^7.4",
+        "php": "^7.4||^8.0",
         "symfony/expression-language": "^4.3",
         "symfony/yaml": "^4.3"
     },
     "require-dev": {
         "shopware/shopware": "^5.7",
         "phpunit/phpunit": "^5.7",
-        "solutiondrive/standalone-build-tools": "^1.0.0"
+        "solutiondrive/standalone-build-tools": "^2.0"
     },
     "config": {
         "sort-packages": true,

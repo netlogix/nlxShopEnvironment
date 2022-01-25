@@ -3,7 +3,7 @@
         xsi:noNamespaceSchemaLocation="../../../engine/Shopware/Components/Plugin/schema/plugin.xsd">
     <label lang="de">nlxShopEnvironment</label>
     <label lang="en">nlxShopEnvironment</label>
-    <version>3.0.0</version>
+    <version>3.1.0</version>
     <copyright>(c) by netlogix GmbH &amp; Co. KG</copyright>
     <license>Proprietary</license>
     <link>https://websolutions.netlogix.de/</link>
@@ -130,5 +130,9 @@
     <changelog version="3.0.0">
         <changes lang="de">Kompatibilität mit symfony/serializer 5.0 und höher hinzufügen. Shopware und PHP Unterstützung auf 5.7 und 7.4 erhöhen</changes>
         <changes lang="en">Add compatibility with symfony/serializer 5.0 and higher. Increase shopware and php supported version to 5.7 and 7.4</changes>
+    </changelog>
+    <changelog version="3.1.0">
+        <changes lang="de">Kompatibilität mit Composer 2 hinzufügen. Dateien, die nicht mehr gebraucht werden, löschen</changes>
+        <changes lang="en">Add Composer 2 support. Delete files that are no longer needed</changes>
     </changelog>
 </plugin>
