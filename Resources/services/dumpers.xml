@@ -88,5 +88,11 @@
             <argument type="expression">service('models').getRepository('Shopware\\Models\\Payment\\RuleSet')</argument>
             <argument type="service" id="nlx.shop_environment.serializer.serializer.payment_rules"/>
         </service>
+        <service
+                id="nlx.shop_environment.dumper.acl_roles_dumper"
+                class="nlxShopEnvironment\Dumper\AclRolesDumper"
+        >
+            <argument type="service" id="models"/>
+        </service>
     </services>
 </container>

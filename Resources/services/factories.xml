@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service
+                id="nlx_shop_environment.factory.reflrection_class_factory"
+                class="nlxShopEnvironment\Factory\ReflectionClassFactory"
+        >
+        </service>
+
+        <service
+                id="nlx.shop_environment.factory.acl_role.auth_role_factory"
+                class="nlxShopEnvironment\Factory\AclRole\AuthRoleFactory"
+        >
+        </service>
+        <service
+                id="nlx.shop_environment.factory.acl_role.rule_factory"
+                class="nlxShopEnvironment\Factory\AclRole\RuleFactory"
+        >
+        </service>
+    </services>
+</container>

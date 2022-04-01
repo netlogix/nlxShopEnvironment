@@ -94,5 +94,11 @@
             <argument type="service" id="nlx.shop_environment.serializer.serializer.payment_rules"/>
             <argument type="expression">service('models').getRepository('Shopware\\Models\\Payment\\RuleSet')</argument>
         </service>
+        <service
+                class="nlxShopEnvironment\Loader\AclRolesLoader"
+                id="nlx.shop_environment.loader.acl_roles_loader"
+        >
+            <argument type="service" id="nlx.shop_environment.services.acl_role.acl_roles_importer"/>
+        </service>
     </services>
 </container>

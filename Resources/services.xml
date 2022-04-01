@@ -10,6 +10,7 @@
         <import resource="services/serializer.xml" />
         <import resource="services/cache_cleaners.xml" />
         <import resource="services/resolver.xml" />
+        <import resource="services/factories.xml" />
     </imports>
 
     <services>
@@ -44,6 +45,14 @@
         >
             <argument type="service" id="models"/>
         </service>
+        <service
+                id="nlx.shop_environment.services.acl_role.acl_roles_importer"
+                class="nlxShopEnvironment\Services\AclRoles\AclRolesImporter"
+        >
+            <argument type="service" id="models"/>
+            <argument type="service" id="nlx.shop_environment.factory.acl_role.auth_role_factory"/>
+            <argument type="service" id="nlx.shop_environment.factory.acl_role.rule_factory"/>
+        </service>
 
         <!-- Commands -->
         <service
@@ -77,13 +86,6 @@
                     <argument key="verify">false</argument>
                 </argument>
             </argument>
-        </service>
-
-        <!-- Factories -->
-        <service
-                id="nlx_shop_environment.factory.reflrection_class_factory"
-                class="nlxShopEnvironment\Factory\ReflectionClassFactory"
-        >
         </service>
 
         <!-- Subscriber -->
