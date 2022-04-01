@@ -115,5 +115,13 @@
             <argument type="service" id="nlx.shop_environment.dumper.payment_rules_dumper" />
             <argument type="service" id="nlx.shop_environment.loader.payment_rules_loader" />
         </service>
+        <service
+                id="nlx_shop_environment.data_types.acl_roles"
+                class="nlxShopEnvironment\DataTypes\GenericDataType"
+        >
+            <tag name="nlx.data_type" root_name="acl_roles" />
+            <argument type="service" id="nlx.shop_environment.dumper.acl_roles_dumper" />
+            <argument type="service" id="nlx.shop_environment.loader.acl_roles_loader" />
+        </service>
     </services>
 </container>

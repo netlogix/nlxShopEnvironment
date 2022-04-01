@@ -3,7 +3,7 @@
         xsi:noNamespaceSchemaLocation="../../../engine/Shopware/Components/Plugin/schema/plugin.xsd">
     <label lang="de">nlxShopEnvironment</label>
     <label lang="en">nlxShopEnvironment</label>
-    <version>3.1.0</version>
+    <version>3.2.0</version>
     <copyright>(c) by netlogix GmbH &amp; Co. KG</copyright>
     <license>Proprietary</license>
     <link>https://websolutions.netlogix.de/</link>
@@ -134,5 +134,9 @@
     <changelog version="3.1.0">
         <changes lang="de">Kompatibilität mit Composer 2 hinzufügen. Dateien, die nicht mehr gebraucht werden, löschen</changes>
         <changes lang="en">Add Composer 2 support. Delete files that are no longer needed</changes>
+    </changelog>
+    <changelog version="3.2.0">
+        <changes lang="de">Acl Roles support hinzugefügt</changes>
+        <changes lang="en">Added acl roles support</changes>
     </changelog>
 </plugin>
