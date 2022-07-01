@@ -3,11 +3,18 @@
         xsi:noNamespaceSchemaLocation="../../../engine/Shopware/Components/Plugin/schema/plugin.xsd">
     <label lang="de">nlxShopEnvironment</label>
     <label lang="en">nlxShopEnvironment</label>
-    <version>3.2.0</version>
+    <version>3.3.0</version>
     <copyright>(c) by netlogix GmbH &amp; Co. KG</copyright>
     <license>Proprietary</license>
     <link>https://websolutions.netlogix.de/</link>
     <author>netlogix GmbH &amp; Co. KG</author>
+
+    <description lang="de">
+        Plugin, um Shopware beim Deployment zu konfigurieren (Shop-Konfig)
+    </description>
+    <description lang="en">
+        Plugin to configure shopware during deployment (shop config)
+    </description>
 
     <compatibility minVersion="5.7.0" />
 
@@ -138,5 +145,9 @@
     <changelog version="3.2.0">
         <changes lang="de">Acl Roles support hinzugefügt</changes>
         <changes lang="en">Added acl roles support</changes>
+    </changelog>
+    <changelog version="3.3.0">
+        <changes lang="de">Plugin Beschreibung hinzugefügt</changes>
+        <changes lang="en">Added plugin description</changes>
     </changelog>
 </plugin>
