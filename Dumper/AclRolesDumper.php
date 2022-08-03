@@ -52,9 +52,11 @@ class AclRolesDumper implements DumperInterface
                     continue;
                 }
                 $resourceName = $resource->getName();
-                $privilegeName = $rule->getPrivilege()->getName();
+                $privilege = $rule->getPrivilege();
 
-                $roleConfigs[$roleName]['acl'][$resourceName][] = $privilegeName;
+                if ($privilege) {
+                    $roleConfigs[$roleName]['acl'][$resourceName][] = $privilege->getName();
+                }
             }
         }
 
