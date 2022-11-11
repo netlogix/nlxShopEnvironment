@@ -43,10 +43,15 @@ class EnvironmentResolver implements Resolver
     private function getResolvedValue(string $value): string
     {
         \preg_match('/\(([^\)]*)\)/', $value, $matches);
-        $resolvedValue = \getenv($matches[1]);
+        $envName = $matches[1];
+        if (false !== \strpos($envName, ':-')) {
+            list($envName, $default) = \explode(':-', $matches[1], 2);
+        }
 
-        if (false === $resolvedValue) {
-            return '';
+        $resolvedValue = \getenv($envName);
+
+        if (empty($resolvedValue)) {
+            return $default ?? '';
         }
 
         return $resolvedValue;
