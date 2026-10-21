@@ -198,7 +198,7 @@ class CoreConfigLoader implements LoaderInterface
         $stmt->execute(['elementName' => $name, 'formId' => $formId]);
         $result = $stmt->fetch();
 
-        if (\count($result) < 1) {
+        if (false === $result) {
             return null;
         }
 

@@ -3,7 +3,7 @@
         xsi:noNamespaceSchemaLocation="../../../engine/Shopware/Components/Plugin/schema/plugin.xsd">
     <label lang="de">nlxShopEnvironment</label>
     <label lang="en">nlxShopEnvironment</label>
-    <version>3.4.0</version>
+    <version>3.4.1</version>
     <copyright>(c) by netlogix GmbH &amp; Co. KG</copyright>
     <license>Proprietary</license>
     <link>https://websolutions.netlogix.de/</link>
@@ -153,5 +153,9 @@
     <changelog version="3.4.0">
         <changes lang="de">Environment Support mit Fallback Werten</changes>
         <changes lang="en">Allow fallback values for env variables</changes>
+    </changelog>
+    <changelog version="3.4.1">
+        <changes lang="de">Fehler beim Laden der Konfiguration unter PHP 8 behoben</changes>
+        <changes lang="en">Fix loading the configuration on PHP 8</changes>
     </changelog>
 </plugin>

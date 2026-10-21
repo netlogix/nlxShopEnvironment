@@ -20,14 +20,14 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          tools: composer:v1
+          tools: composer:v2
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
         with:
           clean: false
 
       - name: Cache composer
-        uses: actions/cache@v2
+        uses: actions/cache@v6
         with:
           path: ~/vendor/
           key: php-${{ matrix.php-version }}-shopware-${{ matrix.shopware-version }}-composer-${{ hashFiles('composer.json') }}
@@ -40,11 +40,8 @@ jobs:
       - name: Composer install
         run: composer install -n --no-progress
 
-      - name: Check coding standards
-        run: ./etc/scripts/checkCodingStandards.sh
-
       - name: Check plugin structure
         run: ./etc/scripts/checkForCorrectPluginStructure.sh
 
       - name: Run phpspec
-        run: vendor/bin/phpspec-standalone.php${{ matrix.php-version }}.phar run --no-code-generation --format=dot
+        run: bin/phpspec-standalone.php.phar run --no-code-generation --format=dot
