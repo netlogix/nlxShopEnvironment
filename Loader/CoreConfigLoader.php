@@ -174,7 +174,7 @@ class CoreConfigLoader implements LoaderInterface
             $element = $configElementRepository->find($elementId);
         } else {
             $elementType = $elementInformation['type'];
-            $elementOptions = null !== $elementInformation['options'] ? $elementInformation['options'] : [];
+            $elementOptions = $elementInformation['options'] ?? [];
 
             $element = new Element($elementType, $elementName, $elementOptions);
             $element->setForm($form);
