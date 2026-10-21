@@ -8,14 +8,14 @@
 
 namespace nlxShopEnvironment\Loader;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManager;
 use Shopware\Components\Model\ModelRepository;
 use Shopware\Models\Payment\RuleSet;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class PaymentRulesLoader implements LoaderInterface
 {
-    /** @var EntityManagerInterface */
+    /** @var EntityManager */
     private $entityManager;
 
     /** @var DenormalizerInterface */
@@ -25,7 +25,7 @@ class PaymentRulesLoader implements LoaderInterface
     private $paymentRulesRepository;
 
     public function __construct(
-        EntityManagerInterface $entityManager,
+        EntityManager $entityManager,
         DenormalizerInterface $denormalizer,
         ModelRepository $paymentRulesRepository
     ) {

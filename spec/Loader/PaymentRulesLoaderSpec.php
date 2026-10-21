@@ -8,7 +8,7 @@
 
 namespace spec\nlxShopEnvironment\Loader;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use nlxShopEnvironment\Loader\LoaderInterface;
 use nlxShopEnvironment\Loader\PaymentRulesLoader;
@@ -20,7 +20,7 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 class PaymentRulesLoaderSpec extends ObjectBehavior
 {
     public function let(
-        EntityManagerInterface $entityManager,
+        EntityManager $entityManager,
         DenormalizerInterface $denormalizer,
         ModelRepository $paymentRulesRepository,
         ClassMetadata $classMetadata
@@ -46,7 +46,7 @@ class PaymentRulesLoaderSpec extends ObjectBehavior
     }
 
     public function it_can_load_new_payment_rules(
-        EntityManagerInterface $entityManager,
+        EntityManager $entityManager,
         DenormalizerInterface $denormalizer,
         RuleSet $paymentRule
     ): void {
@@ -65,7 +65,7 @@ class PaymentRulesLoaderSpec extends ObjectBehavior
     }
 
     public function it_can_update_an_existing_payment_rules(
-        EntityManagerInterface $entityManager,
+        EntityManager $entityManager,
         DenormalizerInterface $denormalizer,
         ModelRepository $paymentRulesRepository,
         RuleSet $paymentRule
